@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="../../@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+    <script src="../node_modules/sinon/pkg/sinon.js"></script>
+
+    <script type="module" src="../vl-upload.src.js"></script>
+  </head>
+  <body>
+    <test-fixture id="vl-upload-fixture">
+      <template>
+        <vl-upload url="http://www.example.com"/>
+      </template>
+    </test-fixture>
+
+    <script>
+      suite('vl-upload', () => {
+        const should = chai.should();
+
+        let upload;
+
+        setup(() => {
+          window.vl = {
+            upload: {
+              dress: sinon.spy()
+            }
+          };
+
+          // dress method wordt gecalled, wachten tot deze effectief uitgevoerd wordt.
+          (async () => {
+            while (!window.vl || !window.vl.upload) {
+              await new Promise(resolve => setTimeout(resolve, 100));
+            }
+          })();
+
+          upload = fixture('vl-upload-fixture');
+        });
+
+        test('heeft de vl-upload class', () => {
+          assert(upload._upload.classList.contains('vl-upload'));
+        });
+
+        test('de dress methode voegt de templates aan de body toe', () => {
+          ['uploadTemplate', 'previewFilesWrapper', 'previewTemplate', 'uploadOverlay'].forEach(
+              template => should.exist(document.body.querySelector('#' + template)));
+        });
+
+        test('de dress methode called vl.upload.dress met de upload', () => {
+          assert(window.vl.upload.dress.calledWith(upload._upload));
+        });
+
+        test('verander url attribute van de upload', () => {
+          assert(upload._upload.getAttribute(upload._prefix +'url') === 'http://www.example.com');
+          upload.setAttribute('url', 'http://www.newexample.com');
+          assert(upload._upload.getAttribute(upload._prefix + 'url') === 'http://www.newexample.com');
+        });
+
+        test('verander files-name attribute van de upload', () => {
+          assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'files-name'));
+          assert.isFalse(upload.hasAttribute('files-name'));
+          upload.setAttribute('files-name', 'files');
+          assert(upload._upload.getAttribute(upload._prefix + 'files-name') === 'files');
+        });
+
+        test('verander error-message-filesize attribute van de upload', () => {
+          assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'error-message-filesize'));
+          assert.isFalse(upload.hasAttribute('error-message-filesize'));
+          upload.setAttribute('error-message-filesize', 'Too much');
+          assert(upload._upload.getAttribute(upload._prefix + 'error-message-filesize') === 'Too much');
+        });
+
+        test('verander error-message-maxfiles attribute van de upload', () => {
+          assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'error-message-maxfiles'));
+          assert.isFalse(upload.hasAttribute('error-message-maxfiles'));
+          upload.setAttribute('error-message-maxfiles', 'Too much');
+          assert(upload._upload.getAttribute(upload._prefix + 'error-message-maxfiles') === 'Too much');
+        });
+
+        test('verander max-files attribute van de upload', () => {
+          assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'max-files'));
+          assert.isFalse(upload.hasAttribute('max-files'));
+          upload.setAttribute('max-files', '5');
+          assert(upload._upload.getAttribute(upload._prefix + 'max-files') === '5');
+        });
+
+        test('verander max-size attribute van de upload', () => {
+          assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'max-size'));
+          assert.isFalse(upload.hasAttribute('max-size'));
+          upload.setAttribute('max-size', '200');
+          assert(upload._upload.getAttribute(upload._prefix + 'max-size') === '200');
+        });
+
+        test('verander accepted-files attribute van de upload', () => {
+          assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'accepted-files'));
+          assert.isFalse(upload.hasAttribute('accepted-files'));
+          upload.setAttribute('accepted-files', 'application/pdf');
+          assert(upload._upload.getAttribute(upload._prefix + 'accepted-files') === 'application/pdf');
+        });
+
+        test('verander multiple attribute van de upload', () => {
+          assert.isFalse(upload._upload.hasAttribute('multiple'));
+          assert.isFalse(upload.hasAttribute('multiple'));
+          upload.setAttribute('multiple', '');
+          assert(upload._upload.hasAttribute('multiple'));
+        });
+
+        test('verander multiple-caption attribute van de upload', () => {
+          assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'multiple-caption'));
+          assert.isFalse(upload.hasAttribute('multiple-caption'));
+          upload.setAttribute('multiple-caption', 'Multiple uploads');
+          assert(upload._upload.getAttribute(upload._prefix + 'multiple-caption') === 'Multiple uploads');
+        });
+
+        test('verander full-body-drop attribute van de upload', () => {
+          assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'full-body-drop'));
+          assert.isFalse(upload.hasAttribute('full-body-drop'));
+          upload.setAttribute('full-body-drop', '');
+          assert(upload._upload.hasAttribute(upload._prefix + 'full-body-drop'));
+        });
+
+        test('verander autoprocess attribute van de upload', () => {
+          assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'autoprocess'));
+          upload.setAttribute('autoprocess', 'true');
+          assert(upload._upload.getAttribute(upload._prefix + 'autoprocess') === 'true');
+        });
+
+      });
+    </script>
+  </body>
+</html>

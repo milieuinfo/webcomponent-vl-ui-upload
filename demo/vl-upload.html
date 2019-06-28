@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>vl-upload voorbeeld</title>
+  </head>
+
+  <script type="module" src="../vl-upload.src.js"></script>
+  <script type="module" src="demo.js"></script>
+
+
+  <body>
+    <h1>vl-ui-upload demo</h1>
+    <p>
+      <a href="https://overheid.vlaanderen.be/webuniversum/v3/documentation/forms/vl-ui-upload">Meer
+        voorbeelden en documentatie</a>.
+    </p>
+
+    <div>
+      <h2>Upload</h2>
+      <pre>
+        <code class="line-numbers language-markup">
+            &lt;vl-upload url="http://example.com"&gt;&lt;/vl-upload&gt;
+        </code>
+      </pre>
+      <div class="demo">
+        <vl-upload url="http://example.com" files-name="files"></vl-upload>
+      </div>
+    </div>
+
+    <div>
+      <h2>Beperkte Upload (aantal en grootte)</h2>
+      <pre>
+        <code class="line-numbers language-markup">
+            &lt;vl-upload url="http://example.com" files-name="files" error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
+          error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden." max-files="5" max-size="20000000"&gt;&lt;/vl-upload&gt;
+        </code>
+      </pre>
+      <div class="demo">
+        <vl-upload url="http://example.com" files-name="files" error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
+          error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden." max-files="5" max-size="20000000"></vl-upload>
+      </div>
+    </div>
+
+    <div>
+      <h2>Beperkte Upload (aantal en type)</h2>
+      <pre>
+        <code class="line-numbers language-markup">
+            &lt;vl-upload url="http://example.com" files-name="files" max-files="10" accepted-files="application/pdf"&gt;&lt;/vl-upload&gt;
+        </code>
+      </pre>
+      <div class="demo">
+        <vl-upload url="http://example.com" files-name="files" max-files="10" accepted-files="application/pdf" error-message-accepted-files="Je kan enkel :fileType bestanden opladen"></vl-upload>
+      </div>
+    </div>
+
+  </body>
+</html>
