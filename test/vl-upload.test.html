@@ -57,11 +57,18 @@
           assert(upload._upload.getAttribute(upload._prefix + 'url') === 'http://www.newexample.com');
         });
 
-        test('verander files-name attribute van de upload', () => {
-          assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'files-name'));
-          assert.isFalse(upload.hasAttribute('files-name'));
-          upload.setAttribute('files-name', 'files');
-          assert(upload._upload.getAttribute(upload._prefix + 'files-name') === 'files');
+        test('verander input-name attribute van de upload', () => {
+          assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'input-name'));
+          assert.isFalse(upload.hasAttribute('input-name'));
+          upload.setAttribute('input-name', 'files');
+          assert(upload._upload.getAttribute(upload._prefix + 'input-name') === 'files');
+        });
+
+        test('verander error-message-accepted-files attribute van de upload', () => {
+          assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'error-message-accepted-files'));
+          assert.isFalse(upload.hasAttribute('error-message-accepted-files'));
+          upload.setAttribute('error-message-accepted-files', 'File not accepted');
+          assert(upload._upload.getAttribute(upload._prefix + 'error-message-accepted-files') === 'File not accepted');
         });
 
         test('verander error-message-filesize attribute van de upload', () => {
@@ -97,20 +104,6 @@
           assert.isFalse(upload.hasAttribute('accepted-files'));
           upload.setAttribute('accepted-files', 'application/pdf');
           assert(upload._upload.getAttribute(upload._prefix + 'accepted-files') === 'application/pdf');
-        });
-
-        test('verander multiple attribute van de upload', () => {
-          assert.isFalse(upload._upload.hasAttribute('multiple'));
-          assert.isFalse(upload.hasAttribute('multiple'));
-          upload.setAttribute('multiple', '');
-          assert(upload._upload.hasAttribute('multiple'));
-        });
-
-        test('verander multiple-caption attribute van de upload', () => {
-          assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'multiple-caption'));
-          assert.isFalse(upload.hasAttribute('multiple-caption'));
-          upload.setAttribute('multiple-caption', 'Multiple uploads');
-          assert(upload._upload.getAttribute(upload._prefix + 'multiple-caption') === 'Multiple uploads');
         });
 
         test('verander full-body-drop attribute van de upload', () => {

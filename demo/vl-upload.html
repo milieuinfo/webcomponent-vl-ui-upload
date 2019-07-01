@@ -11,6 +11,10 @@
   <body>
     <h1>vl-ui-upload demo</h1>
     <p>
+      Om de bestanden effectief op te laden, moet je <strong>vl.upload.dropzoneInstances[i].processQueue()</strong>
+      oproepen. Elke methode van <a href="https://www.dropzonejs.com/#dropzone-methods" target="_blank">Dropzone</a> kan je zo oproepen.
+    </p>
+    <p>
       <a href="https://overheid.vlaanderen.be/webuniversum/v3/documentation/forms/vl-ui-upload">Meer
         voorbeelden en documentatie</a>.
     </p>
@@ -23,34 +27,93 @@
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://example.com" files-name="files"></vl-upload>
+        <vl-upload url="http://example.com" input-name="files"></vl-upload>
+      </div>
+    </div>
+
+    <div>
+      <h2>Upload bij toevoegen van bestand</h2>
+      <pre>
+        <code class="line-numbers language-markup">
+            &lt;vl-upload url="http://example.com" autoprocess="true"&gt;&lt;/vl-upload&gt;
+        </code>
+      </pre>
+      <div class="demo">
+        <vl-upload url="http://example.com" input-name="files" autoprocess="true"></vl-upload>
       </div>
     </div>
 
     <div>
       <h2>Beperkte Upload (aantal en grootte)</h2>
+      Beperkt aantal bestanden opladen, met een bepaalde grootte (20MB).
       <pre>
         <code class="line-numbers language-markup">
-            &lt;vl-upload url="http://example.com" files-name="files" error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
-          error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden." max-files="5" max-size="20000000"&gt;&lt;/vl-upload&gt;
+            &lt;vl-upload url="http://example.com"
+              input-name="files"
+              error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
+              error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden."
+              max-files="5" max-size="20000000"&gt;
+            &lt;/vl-upload&gt;
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://example.com" files-name="files" error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
+        <vl-upload url="https://00398ce8-d55b-409f-92a3-f36123a5eb44.mock.pstmn.io/file" input-name="files" error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
           error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden." max-files="5" max-size="20000000"></vl-upload>
       </div>
     </div>
 
     <div>
       <h2>Beperkte Upload (aantal en type)</h2>
+      Beperkt aantal bestanden opladen, van een bepaald type (mime of extensie).
       <pre>
         <code class="line-numbers language-markup">
-            &lt;vl-upload url="http://example.com" files-name="files" max-files="10" accepted-files="application/pdf"&gt;&lt;/vl-upload&gt;
+            &lt;vl-upload url="http://example.com"
+              input-name="files" max-files="10"
+              accepted-files="application/pdf,.png"
+              error-message-accepted-files="Je kan enkel :fileType bestanden opladen"&gt;
+            &lt;/vl-upload&gt;
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://example.com" files-name="files" max-files="10" accepted-files="application/pdf" error-message-accepted-files="Je kan enkel :fileType bestanden opladen"></vl-upload>
+        <vl-upload url="http://example.com" input-name="files" max-files="10" accepted-files="application/pdf,.png" error-message-accepted-files="Je kan enkel :fileType bestanden opladen"></vl-upload>
       </div>
+    </div>
+
+    <div>
+      <h2>Full Body Dropzone Upload</h2>
+      Dropzone over heel de pagina
+      <pre>
+        <code class="line-numbers language-markup">
+            &lt;vl-upload url="http://example.com" input-name="files" full-body-drop&gt;&lt;/vl-upload&gt;
+        </code>
+      </pre>
+      <div class="demo">
+        <vl-upload url="http://example.com" input-name="files" full-body-drop></vl-upload>
+      </div>
+    </div>
+
+    <div>
+      <h2>Event listener</h2>
+      Bij elke <strong>fileChange</strong> van de upload component, wordt de custom event <strong>vl.upload.hook.fileChange</strong> getriggered.
+      Dit custom event zal triggeren op <strong>drop</strong> en <strong>change</strong>.
+      Het event object zal een lijst van alle bestanden bevatten in <strong>e.detail</strong>. Je kan die lijst ook vinden in <strong>vl.upload.dropzoneInstances[i].files</strong>,
+      waarbij i de index van de dropzone instance is op uw pagina.
+      Het event bubbled, dus je kan de event listener op eender welke ancestor van het de upload component zetten.
+      <strong>vl.upload.dropzoneInstances</strong> bevat alle dropzones op de pagina (indien je niet met shadow root werkt).
+      <pre>
+        <code class="line-numbers language-javascript">
+          document.addEventListener('vl.upload.hook.fileChange', function (event) {
+            console.log(event);
+            console.log(vl.upload.dropzoneInstances[0].files);
+          }, false)
+        </code>
+      </pre>
+      <script>
+        document.addEventListener('vl.upload.hook.fileChange', function (event) {
+          console.log(event);
+          console.log(vl.upload.dropzoneInstances[0].files);
+        }, false);
+      </script>
     </div>
 
   </body>

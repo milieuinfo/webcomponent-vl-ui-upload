@@ -31,6 +31,17 @@
     return value;
   };
 
+  /**
+   * Workaround wrong use of {@link vl.util.bytesToSize}
+   * @param bytes
+   * @param addUnits
+   * @param base
+   * @returns {*}
+   */
+  vl.util.bytesToMB = (bytes) => {
+    return bytes / (1000*1000);
+  };
+
   function _typeof(obj) {
     if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
       _typeof = function (obj) {
@@ -3566,13 +3577,13 @@
 
     var autoProcessQueue = element.hasAttribute(dataAutoprocess) && element.getAttribute(dataAutoprocess) !== 'false';
     var size = element.hasAttribute(dataMaxSize) ? element.getAttribute(dataMaxSize) : 2000000;
-    var maxFilesize = vl.util.bytesToSize(size, false, 1000);
+    var maxFilesize = vl.util.bytesToMB(size);
     var maxFiles = element.hasAttribute(dataMaxFiles) ? element.getAttribute(dataMaxFiles) : 1;
-    var acceptedFiles = element.hasAttribute(dataAcceptedFiles) ? element.getAttribute(dataAcceptedFiles) : '*'
+    var acceptedFiles = element.hasAttribute(dataAcceptedFiles) ? element.getAttribute(dataAcceptedFiles) : null;
 
     var errorMessages = _createErrorMessages(element, size, maxFiles);
 
-    var paramName = element.hasAttribute(dataInputName) ? element.hasAttribute(dataInputName) : 'file';
+    var paramName = element.hasAttribute(dataInputName) ? element.getAttribute(dataInputName) : 'file';
     var config = {
       autoProcessQueue: autoProcessQueue,
       dictDefaultMessage: uploadTemplateString,

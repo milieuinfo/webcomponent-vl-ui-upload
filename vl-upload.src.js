@@ -31,9 +31,8 @@ import {VlElement, define} from '/node_modules/vl-ui-core/vl-core.js';
 export class VlUpload extends VlElement(HTMLElement) {
 
   static get _observedAttributes() {
-    return ['url', 'files-name', 'error-message-filesize', 'error-message-accepted-files',
-      'error-message-maxfiles', 'max-files', 'max-size', 'accepted-files',
-      'multiple', 'multiple-caption', 'full-body-drop', 'autoprocess'];
+    return ['url', 'input-name', 'error-message-filesize', 'error-message-accepted-files',
+      'error-message-maxfiles', 'max-files', 'max-size', 'accepted-files', 'full-body-drop', 'autoprocess'];
   }
 
   constructor() {
@@ -129,6 +128,10 @@ export class VlUpload extends VlElement(HTMLElement) {
         document.body.appendChild(this._templates)
         vl.upload.dress(this._upload);
       }
+
+      this.addEventListener("success", (file) => {
+        console.log("succes", file)
+      })
     })();
   }
 
@@ -136,8 +139,8 @@ export class VlUpload extends VlElement(HTMLElement) {
     this._element.setAttribute(this._prefix+'url', newValue);
   }
 
-  _files_nameChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix+'files-name', newValue);
+  _input_nameChangedCallback(oldValue, newValue) {
+    this._element.setAttribute(this._prefix+'input-name', newValue);
   }
 
   _error_message_filesizeChangedCallback(oldValue, newValue) {
@@ -163,14 +166,6 @@ export class VlUpload extends VlElement(HTMLElement) {
   _accepted_filesChangedCallback(oldValue, newValue) {
     this._element.setAttribute(this._prefix+'accepted-files', newValue);
     this._element.setAttribute('accept', newValue);
-  }
-
-  _multipleChangedCallback(oldValue, newValue) {
-    this._element.setAttribute('multiple', '');
-  }
-
-  _multiple_captionChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix+'multiple-caption', newValue);
   }
 
   _full_body_dropChangedCallback(oldValue, newValue) {
