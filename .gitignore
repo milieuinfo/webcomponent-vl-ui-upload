@@ -3,3 +3,5 @@ node_modules/
 *.css.map
 *.iml
 .idea/
+
+vl-upload.js
