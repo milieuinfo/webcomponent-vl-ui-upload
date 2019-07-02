@@ -60,16 +60,15 @@ export class VlUpload extends VlElement(HTMLElement) {
   }
 
   get _dropzone() {
-    let dropzones = vl.upload.dropzoneInstances.filter(dropzone => dropzone.element === this._element);
-    if(dropzones.length > 1) {
-      console.warn("More than one dropzone element found");
-      return dropzones;
-    }
-    return dropzones[0];
+    return vl.upload.dropzoneInstances.filter(dropzone => dropzone.element === this._element)[0];
   }
 
-  get files() {
-    return this._dropzone.files;
+  /**
+   * Haal de geaccepteerde bestanden op die toegevoegd zijn aan de dropzone.
+   * @returns {*}
+   */
+  get acceptedFiles() {
+    return this._dropzone.getAcceptedFiles();
   }
 
   get _templates() {
