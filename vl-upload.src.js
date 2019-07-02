@@ -80,6 +80,14 @@ export class VlUpload extends VlElement(HTMLElement) {
     return this._dropzone.getAcceptedFiles();
   }
 
+  /**
+   * Haal alle bestanden op die toegevoegd zijn aan de dropzone.
+   * @returns {File[]}
+   */
+  get files() {
+    return this._dropzone.files;
+  }
+
   get _templates() {
     return this._template(`
         <template id="uploadTemplate">
