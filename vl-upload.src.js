@@ -35,6 +35,15 @@ export class VlUpload extends VlElement(HTMLElement) {
       'error-message-maxfiles', 'max-files', 'max-size', 'accepted-files', 'full-body-drop', 'autoprocess'];
   }
 
+  static get _observedChildClassAttributes() {
+    return ['error'];
+  }
+
+  get _classPrefix() {
+    return 'vl-upload--';
+  }
+
+
   constructor() {
     super(`
             <style>

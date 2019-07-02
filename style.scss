@@ -17,3 +17,13 @@
 // Util
 // ==========================================================================
 @import "vl-ui-util/src/scss/util";
+
+.vl-upload--error {
+  .vl-upload__element {
+    border-color: $upload-file-error-color;
+    background-color: #fae6e6;
+    .vl-upload__element__label > * {
+      color: $upload-file-error-color;
+    }
+  }
+}
