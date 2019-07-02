@@ -59,6 +59,19 @@ export class VlUpload extends VlElement(HTMLElement) {
     return !!this.getAttribute('data-vl-upload-dressed');
   }
 
+  get _dropzone() {
+    let dropzones = vl.upload.dropzoneInstances.filter(dropzone => dropzone.element === this._element);
+    if(dropzones.length > 1) {
+      console.warn("More than one dropzone element found");
+      return dropzones;
+    }
+    return dropzones[0];
+  }
+
+  get files() {
+    return this._dropzone.files;
+  }
+
   get _templates() {
     return this._template(`
         <template id="uploadTemplate">
@@ -135,6 +148,13 @@ export class VlUpload extends VlElement(HTMLElement) {
     })();
   }
 
+  upload(url) {
+    if (url) {
+      this._dropzone.options.url = url;
+    }
+    this._dropzone.processQueue();
+  }
+
   _urlChangedCallback(oldValue, newValue) {
     this._element.setAttribute(this._prefix+'url', newValue);
   }
@@ -176,6 +196,6 @@ export class VlUpload extends VlElement(HTMLElement) {
     this._element.setAttribute(this._prefix+'autoprocess', newValue);
   }
 
-};
+}
 
 define('vl-upload', VlUpload);
