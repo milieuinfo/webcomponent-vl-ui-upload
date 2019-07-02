@@ -157,10 +157,6 @@ export class VlUpload extends VlElement(HTMLElement) {
         document.body.appendChild(this._templates)
         vl.upload.dress(this._upload);
       }
-
-      this.addEventListener("success", (file) => {
-        console.log("succes", file)
-      })
     })();
   }
 

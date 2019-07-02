@@ -3682,7 +3682,7 @@
             _this.updateFileList(dropzone$$1, element);
           });
           dropzone$$1.on('addedfiles', function () {
-            vl.util.triggerEvent(document, 'vl.upload.hook.fileChange');
+            vl.util.triggerEvent(element, 'vl.upload.hook.fileChange');
           });
           dropzone$$1.on('removedfile', function () {
             _this.updateFileList(dropzone$$1, element);
