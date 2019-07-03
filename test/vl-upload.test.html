@@ -36,6 +36,8 @@
           })();
 
           upload = fixture('vl-upload-fixture');
+
+          window.vl.upload.dropzoneInstances = [{element: upload._element, processQueue: sinon.spy(), options: {}}]
         });
 
         test('heeft de vl-upload class', () => {
@@ -49,6 +51,17 @@
 
         test('de dress methode called vl.upload.dress met de upload', () => {
           assert(window.vl.upload.dress.calledWith(upload._upload));
+        });
+
+        test('de upload methode called processQueue() van de dropzone', () => {
+          upload.upload();
+          assert(upload._dropzone.processQueue.should.have.been.calledOnce);
+        });
+
+        test('de upload methode met url parameter zet url en called processQueue() van de dropzone', () => {
+          upload.upload("http://www.testexample.com");
+          assert(upload._dropzone.options.url === "http://www.testexample.com");
+          assert(upload._dropzone.processQueue.should.have.been.calledOnce);
         });
 
         test('verander url attribute van de upload', () => {
@@ -117,6 +130,12 @@
           assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'autoprocess'));
           upload.setAttribute('autoprocess', 'true');
           assert(upload._upload.getAttribute(upload._prefix + 'autoprocess') === 'true');
+        });
+
+        test('verander error attribute van de upload', () => {
+          assert.isFalse(upload._upload.classList.contains('vl-upload--error'));
+          upload.setAttribute('error', '');
+          assert(upload._upload.classList.contains('vl-upload--error'));
         });
 
       });
