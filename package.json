@@ -53,6 +53,7 @@
     "uglify-es": "github:mishoo/UglifyJS2#harmony",
     "http-server": "0.11.1",
     "sinon": "7.3.1",
-    "vl-ui-util": "1.0.6"
+    "vl-ui-util": "1.0.6",
+    "vl-ui-button": "1.0.8"
   }
 }

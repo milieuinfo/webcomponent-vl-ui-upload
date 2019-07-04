@@ -5,6 +5,7 @@
   </head>
 
   <script type="module" src="../vl-upload.src.js"></script>
+  <script type="module" src="../node_modules/vl-ui-button/vl-button.js"></script>
   <script type="module" src="demo.js"></script>
 
 
@@ -12,7 +13,8 @@
     <h1>vl-ui-upload demo</h1>
     <p>
       Om de bestanden effectief op te laden, moet je <strong>vl.upload.dropzoneInstances[i].processQueue()</strong>
-      oproepen. Elke methode van <a href="https://www.dropzonejs.com/#dropzone-methods" target="_blank">Dropzone</a> kan je zo oproepen.
+      oproepen. Elke methode van <a href="https://www.dropzonejs.com/#dropzone-methods"
+                                    target="_blank">Dropzone</a> kan je zo oproepen.
     </p>
     <p>
       <a href="https://overheid.vlaanderen.be/webuniversum/v3/documentation/forms/vl-ui-upload">Meer
@@ -23,11 +25,11 @@
       <h2>Upload</h2>
       <pre>
         <code class="line-numbers language-markup">
-            &lt;vl-upload url="http://example.com"&gt;&lt;/vl-upload&gt;
+            &lt;vl-upload url="http://example.com" id="upload-1"&gt;&lt;/vl-upload&gt;
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://example.com" input-name="files"></vl-upload>
+        <vl-upload url="http://example.com" input-name="files" id="upload-1"></vl-upload>
       </div>
     </div>
 
@@ -56,6 +58,34 @@
     </div>
 
     <div>
+      <h2>Upload Clear</h2>
+      <pre>
+        <code class="line-numbers language-markup">
+            &lt;vl-upload url="http://example.com"&gt;&lt;/vl-upload&gt;
+
+            &lt;button is="vl-button" onclick="clear()"&gt;Clear&lt;/button&gt;
+
+            &lt;script type="text/javascript"&gt;
+              function clear() {
+                document.querySelector("vl-upload[id=\"upload-4\"]").clear();
+              }
+            &lt;/script&gt;
+        </code>
+      </pre>
+      <div class="demo">
+        <vl-upload id="upload-4" url="http://example.com" input-name="files"></vl-upload>
+
+        <button is="vl-button" onclick="clearList()">Clear</button>
+
+        <script type="text/javascript">
+          function clearList() {
+            document.querySelector("vl-upload[id=\"upload-4\"]").clear();
+          }
+        </script>
+      </div>
+    </div>
+
+    <div>
       <h2>Beperkte Upload (aantal en grootte)</h2>
       Beperkt aantal bestanden opladen, met een bepaalde grootte (20MB).
       <pre>
@@ -69,8 +99,10 @@
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://example.com" input-name="files" error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
-          error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden." max-files="5" max-size="20000000"></vl-upload>
+        <vl-upload url="http://example.com" input-name="files"
+                   error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
+                   error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden." max-files="5"
+                   max-size="20000000"></vl-upload>
       </div>
     </div>
 
@@ -87,7 +119,9 @@
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://example.com" input-name="files" max-files="10" accepted-files="application/pdf,.png" error-message-accepted-files="Je kan enkel :fileType bestanden opladen"></vl-upload>
+        <vl-upload url="http://example.com" input-name="files" max-files="10"
+                   accepted-files="application/pdf,.png"
+                   error-message-accepted-files="Je kan enkel :fileType bestanden opladen"></vl-upload>
       </div>
     </div>
 
@@ -106,26 +140,44 @@
 
     <div>
       <h2>Event listener</h2>
-      Bij elke <strong>fileChange</strong> van de upload component, wordt de custom event <strong>vl.upload.hook.fileChange</strong> getriggered.
+      Bij elke <strong>fileChange</strong> van de upload component, wordt de custom event <strong>vl.upload.hook.fileChange</strong>
+      getriggered.
       Dit custom event zal triggeren op <strong>drop</strong> en <strong>change</strong>.
-      Het event object zal een lijst van alle bestanden bevatten in <strong>e.detail</strong>. Je kan die lijst ook vinden in <strong>vl.upload.dropzoneInstances[i].files</strong>,
+      Het event object zal een lijst van alle bestanden bevatten in <strong>e.detail</strong>. Je
+      kan die lijst ook vinden in <strong>vl.upload.dropzoneInstances[i].files</strong>,
       waarbij i de index van de dropzone instance is op uw pagina.
-      Het event bubbled, dus je kan de event listener op eender welke ancestor van het de upload component zetten.
-      <strong>vl.upload.dropzoneInstances</strong> bevat alle dropzones op de pagina (indien je niet met shadow root werkt).
+      Het event bubbled, dus je kan de event listener op eender welke ancestor van het de upload
+      component zetten.
+      <strong>vl.upload.dropzoneInstances</strong> bevat alle dropzones op de pagina (indien je niet
+      met shadow root werkt).
       <pre>
-        <code class="line-numbers language-javascript">
-          document.addEventListener('vl.upload.hook.fileChange', function (event) {
-            console.log(event);
-            console.log(vl.upload.dropzoneInstances[0].files);
-          }, false)
+        <code class="line-numbers language-markup">
+          &lt;button is="vl-button" onclick="addListener()"&gt;Voeg listener toe&lt;/button&gt;
+          &lt;script&gt;
+            function addListener() {
+              document.querySelector('vl-upload[id="upload-1"]').on('vl.upload.hook.fileChange',
+                  function (event) {
+                    console.log(event);
+                    console.log(vl.upload.dropzoneInstances[0].files);
+                  });
+            }
+          &lt;/script&gt;
         </code>
       </pre>
-      <script>
-        document.addEventListener('vl.upload.hook.fileChange', function (event) {
-          console.log(event);
-          console.log(vl.upload.dropzoneInstances[0].files);
-        }, false);
-      </script>
+
+      <div class="demo">
+
+        <button is="vl-button" onclick="addListener()">Voeg listener toe</button>
+        <script>
+          function addListener() {
+            document.querySelector('vl-upload[id="upload-1"]').on('vl.upload.hook.fileChange',
+                function (event) {
+                  console.log(event);
+                  console.log(vl.upload.dropzoneInstances[0].files);
+                });
+          }
+        </script>
+      </div>
     </div>
 
   </body>
