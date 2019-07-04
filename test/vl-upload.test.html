@@ -37,7 +37,7 @@
 
           upload = fixture('vl-upload-fixture');
 
-          window.vl.upload.dropzoneInstances = [{element: upload._element, processQueue: sinon.spy(), options: {}}]
+          window.vl.upload.dropzoneInstances = [{element: upload._element, files: [], processQueue: sinon.spy(), removeAllFiles: sinon.spy(), options: {}}]
         });
 
         test('heeft de vl-upload class', () => {
@@ -62,6 +62,11 @@
           upload.upload("http://www.testexample.com");
           assert(upload._dropzone.options.url === "http://www.testexample.com");
           assert(upload._dropzone.processQueue.should.have.been.calledOnce);
+        });
+
+        test('de clear methode met called removeAllFiles() van de dropzone', () => {
+          upload.clear();
+          assert(upload._dropzone.removeAllFiles.should.have.been.calledOnce);
         });
 
         test('verander url attribute van de upload', () => {

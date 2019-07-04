@@ -160,11 +160,31 @@ export class VlUpload extends VlElement(HTMLElement) {
     })();
   }
 
+  /**
+   * Handmatig de upload aanroepen. Indien een url gegeven is, laad op naar die url.
+   * @param url
+   */
   upload(url) {
     if (url) {
       this._dropzone.options.url = url;
     }
     this._dropzone.processQueue();
+  }
+
+  /**
+   * Verwijder alle files in de dropzone.
+   */
+  clear() {
+    this._dropzone.removeAllFiles();
+  }
+
+  /**
+   * Wrapper om alle events te kunnen catchen van de upload (zoals vl.upload.hook.fileChange)
+   * @param event
+   * @param callback
+   */
+  on(event, callback) {
+    this._element.addEventListener(event, callback);
   }
 
   _urlChangedCallback(oldValue, newValue) {
