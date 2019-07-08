@@ -3686,6 +3686,7 @@
           });
           dropzone$$1.on('removedfile', function () {
             _this.updateFileList(dropzone$$1, element);
+            setTimeout(() => vl.util.triggerEvent(element, 'vl.upload.hook.fileChange'));
           });
           dropzone$$1.on('error', function (file, errorMessage) {
             if (errorMessage === config.dictFileTooBig) {
