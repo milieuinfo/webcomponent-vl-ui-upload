@@ -73,11 +73,19 @@ export class VlUpload extends VlElement(HTMLElement) {
   }
 
   /**
-   * Haal de geaccepteerde bestanden (zonder error) op die toegevoegd zijn aan de dropzone.
+   * Haal de geaccepteerde bestanden (zonder error) op, die toegevoegd zijn aan de dropzone.
    * @returns {File[]}
    */
   get acceptedFiles() {
     return this._dropzone.getAcceptedFiles();
+  }
+
+  /**
+   * Haal de niet-geaccepteerde bestanden (met error) op, die toegevoegd zijn aan de dropzone.
+   * @returns {File[]}
+   */
+  get rejectedFiles() {
+    return this._dropzone.getRejectedFiles();
   }
 
   /**
