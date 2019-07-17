@@ -1,7 +1,6 @@
-node_modules/
-.sass-cache/
-*.css.map
-*.iml
-.idea/
-
-vl-upload.js
+node_modules
+.git-credentials
+.gitconfig
+.npmrc
+package-lock.json
+.idea
