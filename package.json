@@ -49,6 +49,7 @@
     "http-server": "0.11.1",
     "np": "3.0.4",
     "replace": "1.0.0",
+    "sass": "^1.22.7",
     "sinon": "7.3.1",
     "uglify-es": "github:mishoo/UglifyJS2#harmony",
     "vl-ui-button": "1.0.10",
