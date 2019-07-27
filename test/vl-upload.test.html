@@ -21,23 +21,19 @@
 
         let upload;
 
-        setup(() => {
-          window.vl = {
-            upload: {
-              dress: sinon.spy()
-            }
-          };
-
-          // dress method wordt gecalled, wachten tot deze effectief uitgevoerd wordt.
-          (async () => {
-            while (!window.vl || !window.vl.upload) {
-              await new Promise(resolve => setTimeout(resolve, 100));
-            }
-          })();
-
-          upload = fixture('vl-upload-fixture');
-
-          window.vl.upload.dropzoneInstances = [{element: upload._element, files: [], processQueue: sinon.spy(), removeAllFiles: sinon.spy(), options: {}}]
+        setup((done) => {
+          customElements.whenDefined('vl-upload').then(() => {
+            window.vl.upload.dress = sinon.spy();
+            upload = fixture('vl-upload-fixture');
+            window.vl.upload.dropzoneInstances = [{
+              element: upload._element,
+              files: [],
+              processQueue: sinon.spy(),
+              removeAllFiles: sinon.spy(),
+              options: {}
+            }];
+            done();
+          });
         });
 
         test('heeft de vl-upload class', () => {
