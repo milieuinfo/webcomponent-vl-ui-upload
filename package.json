@@ -38,9 +38,9 @@
     "vl-ui-link": "1.1.2"
   },
   "peerDependencies": {
-    "vl-ui-core": "^1.4.3",
-    "vl-ui-icon": "^2.0.5",
-    "vl-ui-link": "^1.1.2"
+    "vl-ui-core": "^1.4.2",
+    "vl-ui-link": "^1.1.1",
+    "vl-ui-icon": "^2.0.4"
   },
   "devDependencies": {
     "@govflanders/vl-ui-core": "3.7.2",
@@ -49,6 +49,7 @@
     "http-server": "0.11.1",
     "np": "3.0.4",
     "replace": "1.0.0",
+    "sass": "^1.22.7",
     "sinon": "7.3.1",
     "uglify-es": "github:mishoo/UglifyJS2#harmony",
     "vl-ui-button": "1.0.10",

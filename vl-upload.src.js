@@ -1,5 +1,26 @@
 import {VlElement, define} from '/node_modules/vl-ui-core/vl-core.js';
 
+(() => {
+  loadScript('util.js',
+      '/node_modules/@govflanders/vl-ui-util/dist/js/util.min.js', () => {
+        loadScript('core.js',
+            '/node_modules/@govflanders/vl-ui-core/dist/js/core.min.js', () => {
+              loadScript('upload.js',
+                  '../dist/upload.js');
+            });
+      });
+
+  function loadScript(id, src, onload) {
+    if (!document.head.querySelector('#' + id)) {
+      let script = document.createElement('script');
+      script.setAttribute('id', id);
+      script.setAttribute('src', src);
+      script.onload = onload;
+      document.head.appendChild(script);
+    }
+  }
+})();
+
 /**
  * VlUpload
  * @class
@@ -135,10 +156,16 @@ export class VlUpload extends VlElement(HTMLElement) {
    * Initialiseer de modal config.
    */
   dress() {
-    if (!this._dressed) {
-      document.body.appendChild(this._templates);
-      vl.upload.dress(this._upload);
-    }
+    (async () => {
+      while (!window.vl || !window.vl.upload) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
+
+      if (!this._dressed) {
+        document.body.appendChild(this._templates)
+        vl.upload.dress(this._upload);
+      }
+    })();
   }
 
   /**
@@ -211,49 +238,4 @@ export class VlUpload extends VlElement(HTMLElement) {
 
 }
 
-(() => {
-
-  // cfr https://www.html5rocks.com/en/tutorials/speed/script-loading/
-  // download as fast as possible in the provided order
-
-  const awaitScript = (id, src) => {
-    if (document.head.querySelector('#' + id)) {
-      console.log(`script with id '${id}' is already loaded`);
-      return Promise.resolve();
-    }
-
-    let script = document.createElement('script');
-    script.id = id;
-    script.src = src;
-    script.async = false;
-
-    const promise = new Promise((resolve, reject) => {
-      script.onload = () => {
-        resolve();
-      };
-    });
-
-    document.head.appendChild(script);
-    return promise;
-  };
-
-  const awaitUntil = (condition) => {
-    return new Promise((resolve, reject) => {
-      (async () => {
-        while (!condition()) {
-          await new Promise(r => setTimeout(r, 50));
-        }
-        resolve();
-      })();
-    });
-  };
-
-  Promise.all([
-    awaitScript('util', '/node_modules/@govflanders/vl-ui-util/dist/js/util.min.js'),
-    awaitScript('core', '/node_modules/@govflanders/vl-ui-core/dist/js/core.min.js'),
-    awaitScript('upload', '../dist/upload.js'),
-    awaitUntil(() => window.vl && window.vl.upload)]
-  ).then(() => {
-    define('vl-upload', VlUpload);
-  });
-})();
+define('vl-upload', VlUpload);
