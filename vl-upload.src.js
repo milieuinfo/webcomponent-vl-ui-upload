@@ -1,14 +1,12 @@
 import {VlElement, define} from '/node_modules/vl-ui-core/vl-core.js';
 
 (() => {
-  loadScript('util.js',
-      '/node_modules/@govflanders/vl-ui-util/dist/js/util.min.js', () => {
-        loadScript('core.js',
-            '/node_modules/@govflanders/vl-ui-core/dist/js/core.min.js', () => {
-              loadScript('upload.js',
-                  '../dist/upload.js');
-            });
-      });
+  loadScript('util.js', '/node_modules/@govflanders/vl-ui-util/dist/js/util.min.js', () => {
+    loadScript('core.js', '/node_modules/@govflanders/vl-ui-core/dist/js/core.js', () => {
+      loadScript('upload.js',
+          '../dist/upload.js');
+    });
+  });
 
   function loadScript(id, src, onload) {
     if (!document.head.querySelector('#' + id)) {
