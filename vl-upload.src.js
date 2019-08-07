@@ -1,12 +1,14 @@
 import {VlElement, define} from '/node_modules/vl-ui-core/vl-core.js';
 
 (() => {
-  loadScript('util.js', '/node_modules/@govflanders/vl-ui-util/dist/js/util.min.js', () => {
-    loadScript('core.js', '/node_modules/@govflanders/vl-ui-core/dist/js/core.js', () => {
-      loadScript('upload.js',
-          '../dist/upload.js');
-    });
-  });
+  loadScript('util.js',
+      '/node_modules/@govflanders/vl-ui-util/dist/js/util.min.js', () => {
+        loadScript('core.js',
+            '/node_modules/@govflanders/vl-ui-core/dist/js/core.js', () => {
+              loadScript('upload.js',
+                  '../dist/upload.js');
+            });
+      });
 
   function loadScript(id, src, onload) {
     if (!document.head.querySelector('#' + id)) {
@@ -25,12 +27,25 @@ import {VlElement, define} from '/node_modules/vl-ui-core/vl-core.js';
  * @classdesc Gebruik de upload component om één of meerdere bestanden te selecteren of te slepen naar het upload veld. De gebruiker kan alternatief ook één of meerdere bestanden uploaden door op de link in het upload veld te klikken en de bestanden te selecteren in het Bestand menu. <a href="demo/vl-upload.html">Demo</a>.
  *
  * @extends VlElement
+ *
+ * @property {URL} url - Attribuut om de url naar waar de component moet uploaden, te definiëren.
+ * @property {string} input-name - Attribuut om de key te definiëren waarmee het bestand wordt opgeladen.
+ * @property {string} error-message-filesize - Attribuut om de message te definiëren wanneer er te grote bestanden zijn toegevoegd.
+ * @property {string} error-message-accepted-files - Attribuut om de message te definiëren wanneer er niet-geaccepteerde bestanden zijn toegevoegd.
+ * @property {string} error-message-maxfiles - Attribuut om de message te definiëren wanneer er teveel bestanden zijn toegevoegd.
+ * @property {number} max-files - Attribuut om het maximaal aantal bestanden dat opgeladen mag worden, aan te duiden.
+ * @property {number} max-size - Attribuut om de maximum grootte van een bestand dat opgeladen kan worden (20000000 = 2MB), aan te duiden.
+ * @property {list} accepted-files - Attribuut om te op te lijsten welke bestanden worden geaccepteerd door component (extensie en mimetype).
+ * @property {boolean} full-body-drop - Attribuut om te activeren of deactiveren dat het de dropzone over het heel scherm is.
+ * @property {boolean} autoprocess - Attribuut om te activeren of deactiveren dat het het gedropte bestand direct moet opgeladen worden.
  */
 export class VlUpload extends VlElement(HTMLElement) {
 
   static get _observedAttributes() {
-    return ['url', 'input-name', 'error-message-filesize', 'error-message-accepted-files',
-      'error-message-maxfiles', 'max-files', 'max-size', 'accepted-files', 'full-body-drop', 'autoprocess'];
+    return ['url', 'input-name', 'error-message-filesize',
+      'error-message-accepted-files',
+      'error-message-maxfiles', 'max-files', 'max-size', 'accepted-files',
+      'full-body-drop', 'autoprocess'];
   }
 
   static get _observedChildClassAttributes() {
@@ -40,7 +55,6 @@ export class VlUpload extends VlElement(HTMLElement) {
   get _classPrefix() {
     return 'vl-upload--';
   }
-
 
   constructor() {
     super(`
@@ -67,7 +81,8 @@ export class VlUpload extends VlElement(HTMLElement) {
   }
 
   get _dropzone() {
-    return vl.upload.dropzoneInstances.filter(dropzone => dropzone.element === this._element)[0];
+    return vl.upload.dropzoneInstances.filter(
+        dropzone => dropzone.element === this._element)[0];
   }
 
   /**
@@ -152,6 +167,7 @@ export class VlUpload extends VlElement(HTMLElement) {
 
   /**
    * Initialiseer de modal config.
+   * @returns void
    */
   dress() {
     (async () => {
@@ -169,6 +185,7 @@ export class VlUpload extends VlElement(HTMLElement) {
   /**
    * Handmatig de upload aanroepen. Indien een url gegeven is, laad op naar die url.
    * @param url
+   * @returns void
    */
   upload(url) {
     if (url) {
@@ -179,59 +196,64 @@ export class VlUpload extends VlElement(HTMLElement) {
 
   /**
    * Verwijder alle files in de dropzone.
+   * @returns void
    */
   clear() {
     this._dropzone.removeAllFiles();
   }
 
   /**
-   * Wrapper om alle events te kunnen catchen van de upload (zoals vl.upload.hook.fileChange)
+   * Wrapper om alle events te kunnen catchen van de upload (zoals vl.upload.hook.fileChange alsook de events van [DropZoneJs]{@link https://www.dropzonejs.com/#event-list})
    * @param event
    * @param callback
+   * @returns void
    */
   on(event, callback) {
     this._element.addEventListener(event, callback);
   }
 
   _urlChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix+'url', newValue);
+    this._element.setAttribute(this._prefix + 'url', newValue);
   }
 
   _input_nameChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix+'input-name', newValue);
+    this._element.setAttribute(this._prefix + 'input-name', newValue);
   }
 
   _error_message_filesizeChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix+'error-message-filesize', newValue);
+    this._element.setAttribute(this._prefix + 'error-message-filesize',
+        newValue);
   }
 
   _error_message_accepted_filesChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix+'error-message-accepted-files', newValue);
+    this._element.setAttribute(this._prefix + 'error-message-accepted-files',
+        newValue);
   }
 
   _error_message_maxfilesChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix+'error-message-maxfiles', newValue);
+    this._element.setAttribute(this._prefix + 'error-message-maxfiles',
+        newValue);
   }
 
   _max_filesChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix+'max-files', newValue);
+    this._element.setAttribute(this._prefix + 'max-files', newValue);
   }
 
   _max_sizeChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix+'max-size', newValue);
+    this._element.setAttribute(this._prefix + 'max-size', newValue);
   }
 
   _accepted_filesChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix+'accepted-files', newValue);
+    this._element.setAttribute(this._prefix + 'accepted-files', newValue);
     this._element.setAttribute('accept', newValue);
   }
 
   _full_body_dropChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix+'full-body-drop', '');
+    this._element.setAttribute(this._prefix + 'full-body-drop', '');
   }
 
   _autoprocessChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix+'autoprocess', newValue);
+    this._element.setAttribute(this._prefix + 'autoprocess', newValue);
   }
 
 }
