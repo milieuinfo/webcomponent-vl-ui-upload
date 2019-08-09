@@ -25,11 +25,11 @@
       <h2>Upload</h2>
       <pre>
         <code class="line-numbers language-markup">
-            &lt;vl-upload url="http://example.com" id="upload-1"&gt;&lt;/vl-upload&gt;
+            &lt;vl-upload data-vl-url="http://example.com" id="upload-1"&gt;&lt;/vl-upload&gt;
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://example.com" input-name="files" id="upload-1"></vl-upload>
+        <vl-upload data-vl-url="http://example.com" data-vl-input-name="files" id="upload-1"></vl-upload>
       </div>
     </div>
 
@@ -37,11 +37,11 @@
       <h2>Upload bij toevoegen van bestand</h2>
       <pre>
         <code class="line-numbers language-markup">
-            &lt;vl-upload url="http://example.com" autoprocess="true"&gt;&lt;/vl-upload&gt;
+            &lt;vl-upload data-vl-url="http://example.com" data-vl-autoprocess="true"&gt;&lt;/vl-upload&gt;
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://example.com" input-name="files" autoprocess="true"></vl-upload>
+        <vl-upload data-vl-url="http://example.com" data-vl-input-name="files" data-vl-autoprocess="true"></vl-upload>
       </div>
     </div>
 
@@ -49,11 +49,11 @@
       <h2>Upload Error</h2>
       <pre>
         <code class="line-numbers language-markup">
-            &lt;vl-upload url="http://example.com" error&gt;&lt;/vl-upload&gt;
+            &lt;vl-upload data-vl-url="http://example.com" data-vl-error&gt;&lt;/vl-upload&gt;
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://example.com" input-name="files" error></vl-upload>
+        <vl-upload data-vl-url="http://example.com" data-vl-input-name="files" data-vl-error></vl-upload>
       </div>
     </div>
 
@@ -61,7 +61,7 @@
       <h2>Upload Clear</h2>
       <pre>
         <code class="line-numbers language-markup">
-            &lt;vl-upload url="http://example.com"&gt;&lt;/vl-upload&gt;
+            &lt;vl-upload data-vl-url="http://example.com"&gt;&lt;/vl-upload&gt;
 
             &lt;button is="vl-button" onclick="clear()"&gt;Clear&lt;/button&gt;
 
@@ -73,7 +73,7 @@
         </code>
       </pre>
       <div class="demo">
-        <vl-upload id="upload-4" url="http://example.com" input-name="files"></vl-upload>
+        <vl-upload id="upload-4" data-vl-url="http://example.com" data-vl-input-name="files"></vl-upload>
 
         <button is="vl-button" onclick="clearList()">Clear</button>
 
@@ -90,19 +90,19 @@
       Beperkt aantal bestanden opladen, met een bepaalde grootte (20MB).
       <pre>
         <code class="line-numbers language-markup">
-            &lt;vl-upload url="http://example.com"
-              input-name="files"
-              error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
-              error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden."
-              max-files="5" max-size="20000000"&gt;
+            &lt;vl-upload data-vl-url="http://example.com"
+              data-vl-input-name="files"
+              data-vl-error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
+              data-vl-error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden."
+              data-vl-max-files="5" data-vl-max-size="20000000"&gt;
             &lt;/vl-upload&gt;
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://example.com" input-name="files"
-                   error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
-                   error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden." max-files="5"
-                   max-size="20000000"></vl-upload>
+        <vl-upload data-vl-url="http://example.com" data-vl-input-name="files"
+                   data-vl-error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
+                   data-vl-error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden." data-vl-max-files="5"
+                   data-vl-max-size="20000000"></vl-upload>
       </div>
     </div>
 
@@ -111,17 +111,17 @@
       Beperkt aantal bestanden opladen, van een bepaald type (mime of extensie).
       <pre>
         <code class="line-numbers language-markup">
-            &lt;vl-upload url="http://example.com"
-              input-name="files" max-files="10"
-              accepted-files="application/pdf, .png"
-              error-message-accepted-files="Je kan enkel :fileType bestanden opladen"&gt;
+            &lt;vl-upload data-vl-url="http://example.com"
+              data-vl-input-name="files" data-vl-max-files="10"
+              data-vl-accepted-files="application/pdf, .png"
+              data-vl-error-message-accepted-files="Je kan enkel :fileType bestanden opladen"&gt;
             &lt;/vl-upload&gt;
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://example.com" input-name="files" max-files="10" max-size="20000000"
-                   accepted-files="application/pdf, .png"
-                   error-message-accepted-files="Je kan enkel :fileType bestanden opladen"></vl-upload>
+        <vl-upload data-vl-url="http://example.com" data-vl-input-name="files" data-vl-max-files="10" data-vl-max-size="20000000"
+                   data-vl-accepted-files="application/pdf, .png"
+                   data-vl-error-message-accepted-files="Je kan enkel :fileType bestanden opladen"></vl-upload>
       </div>
     </div>
 
@@ -130,11 +130,11 @@
       Dropzone over heel de pagina
       <pre>
         <code class="line-numbers language-markup">
-            &lt;vl-upload url="http://example.com" input-name="files" full-body-drop&gt;&lt;/vl-upload&gt;
+            &lt;vl-upload data-vl-url="http://example.com" data-vl-input-name="files" data-vl-full-body-drop&gt;&lt;/vl-upload&gt;
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://example.com" input-name="files" full-body-drop></vl-upload>
+        <vl-upload data-vl-url="http://example.com" data-vl-input-name="files" data-vl-full-body-drop></vl-upload>
       </div>
     </div>
 
