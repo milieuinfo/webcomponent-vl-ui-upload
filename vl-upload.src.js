@@ -25,6 +25,8 @@ import {VlElement, define} from '/node_modules/vl-ui-core/vl-core.js';
  * @classdesc Gebruik de upload component om één of meerdere bestanden te selecteren of te slepen naar het upload veld. De gebruiker kan alternatief ook één of meerdere bestanden uploaden door op de link in het upload veld te klikken en de bestanden te selecteren in het Bestand menu. <a href="demo/vl-upload.html">Demo</a>.
  *
  * @extends VlElement
+ * 
+ * @version <a href="http://www.github.com/milieuinfo/webcomponent-vl-ui-upload/releases/latest">Release notes</a>
  */
 export class VlUpload extends VlElement(HTMLElement) {
 
