@@ -36,8 +36,8 @@
     "vl-ui-core": "1.4.4",
     "vl-ui-icon": "2.0.6",
     "vl-ui-link": "1.1.4",
-    "@govflanders/vl-ui-util": "3.7.2",
-    "@govflanders/vl-ui-core": "3.7.2"
+    "@govflanders/vl-ui-util": "3.9.0",
+    "@govflanders/vl-ui-core": "3.9.0"
   },
   "peerDependencies": {
     "vl-ui-core": "^1.4.2",
@@ -45,7 +45,7 @@
     "vl-ui-icon": "^2.0.4"
   },
   "devDependencies": {
-    "@govflanders/vl-ui-upload": "3.7.2",
+    "@govflanders/vl-ui-upload": "3.9.0",
     "http-server": "0.11.1",
     "np": "3.0.4",
     "replace": "1.0.0",
