@@ -177,79 +177,79 @@ body::before {
 
 @font-face {
   font-family: "Flanders Art Sans";
-  src: url("https://ui.vlaanderen.be/assets/fonts/sans/FlandersArtSans-Light.woff2") format("woff2"), url("https://ui.vlaanderen.be/assets/fonts/sans/FlandersArtSans-Light.woff") format("woff");
+  src: url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSans-Light.woff2") format("woff2"), url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSans-Light.woff") format("woff");
   font-weight: 300;
   font-style: normal;
 }
 @font-face {
   font-family: "Flanders Art Sans";
-  src: url("https://ui.vlaanderen.be/assets/fonts/sans/FlandersArtSans-Regular.woff2") format("woff2"), url("https://ui.vlaanderen.be/assets/fonts/sans/FlandersArtSans-Regular.woff") format("woff");
+  src: url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSans-Regular.woff2") format("woff2"), url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSans-Regular.woff") format("woff");
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
   font-family: "Flanders Art Sans";
-  src: url("https://ui.vlaanderen.be/assets/fonts/sans/FlandersArtSans-Medium.woff2") format("woff2"), url("https://ui.vlaanderen.be/assets/fonts/sans/FlandersArtSans-Medium.woff") format("woff");
+  src: url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSans-Medium.woff2") format("woff2"), url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSans-Medium.woff") format("woff");
   font-weight: 500;
   font-style: normal;
 }
 @font-face {
   font-family: "Flanders Art Sans";
-  src: url("https://ui.vlaanderen.be/assets/fonts/sans/FlandersArtSans-Bold.woff2") format("woff2"), url("https://ui.vlaanderen.be/assets/fonts/sans/FlandersArtSans-Bold.woff") format("woff");
+  src: url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSans-Bold.woff2") format("woff2"), url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSans-Bold.woff") format("woff");
   font-weight: 700;
   font-style: normal;
 }
 @font-face {
   font-family: "Flanders Art Sans";
-  src: url("https://ui.vlaanderen.be/assets/fonts/italic/FlandersArtSans-Light.woff2") format("woff2"), url("https://ui.vlaanderen.be/assets/fonts/italic/FlandersArtSans-Light.woff") format("woff");
+  src: url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSansItalic-Light.woff2") format("woff2"), url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSansItalic-Light.woff") format("woff");
   font-weight: 300;
   font-style: italic;
 }
 @font-face {
   font-family: "Flanders Art Sans";
-  src: url("https://ui.vlaanderen.be/assets/fonts/italic/FlandersArtSans-Regular.woff2") format("woff2"), url("https://ui.vlaanderen.be/assets/fonts/italic/FlandersArtSans-Regular.woff") format("woff");
+  src: url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSansItalic-Regular.woff2") format("woff2"), url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSansItalic-Regular.woff") format("woff");
   font-weight: 400;
   font-style: italic;
 }
 @font-face {
   font-family: "Flanders Art Sans";
-  src: url("https://ui.vlaanderen.be/assets/fonts/italic/FlandersArtSans-Medium.woff2") format("woff2"), url("https://ui.vlaanderen.be/assets/fonts/italic/FlandersArtSans-Medium.woff") format("woff");
+  src: url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSansItalic-Medium.woff2") format("woff2"), url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSansItalic-Medium.woff") format("woff");
   font-weight: 500;
   font-style: italic;
 }
 @font-face {
   font-family: "Flanders Art Sans";
-  src: url("https://ui.vlaanderen.be/assets/fonts/italic/FlandersArtSans-Bold.woff2") format("woff2"), url("https://ui.vlaanderen.be/assets/fonts/italic/FlandersArtSans-Bold.woff") format("woff");
+  src: url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSansItalic-Bold.woff2") format("woff2"), url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSansItalic-Bold.woff") format("woff");
   font-weight: 700;
   font-style: italic;
 }
 @font-face {
   font-family: "Flanders Art Serif";
-  src: url("https://ui.vlaanderen.be/assets/fonts/serif/FlandersArtSerif-Light.woff2") format("woff2"), url("https://ui.vlaanderen.be/assets/fonts/serif/FlandersArtSerif-Light.woff") format("woff");
+  src: url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSerif-Light.woff2") format("woff2"), url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSerif-Light.woff") format("woff");
   font-weight: 300;
   font-style: normal;
 }
 @font-face {
   font-family: "Flanders Art Serif";
-  src: url("https://ui.vlaanderen.be/assets/fonts/serif/FlandersArtSerif-Regular.woff2") format("woff2"), url("https://ui.vlaanderen.be/assets/fonts/serif/FlandersArtSerif-Regular.woff") format("woff");
+  src: url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSerif-Regular.woff2") format("woff2"), url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSerif-Regular.woff") format("woff");
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
   font-family: "Flanders Art Serif";
-  src: url("https://ui.vlaanderen.be/assets/fonts/serif/FlandersArtSerif-Medium.woff2") format("woff2"), url("https://ui.vlaanderen.be/assets/fonts/serif/FlandersArtSerif-Medium.woff") format("woff");
+  src: url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSerif-Medium.woff2") format("woff2"), url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSerif-Medium.woff") format("woff");
   font-weight: 500;
   font-style: normal;
 }
 @font-face {
   font-family: "Flanders Art Serif";
-  src: url("https://ui.vlaanderen.be/assets/fonts/serif/FlandersArtSerif-Bold.woff2") format("woff2"), url("https://ui.vlaanderen.be/assets/fonts/serif/FlandersArtSerif-Bold.woff") format("woff");
+  src: url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSerif-Bold.woff2") format("woff2"), url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/FlandersArtSerif-Bold.woff") format("woff");
   font-weight: 700;
   font-style: normal;
 }
 @font-face {
   font-family: "vlaanderen-icon";
-  src: url("/font/iconfont/vlaanderen-icon.woff2") format("woff2"), url("/font/iconfont/vlaanderen-icon.woff") format("woff");
+  src: url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/vlaanderen-icon.woff2") format("woff2"), url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/vlaanderen-icon.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
