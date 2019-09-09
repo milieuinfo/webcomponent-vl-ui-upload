@@ -107,6 +107,28 @@
     </div>
 
     <div>
+      <h2>Beperkte Upload zonder dubbels</h2>
+      Beperkt aantal bestanden opladen, met een bepaalde grootte (20MB), en dubbels zijn niet toegelaten.
+      <pre>
+        <code class="line-numbers language-markup">
+            &lt;vl-upload url="http://example.com"
+              input-name="files"
+              error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
+              error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden."
+              max-files="2" max-size="20000000" data-disallowed-duplicates="true"&gt;
+            &lt;/vl-upload&gt;
+        </code>
+      </pre>
+      <div class="demo">
+        <vl-upload url="http://example.com" input-name="files"
+                   error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
+                   error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden." max-files="5"
+                   max-size="20000000" data-disallowed-duplicates="true"></vl-upload>
+        <!--TODO -->
+      </div>
+    </div>
+
+    <div>
       <h2>Beperkte Upload (aantal en type)</h2>
       Beperkt aantal bestanden opladen, van een bepaald type (mime of extensie).
       <pre>

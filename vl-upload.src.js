@@ -32,7 +32,8 @@ export class VlUpload extends VlElement(HTMLElement) {
 
   static get _observedAttributes() {
     return ['url', 'input-name', 'error-message-filesize', 'error-message-accepted-files',
-      'error-message-maxfiles', 'max-files', 'max-size', 'accepted-files', 'full-body-drop', 'autoprocess'];
+      'error-message-maxfiles', 'max-files', 'max-size', 'accepted-files', 'full-body-drop', 'autoprocess',
+      'data-disallowed-duplicates'];
   }
 
   static get _observedChildClassAttributes() {
