@@ -113,14 +113,14 @@
         <code class="line-numbers language-markup">
             &lt;vl-upload url="http://example.com"
               input-name="files" max-files="10"
-              accepted-files="application/pdf,.png"
+              accepted-files="application/pdf, .png"
               error-message-accepted-files="Je kan enkel :fileType bestanden opladen"&gt;
             &lt;/vl-upload&gt;
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://example.com" input-name="files" max-files="10"
-                   accepted-files="application/pdf,.png"
+        <vl-upload url="http://example.com" input-name="files" max-files="10" max-size="20000000"
+                   accepted-files="application/pdf, .png"
                    error-message-accepted-files="Je kan enkel :fileType bestanden opladen"></vl-upload>
       </div>
     </div>
