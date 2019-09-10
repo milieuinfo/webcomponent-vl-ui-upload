@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "vl-ui-core": "1.4.4",
-    "vl-ui-icon": "2.0.6",
+    "vl-ui-icon": "2.0.11",
     "vl-ui-link": "1.1.9",
     "@govflanders/vl-ui-util": "3.7.2",
     "@govflanders/vl-ui-core": "3.7.2"
