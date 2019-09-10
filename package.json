@@ -33,7 +33,7 @@
     "registry": "http://artifactory-pr-build.lb.cumuli.be:8081/artifactory/api/npm/acd-npm/"
   },
   "dependencies": {
-    "vl-ui-core": "1.4.4",
+    "vl-ui-core": "1.4.6",
     "vl-ui-icon": "2.0.6",
     "vl-ui-link": "1.1.4",
     "@govflanders/vl-ui-util": "3.7.2",
