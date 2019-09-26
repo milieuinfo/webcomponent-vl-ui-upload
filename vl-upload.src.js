@@ -35,7 +35,7 @@ export class VlUpload extends VlElement(HTMLElement) {
   static get _observedAttributes() {
     return ['url', 'input-name', 'error-message-filesize', 'error-message-accepted-files',
       'error-message-maxfiles', 'max-files', 'max-size', 'accepted-files', 'full-body-drop', 'autoprocess',
-      'data-disallowed-duplicates'];
+      'disallow-duplicates'];
   }
 
   static get _observedChildClassAttributes() {
@@ -237,6 +237,10 @@ export class VlUpload extends VlElement(HTMLElement) {
 
   _autoprocessChangedCallback(oldValue, newValue) {
     this._element.setAttribute(this._prefix+'autoprocess', newValue);
+  }
+
+  _disallow_duplicatesChangedCallback(oldValue, newValue) {
+    this._element.setAttribute(this._prefix+'disallow-duplicates', newValue);
   }
 
 }

@@ -249,7 +249,7 @@ body::before {
 }
 @font-face {
   font-family: "vlaanderen-icon";
-  src: url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/vlaanderen-icon.woff2") format("woff2"), url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/flandersart/vlaanderen-icon.woff") format("woff");
+  src: url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/iconfont/3.9.1/vlaanderen-icon.woff2") format("woff2"), url("https://cdn.milieuinfo.be/vlaanderen-font/LATEST/font/iconfont/3.9.1/vlaanderen-icon.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }

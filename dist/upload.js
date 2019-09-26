@@ -1,46 +1,8 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global.upload = factory());
+  global.upload = factory();
 }(typeof self !== 'undefined' ? self : this, function () { 'use strict';
-
-  /**
-   * WorkAround
-   * @param bytes
-   * @param addUnits
-   * @param base
-   * @returns {*}
-   */
-  vl.util.bytesToSize = (bytes, addUnits = true, base = 1024) => {
-    let sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'],
-        value = null,
-        i;
-
-    if (bytes === 0) {
-      value = addUnits ? '0 bytes' : 0;
-    } else {
-      i = parseInt(Math.floor(Math.log(bytes) / Math.log(base)), 10);
-
-      if (!addUnits) {
-        value =  Math.round(bytes / Math.pow(base, i), 2);
-      }
-
-      value = addUnits ? Math.round(bytes / Math.pow(base, i), 2) + ' ' + sizes[i] : Math.round(bytes / Math.pow(base, i), 2);
-    }
-
-    return value;
-  };
-
-  /**
-   * Workaround wrong use of {@link vl.util.bytesToSize}
-   * @param bytes
-   * @param addUnits
-   * @param base
-   * @returns {*}
-   */
-  vl.util.bytesToMB = (bytes) => {
-    return bytes / (1000*1000);
-  };
 
   function _typeof(obj) {
     if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -3579,7 +3541,7 @@
     var autoProcessQueue = element.hasAttribute(dataAutoprocess) && element.getAttribute(dataAutoprocess) !== 'false';
     var size = element.hasAttribute(dataMaxSize) ? element.getAttribute(dataMaxSize) : 2000000;
     var acceptedFiles = element.hasAttribute(dataAllowedTypes) ? element.getAttribute(dataAllowedTypes) : null;
-    var maxFilesize = vl.util.bytesToMB(size);
+    var maxFilesize = vl.util.bytesToSize(size, false, 1000);
     var maxFiles = element.hasAttribute(dataMaxFiles) ? element.getAttribute(dataMaxFiles) : 1;
 
     var errorMessages = _createErrorMessages(element, size, maxFiles);
