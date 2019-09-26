@@ -1,10 +1,10 @@
 {
   "name": "vl-ui-upload",
-  "version": "0.0.14",
+  "version": "0.0.20",
   "description": "Gebruik de upload component om één of meerdere bestanden te selecteren of te slepen naar het upload veld. De gebruiker kan alternatief ook één of meerdere bestanden uploaden door op de link in het upload veld te klikken en de bestanden te selecteren in het Bestand menu.",
   "main": "vl-upload.js",
   "scripts": {
-    "prepare": "npm run prepare:util",
+    "prepare": "npm update --dev vl-ui-util && npm run prepare:util",
     "prepare:util": "npm explore vl-ui-util -- npm run util",
     "test": "wct -l chrome,firefox --npm",
     "test-debug": "wct -l chrome,firefox --npm -p",
@@ -33,27 +33,27 @@
     "registry": "http://artifactory-pr-build.lb.cumuli.be:8081/artifactory/api/npm/acd-npm/"
   },
   "dependencies": {
-    "vl-ui-core": "1.4.3",
-    "vl-ui-icon": "2.0.5",
-    "vl-ui-link": "1.1.2",
-    "@govflanders/vl-ui-util": "3.7.2",
-    "@govflanders/vl-ui-core": "3.7.2"
+    "vl-ui-core": "^2.0.0",
+    "@govflanders/vl-ui-core": "3.9.1",
+    "@govflanders/vl-ui-util": "3.9.1",
+    "vl-ui-icon": "^2.1.0",
+    "vl-ui-link": "^1.1.10"
   },
   "peerDependencies": {
-    "vl-ui-core": "^1.4.2",
-    "vl-ui-link": "^1.1.1",
-    "vl-ui-icon": "^2.0.4"
+    "vl-ui-core": "^2.0.0",
+    "vl-ui-link": "^1.1.10",
+    "vl-ui-icon": "^2.1.0"
   },
   "devDependencies": {
-    "@govflanders/vl-ui-upload": "3.7.2",
+    "@govflanders/vl-ui-upload": "3.9.1",
     "http-server": "0.11.1",
-    "np": "3.0.4",
-    "replace": "1.0.0",
-    "sass": "^1.22.7",
-    "sinon": "7.3.1",
+    "np": "3.1.0",
+    "replace": "1.1.1",
+    "sass": "^1.22.12",
+    "sinon": "7.5.0",
     "uglify-es": "github:mishoo/UglifyJS2#harmony",
-    "vl-ui-button": "1.0.10",
-    "vl-ui-util": "^1.2.3",
+    "vl-ui-button": "^1.1.12",
+    "vl-ui-util": "^2.0.5",
     "wct-browser-legacy": "1.0.2",
     "web-component-tester": "6.9.2"
   }

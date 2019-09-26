@@ -1,4 +1,5 @@
 import {VlElement, define} from '/node_modules/vl-ui-core/vl-core.js';
+import '/node_modules/vl-ui-icon/vl-icon.js';
 
 (() => {
   loadScript('util.js', '/node_modules/@govflanders/vl-ui-util/dist/js/util.min.js', () => {
@@ -22,7 +23,7 @@ import {VlElement, define} from '/node_modules/vl-ui-core/vl-core.js';
 /**
  * VlUpload
  * @class
- * @classdesc Gebruik de upload component om één of meerdere bestanden te selecteren of te slepen naar het upload veld. De gebruiker kan alternatief ook één of meerdere bestanden uploaden door op de link in het upload veld te klikken en de bestanden te selecteren in het Bestand menu. <a href="demo/vl-upload.html">Demo</a>.
+ * @classdesc Gebruik de upload component om één of meerdere bestanden te selecteren of te slepen naar het upload veld. De gebruiker kan alternatief ook één of meerdere bestanden uploaden door op de link in het upload veld te klikken en de bestanden te selecteren in het Bestand menu.
  *
  * @extends VlElement
  *
@@ -36,6 +37,10 @@ import {VlElement, define} from '/node_modules/vl-ui-core/vl-core.js';
  * @property {list} accepted-files - Attribuut om te op te lijsten welke bestanden worden geaccepteerd door component (extensie en mimetype).
  * @property {boolean} full-body-drop - Attribuut om te activeren of deactiveren dat het de dropzone over het heel scherm is.
  * @property {boolean} autoprocess - Attribuut om te activeren of deactiveren dat het het gedropte bestand direct moet opgeladen worden.
+ * 
+ * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-upload/releases/latest|Release notes}
+ * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-upload/issues|Issues}
+ * @see {@link https://webcomponenten.omgeving.vlaanderen.be/demo/vl-ui-upload.html|Demo}
  */
 export class VlUpload extends VlElement(HTMLElement) {
 
@@ -112,7 +117,7 @@ export class VlUpload extends VlElement(HTMLElement) {
           <div class="vl-upload__element">
             <div class="vl-upload__element__label">
               <button type="button" class="vl-upload__element__button vl-link">
-                <i class="vl-vi vl-vi-paperclip" aria-hidden="true"></i>
+                <span is="vl-icon" icon="paperclip"></span>
                 <span class="vl-upload__element__button__container"></span>
               </button>
               <small></small>
@@ -125,16 +130,16 @@ export class VlUpload extends VlElement(HTMLElement) {
             <div class="vl-upload__files__container"></div>
             <div class="vl-upload__files__input__container"></div>
             <button class="vl-upload__files__close vl-link vl-link--icon">
-              <span class="vl-link__icon vl-vi vl-vi-trash" aria-hidden="true"></span>
+              <span is="vl-icon" icon="trash" link></span>
               Verwijder alle bestanden
             </button>
           </div>
         </template>
-    
+
         <template id="previewTemplate">
           <div class="vl-upload__file">
             <p class="vl-upload__file__name">
-              <span class="vl-upload__file__name__icon vl-vi vl-vi-document" aria-hidden="true"></span>
+              <span is="vl-icon" class="vl-upload__file__name__icon" icon="document"></span>
               <span data-dz-name></span>
               <span class="vl-upload__file__size">
             (<span data-dz-size></span>)
@@ -144,15 +149,15 @@ export class VlUpload extends VlElement(HTMLElement) {
               <span data-dz-errormessage></span>
             </div>
             <button type="button" class="vl-upload__file__close vl-link vl-link--icon" data-dz-remove>
-              <span class="vl-vi vl-vi-cross" aria-hidden="true"></span>
+              <span is="vl-icon" icon="cross"></span>
             </button>
           </div>
         </template>
-    
+
         <template id="uploadOverlay">
           <div class="vl-upload__overlay">
             <p class="vl-upload__overlay__text">
-              <span class="vl-link__icon vl-vi vl-vi-paperclip" aria-hidden="true"></span>
+              <span is="vl-icon" icon="paperclip" link></span>
             </p>
           </div>
         </template>`);
@@ -251,6 +256,10 @@ export class VlUpload extends VlElement(HTMLElement) {
 
   _autoprocessChangedCallback(oldValue, newValue) {
     this._element.setAttribute(this._prefix + 'autoprocess', newValue);
+  }
+
+  _disallow_duplicatesChangedCallback(oldValue, newValue) {
+    this._element.setAttribute(this._prefix+'disallow-duplicates', newValue);
   }
 
 }
