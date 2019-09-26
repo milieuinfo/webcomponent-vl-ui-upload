@@ -124,11 +124,10 @@ export class VlUpload extends VlElement(HTMLElement) {
             </button>
           </div>
         </template>
-    
+
         <template id="previewTemplate">
           <div class="vl-upload__file">
             <p class="vl-upload__file__name">
-              <span is="vl-icon" icon="trash" link></span>
               <span is="vl-icon" class="vl-upload__file__name__icon" icon="document"></span>
               <span data-dz-name></span>
               <span class="vl-upload__file__size">
@@ -143,7 +142,7 @@ export class VlUpload extends VlElement(HTMLElement) {
             </button>
           </div>
         </template>
-    
+
         <template id="uploadOverlay">
           <div class="vl-upload__overlay">
             <p class="vl-upload__overlay__text">
