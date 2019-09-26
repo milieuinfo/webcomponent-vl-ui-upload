@@ -143,6 +143,12 @@
           assert(upload._upload.classList.contains('vl-upload--error'));
         });
 
+        test('verander disallow-duplicates attribute van de upload', () => {
+          assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'disallow-duplicates'));
+          upload.setAttribute('disallow-duplicates', 'true');
+          assert(upload._upload.getAttribute(upload._prefix + 'disallow-duplicates') === 'true');
+        });
+
       });
     </script>
   </body>

@@ -1,46 +1,8 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global.upload = factory());
-}(this, (function () { 'use strict';
-
-  /**
-   * WorkAround
-   * @param bytes
-   * @param addUnits
-   * @param base
-   * @returns {*}
-   */
-  vl.util.bytesToSize = (bytes, addUnits = true, base = 1024) => {
-    let sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'],
-        value = null,
-        i;
-
-    if (bytes === 0) {
-      value = addUnits ? '0 bytes' : 0;
-    } else {
-      i = parseInt(Math.floor(Math.log(bytes) / Math.log(base)), 10);
-
-      if (!addUnits) {
-        value =  Math.round(bytes / Math.pow(base, i), 2);
-      }
-
-      value = addUnits ? Math.round(bytes / Math.pow(base, i), 2) + ' ' + sizes[i] : Math.round(bytes / Math.pow(base, i), 2);
-    }
-
-    return value;
-  };
-
-  /**
-   * Workaround wrong use of {@link vl.util.bytesToSize}
-   * @param bytes
-   * @param addUnits
-   * @param base
-   * @returns {*}
-   */
-  vl.util.bytesToMB = (bytes) => {
-    return bytes / (1000*1000);
-  };
+  global.upload = factory();
+}(typeof self !== 'undefined' ? self : this, function () { 'use strict';
 
   function _typeof(obj) {
     if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -3486,12 +3448,13 @@
       dataDressed = "".concat(dataUpload, "-dressed"),
       dataMaxSize = "".concat(dataUpload, "-max-size"),
       dataMaxFiles = "".concat(dataUpload, "-max-files"),
-      dataAcceptedFiles = "".concat(dataUpload, "-accepted-files"),
       dataErrorMessage = "".concat(dataUpload, "-error-message-filesize"),
       dataErrorMessageMaxFiles = "".concat(dataUpload, "-error-message-maxfiles"),
       dataErrorMessageFiletype = "".concat(dataUpload, "-error-message-accepted-files"),
       dataInputName = "".concat(dataUpload, "-input-name"),
       dataFullBodyDrop = "".concat(dataUpload, "-full-body-drop"),
+      dataAllowedTypes = "".concat(dataUpload, "-accepted-files"),
+      dataDisallowedDuplicates = "".concat(dataUpload, "-disallow-duplicates"),
       dataAutoprocess = "".concat(dataUpload, "-autoprocess");
 
   var _getTemplate = function _getTemplate() {
@@ -3509,7 +3472,7 @@
     var errorMessageFilesize = element.getAttribute(dataErrorMessage);
     var errorMessageMaxfiles = element.getAttribute(dataErrorMessageMaxFiles);
     var errorMessageFiletype = element.getAttribute(dataErrorMessageFiletype);
-    var sizeInMB = vl.util.bytesToSize(size, true, 1000);
+    var sizeInMB = vl.util.bytesToSize(size, true, 1024000);
     var dictFileTooBig, dictInvalidFileType, dictMaxFilesExceeded;
 
     if (vl.util.exists(errorMessageFilesize)) {
@@ -3526,7 +3489,7 @@
 
     if (vl.util.exists(errorMessageFiletype)) {
       var fileType = element.getAttribute('accept');
-      dictInvalidFileType = _replaceStringValue(errorMessageFiletype, ':fileType', fileType);
+      dictInvalidFileType = _replaceStringValue(errorMessageFiletype, ':filetype', fileType);
     } else {
       dictInvalidFileType = vl.util.exists(errorMessageFiletype) ? errorMessageFiletype : vl.i18n.t('upload.file-type_not_allowed');
     }
@@ -3577,9 +3540,9 @@
 
     var autoProcessQueue = element.hasAttribute(dataAutoprocess) && element.getAttribute(dataAutoprocess) !== 'false';
     var size = element.hasAttribute(dataMaxSize) ? element.getAttribute(dataMaxSize) : 2000000;
-    var maxFilesize = vl.util.bytesToMB(size);
+    var acceptedFiles = element.hasAttribute(dataAllowedTypes) ? element.getAttribute(dataAllowedTypes) : null;
+    var maxFilesize = vl.util.bytesToSize(size, false, 1000);
     var maxFiles = element.hasAttribute(dataMaxFiles) ? element.getAttribute(dataMaxFiles) : 1;
-    var acceptedFiles = element.hasAttribute(dataAcceptedFiles) ? element.getAttribute(dataAcceptedFiles) : null;
 
     var errorMessages = _createErrorMessages(element, size, maxFiles);
 
@@ -3592,10 +3555,10 @@
       previewTemplate: previewTemplateString,
       previewsContainer: previewsContainer,
       hiddenInputContainer: hiddenInputContainer,
+      acceptedFiles: acceptedFiles,
       paramName: paramName,
       url: url,
-      createImageThumbnails: false,
-      acceptedFiles: acceptedFiles
+      createImageThumbnails: false
     };
     return Object.assign(config, errorMessages);
   };
@@ -3610,12 +3573,35 @@
     }
 
     _createClass(Upload, [{
+      key: "removeDuplicate",
+      value: function removeDuplicate(dz, file) {
+        var files = dz.files;
+
+        if (files) {
+          var i = 0;
+          var filesLength = files.length;
+          var ref = files.slice();
+
+          for (; i < filesLength - 1; i++) {
+            if (ref[i] && file) {
+              if (ref[i].name === file.name && ref[i].size === file.size) {
+                dz.removeFile(ref[i]);
+              }
+            }
+          }
+        }
+      }
+    }, {
       key: "updateFileList",
-      value: function updateFileList(dz, el) {
+      value: function updateFileList(dz, el, file) {
         var fileList = el.querySelector(".".concat(filesClass));
 
         if (dz.files.length) {
           vl.util.addClass(fileList, hasFilesClass);
+
+          if (el.hasAttribute(dataDisallowedDuplicates) && el.getAttribute(dataDisallowedDuplicates) === 'true') {
+            this.removeDuplicate(dz, file);
+          }
         } else {
           vl.util.removeClass(fileList, hasFilesClass);
         }
@@ -3678,8 +3664,8 @@
           var dropzone$$1 = new dropzone(element, config);
           this.dropzoneInstances.push(dropzone$$1);
           vl.util.addClass(dropzone$$1.hiddenFileInput, filesInputClass);
-          dropzone$$1.on('addedfile', function () {
-            _this.updateFileList(dropzone$$1, element);
+          dropzone$$1.on('addedfile', function (file) {
+            _this.updateFileList(dropzone$$1, element, file);
           });
           dropzone$$1.on('addedfiles', function () {
             setTimeout(() => vl.util.triggerEvent(element, 'vl.upload.hook.fileChange'));
@@ -3745,4 +3731,4 @@
 
   return Upload;
 
-})));
+}));
