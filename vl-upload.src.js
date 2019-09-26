@@ -40,10 +40,9 @@ import {VlElement, define} from '/node_modules/vl-ui-core/vl-core.js';
 export class VlUpload extends VlElement(HTMLElement) {
 
   static get _observedAttributes() {
-    return ['url', 'input-name', 'error-message-filesize',
-      'error-message-accepted-files',
-      'error-message-maxfiles', 'max-files', 'max-size', 'accepted-files',
-      'full-body-drop', 'autoprocess'];
+    return ['url', 'input-name', 'error-message-filesize', 'error-message-accepted-files',
+      'error-message-maxfiles', 'max-files', 'max-size', 'accepted-files', 'full-body-drop', 'autoprocess',
+      'disallow-duplicates'];
   }
 
   static get _observedChildClassAttributes() {
