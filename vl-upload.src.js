@@ -40,7 +40,7 @@ import '/node_modules/vl-ui-icon/vl-icon.js';
  * 
  * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-upload/releases/latest|Release notes}
  * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-upload/issues|Issues}
- * @see {@link https://webcomponenten.omgeving.vlaanderen.be/demo/vl-ui-upload.html|Demo}
+ * @see {@link https://webcomponenten.omgeving.vlaanderen.be/demo/vl-upload.html|Demo}
  */
 export class VlUpload extends VlElement(HTMLElement) {
 
