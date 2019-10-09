@@ -1,24 +1,12 @@
-import {VlElement, define} from '/node_modules/vl-ui-core/vl-core.js';
+import {VlElement, define, awaitScript, awaitUntil} from '/node_modules/vl-ui-core/vl-core.js';
 import '/node_modules/vl-ui-icon/vl-icon.js';
 
-(() => {
-  loadScript('util.js', '/node_modules/@govflanders/vl-ui-util/dist/js/util.min.js', () => {
-    loadScript('core.js', '/node_modules/@govflanders/vl-ui-core/dist/js/core.min.js', () => {
-      loadScript('upload.js',
-          '../dist/upload.js');
-    });
-  });
-
-  function loadScript(id, src, onload) {
-    if (!document.head.querySelector('#' + id)) {
-      let script = document.createElement('script');
-      script.setAttribute('id', id);
-      script.setAttribute('src', src);
-      script.onload = onload;
-      document.head.appendChild(script);
-    }
-  }
-})();
+Promise.all([
+  awaitScript('util', '/node_modules/@govflanders/vl-ui-util/dist/js/util.min.js'),
+  awaitScript('core', '/node_modules/@govflanders/vl-ui-core/dist/js/core.min.js'),
+  awaitScript('upload', '../dist/upload.js'),
+  awaitUntil(() => window.vl && window.vl.upload)
+]).then(() => define('vl-upload', VlUpload));
 
 /**
  * VlUpload
@@ -172,16 +160,10 @@ export class VlUpload extends VlElement(HTMLElement) {
    * @returns void
    */
   dress() {
-    (async () => {
-      while (!window.vl || !window.vl.upload) {
-        await new Promise(resolve => setTimeout(resolve, 100));
-      }
-
-      if (!this._dressed) {
-        document.body.appendChild(this._templates)
-        vl.upload.dress(this._upload);
-      }
-    })();
+    if (!this._dressed) {
+      document.body.appendChild(this._templates)
+      vl.upload.dress(this._upload);
+    }
   }
 
   /**
@@ -263,5 +245,3 @@ export class VlUpload extends VlElement(HTMLElement) {
   }
 
 }
-
-define('vl-upload', VlUpload);

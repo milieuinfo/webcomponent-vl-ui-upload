@@ -21,7 +21,7 @@
 
         let upload;
 
-        setup(() => {
+        setup((done) => {
           window.vl = {
             upload: {
               dress: sinon.spy()
@@ -36,8 +36,9 @@
           })();
 
           upload = fixture('vl-upload-fixture');
-
           window.vl.upload.dropzoneInstances = [{element: upload._element, files: [], processQueue: sinon.spy(), removeAllFiles: sinon.spy(), options: {}}]
+
+          customElements.whenDefined('vl-upload').then(done);
         });
 
         test('heeft de vl-upload class', () => {
