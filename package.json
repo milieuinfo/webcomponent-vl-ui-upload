@@ -58,6 +58,6 @@
   "devDependencies": {
     "@govflanders/vl-ui-upload": "3.9.1",
     "vl-ui-button": "^2.0.0",
-    "vl-ui-util": "^3.4.1"
+    "vl-ui-util": "^3.4.2"
   }
 }
