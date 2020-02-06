@@ -1,5 +1,5 @@
 
-const { assert, driver } = require('vl-ui-core').Test;
+const { assert, driver } = require('vl-ui-core').Test.Setup;
 const VlUploadPage = require('./pages/vl-upload.page');
 
 describe('vl-upload', async () => {
@@ -9,5 +9,9 @@ describe('vl-upload', async () => {
         vlUploadPage.load().then(() => {
             done();
         });
+    });
+    
+    after(async () => { 
+        return driver.quit();
     });
 });
