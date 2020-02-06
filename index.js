@@ -1,3 +1,5 @@
 module.exports = { 
-    'VlUpload': require('./test/e2e/components/vl-upload')
+    Test: {
+    	VlUpload: require('./test/e2e/components/vl-upload.js')
+    }
 }

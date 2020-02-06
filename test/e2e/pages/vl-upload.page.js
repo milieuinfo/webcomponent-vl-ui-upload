@@ -1,6 +1,6 @@
 const VlUpload = require('../components/vl-upload');
-const { Page } = require('vl-ui-core');
-const { Config } = require('vl-ui-core');
+const { Page } = require('vl-ui-core').Test;
+const { Config } = require('vl-ui-core').Test;
 
 class VlUploadPage extends Page {
     async _getUpload(selector) {
