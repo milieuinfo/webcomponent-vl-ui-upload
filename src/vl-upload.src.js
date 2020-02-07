@@ -1,12 +1,8 @@
 import {VlElement, define, awaitScript, awaitUntil} from '/node_modules/vl-ui-core/vl-core.js';
 import '/node_modules/vl-ui-icon/vl-icon.js';
-
-Promise.all([
-  awaitScript('util', '/node_modules/@govflanders/vl-ui-util/dist/js/util.min.js'),
-  awaitScript('core', '/node_modules/@govflanders/vl-ui-core/dist/js/core.min.js'),
-  awaitScript('upload', '../../dist/upload.js'),
-  awaitUntil(() => window.vl && window.vl.upload)
-]).then(() => define('vl-upload', VlUpload));
+import '/node_modules/@govflanders/vl-ui-util/dist/js/util.min.js';
+import '/node_modules/@govflanders/vl-ui-core/dist/js/core.min.js';
+import '/dist/upload.js';
 
 /**
  * VlUpload
@@ -245,3 +241,5 @@ export class VlUpload extends VlElement(HTMLElement) {
   }
 
 }
+
+define('vl-upload', VlUpload);
