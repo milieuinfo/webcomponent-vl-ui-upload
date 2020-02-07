@@ -1,12 +1,8 @@
 import {VlElement, define, awaitScript, awaitUntil} from 'vl-ui-core';
 import 'vl-ui-icon';
-
-Promise.all([
-  awaitScript('util', 'vl-ui-ui-util/dist/js/util.min.js'),
-  awaitScript('core', 'vl-ui-ui-core/dist/js/core.min.js'),
-  awaitScript('upload', '../../dist/upload.js'),
-  awaitUntil(() => window.vl && window.vl.upload)
-]).then(() => define('vl-upload', VlUpload));
+import 'vl-ui-util/dist/js/util.min.js';
+import 'vl-ui-core/dist/js/core.min.js';
+import 'vl-ui-upload/dist/upload.js';
 
 /**
  * VlUpload
@@ -246,3 +242,4 @@ export class VlUpload extends VlElement(HTMLElement) {
 
 }
 
+define('vl-upload', VlUpload);
