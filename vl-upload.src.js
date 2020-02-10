@@ -2,7 +2,7 @@ import {VlElement, define} from 'vl-ui-core';
 import 'vl-ui-icon';
 import '@govflanders/vl-ui-util/dist/js/util.min.js';
 import '@govflanders/vl-ui-core/dist/js/core.min.js';
-import '/dist/upload.js';
+import 'vl-ui-upload/dist/upload.js';
 
 /**
  * VlUpload
