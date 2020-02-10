@@ -1,4 +1,4 @@
-import {VlElement, define, awaitScript, awaitUntil} from '/node_modules/vl-ui-core/vl-core.js';
+import {VlElement, define} from '/node_modules/vl-ui-core/vl-core.js';
 import '/node_modules/vl-ui-icon/vl-icon.js';
 import '/node_modules/@govflanders/vl-ui-util/dist/js/util.min.js';
 import '/node_modules/@govflanders/vl-ui-core/dist/js/core.min.js';
