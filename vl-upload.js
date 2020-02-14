@@ -44,14 +44,13 @@ export class VlUpload extends VlElement(HTMLElement) {
 
   constructor() {
     super(`
-            <style>
-            @import '/node_modules/vl-ui-link/style.css';
-            @import '/node_modules/vl-ui-icon/style.css';
-            @import '/node_modules/vl-ui-upload/style.css';
-            </style>
-            <div class="vl-upload" data-vl-upload data-vl-upload-url="http://www.example.com">
-            </div>
-        `);
+      <style>
+        @import '/node_modules/vl-ui-link/style.css';
+        @import '/node_modules/vl-ui-icon/style.css';
+        @import '/node_modules/vl-ui-upload/style.css';
+      </style>
+      <div class="vl-upload" data-vl-upload data-vl-upload-url="http://www.example.com"></div>
+    `);
   }
 
   connectedCallback() {
