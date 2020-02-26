@@ -10,8 +10,8 @@ describe('vl-upload', async () => {
             done();
         });
     });
-    
-    after(async () => { 
-        return driver.quit();
+
+    it("Dummy test om de browsers te sluiten", () => {
+    	assert.isTrue(true);
     });
 });
