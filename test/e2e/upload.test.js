@@ -5,10 +5,8 @@ const VlUploadPage = require('./pages/vl-upload.page');
 describe('vl-upload', async () => {
     const vlUploadPage = new VlUploadPage(driver);
 
-    before((done) => {
-        vlUploadPage.load().then(() => {
-            done();
-        });
+    before(() => {
+        return vlUploadPage.load();
     });
 
     it("Dummy test om de browsers te sluiten", () => {
