@@ -19,12 +19,61 @@ class VlUploadPage extends Page {
     async getUploadAutoProcess() {
     	return this._getUpload("#vl-upload-auto-process");
     }
+
+    async getUploadClear() {
+    	return this._getUpload("#vl-upload-clear");
+    }
+
+    async getUploadMax5() {
+    	return this._getUpload("#vl-upload-max-5");
+    }
+
+    async getUploadMaxSize() {
+    	return this._getUpload("#vl-upload-max-5");
+    }
+
+    async getUploadGeenDubbels() {
+    	return this._getUpload("#vl-upload-geen-dubbels");
+    }
+
+    async getUploadFileTypes() {
+    	return this._getUpload("#vl-upload-file-types");
+    }
+
+    async getUploadFullBodyDrop() {
+    	return this._getUpload("#vl-upload-full-body-drop");
+    }
+    
+    async listenForEventsOnUpload() {
+    	const addListenerButton = await this.driver.findElement(By.css("#vl-upload-listener-button"));
+    	return addListenerButton.click();
+    }
+
+    async getVlUploadLogText() {
+    	const log = await this.driver.findElement(By.css("#vl-upload-log"));
+    	return log.getText();
+    }
+
+    async clearUploadClear() {
+    	const clearButton = await this.driver.findElement(By.css("#vl-upload-clear-button"));
+    	return clearButton.click();
+    }
     
     async changeAllUploadUrlsTo(url) {
     	const script = `document.querySelectorAll("vl-upload").forEach(upload => upload.setAttribute("url", "${url}"));`;
     	return this.driver.executeScript(script);
     }
+    
+    async clearAllUploads() {
+    	const uploads = await this.driver.findElements(By.css("vl-upload"));
+    	await Promise.all(uploads.map(upload => this.clearUpload(upload)))
+    }
 
+    async clearUpload(uploadElement) {
+    	const upload = await new VlUpload(this.driver, await uploadElement);
+    	return upload.removeFiles();
+    }
+    
     async uploadFiles() {
     	const script = `document.querySelector("#vl-upload").upload();`;
     	return this.driver.executeScript(script);

@@ -71,7 +71,7 @@
 
             &lt;script type="text/javascript"&gt;
               function clear() {
-                document.querySelector("vl-upload[id=\"upload-4\"]").clear();
+                document.querySelector("#vl-upload-clear").clear();
               }
             &lt;/script&gt;
         </code>
@@ -79,11 +79,11 @@
       <div class="demo">
         <vl-upload id="vl-upload-clear" url="http://httpbin.org/post" input-name="files"></vl-upload>
 
-        <button is="vl-button" onclick="clearList()">Clear</button>
+        <button id="vl-upload-clear-button" is="vl-button" onclick="clearList()">Clear</button>
 
         <script type="text/javascript">
           function clearList() {
-            document.querySelector("vl-upload[id=\"vl-upload-clear\"]").clear();
+            document.querySelector("#vl-upload-clear").clear();
           }
         </script>
       </div>
@@ -91,22 +91,22 @@
 
     <div>
       <h2>Beperkte Upload (aantal en grootte)</h2>
-      Beperkt aantal bestanden opladen, met een bepaalde grootte (20MB).
+      Beperkt aantal bestanden opladen, met een bepaalde grootte (2MB).
       <pre>
         <code class="line-numbers language-markup">
             &lt;vl-upload url="http://httpbin.org/post"
               input-name="files"
               error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
               error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden."
-              max-files="5" max-size="20000000"&gt;
+              max-files="5" max-size="2000000"&gt;
             &lt;/vl-upload&gt;
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://httpbin.org/post" input-name="files"
+        <vl-upload id="vl-upload-max-5" url="http://httpbin.org/post" input-name="files"
                    error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
                    error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden." max-files="5"
-                   max-size="20000000"></vl-upload>
+                   max-size="2000000"></vl-upload>
       </div>
     </div>
 
@@ -124,7 +124,7 @@
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://httpbin.org/post" input-name="files"
+        <vl-upload id="vl-upload-geen-dubbels" url="http://httpbin.org/post" input-name="files"
                    error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
                    error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden." max-files="2"
                    max-size="20000000" disallow-duplicates="true"></vl-upload>
@@ -144,7 +144,7 @@
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://httpbin.org/post" input-name="files" max-files="10" max-size="20000000"
+        <vl-upload id="vl-upload-file-types" url="http://httpbin.org/post" input-name="files" max-files="10" max-size="20000000"
                    accepted-files="application/pdf, .png"
                    error-message-accepted-files="Je kan enkel :fileType bestanden opladen"></vl-upload>
       </div>
@@ -159,7 +159,7 @@
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://httpbin.org/post" input-name="files" full-body-drop></vl-upload>
+        <vl-upload id="vl-upload-full-body-drop" url="http://httpbin.org/post" input-name="files" full-body-drop></vl-upload>
       </div>
     </div>
 
@@ -184,24 +184,28 @@
                   function (event) {
                     console.log(event);
                     console.log(vl.upload.dropzoneInstances[0].files);
+	                document.querySelector("#vl-upload-log").innerText = "Bestanden in vl-upload: " + vl.upload.dropzoneInstances[0].files.map(f => f.name);
                   });
             }
           &lt;/script&gt;
+          &lt;span id="vl-upload-log"&gt;&lt;/span&gt;
         </code>
       </pre>
 
       <div class="demo">
 
-        <button is="vl-button" onclick="addListener()">Voeg listener toe</button>
+        <button id="vl-upload-listener-button" is="vl-button" onclick="addListener()">Voeg listener toe</button>
         <script>
           function addListener() {
             document.querySelector('vl-upload[id="vl-upload"]').on('vl.upload.hook.fileChange',
                 function (event) {
                   console.log(event);
                   console.log(vl.upload.dropzoneInstances[0].files);
+                  document.querySelector("#vl-upload-log").innerText = "Bestanden in vl-upload: " + vl.upload.dropzoneInstances[0].files.map(f => f.name);
                 });
           }
         </script>
+        <span id="vl-upload-log"></span>
       </div>
     </div>
 

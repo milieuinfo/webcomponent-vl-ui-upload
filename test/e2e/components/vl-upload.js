@@ -8,43 +8,79 @@ class VlUpload extends VlElement {
 	}
 	
 	async getFiles() {
-		const files = await this.shadowRoot.findElements(By.css(".vl-upload__file"));
-		return files.map(file => new VlUploadFile(file));
+		const files = await this.shadowRoot.findElements(By.css(".vl-upload__files__container .vl-upload__file"));
+		return await Promise.all(files.map(file => new VlUploadFile(this.driver, file)));
 	}
 	
 	async isError() {
 		return this.hasAttribute("error");
 	}
 	
+	async isFullBodyDrop() {
+		return this.hasAttribute("full-body-drop");
+	}
+	
 	async removeFiles() {
 		const files = await this.getFiles();
 		await Promise.all(files.map(f => f.remove()));
-		return this.driver.wait(async () => {
-			const files = await this.getFiles();
-			return files.length == 0;
-		});
+	}
+	
+	async getMaximumFilesize() {
+		return this.getAttribute("max-size");
+	}
+
+	async getMaximumNumberOfAllowedFiles() {
+		return this.getAttribute("max-files");
+	}
+
+	async getAcceptedFileTypes() {
+		return this.getAttribute("accepted-files");
+	}
+	
+	async isDuplicatesDisallowed() {
+		const duplicatesDisallowed = await this.getAttribute("disallow-duplicates");
+		return duplicatesDisallowed == "true";
 	}
 }
 
-class VlUploadFile {
-	constructor(fileElement) {
-		this.fileElement = fileElement;
-	}
+class VlUploadFile extends VlElement  {
 	
 	async getName() {
-		const nameSpan = await this.fileElement.findElement(By.css("span[data-dz-name]"));
+		const nameSpan = await this.findElement(By.css("span[data-dz-name]"));
 		return nameSpan.getText();
 	}
 
 	async getSize() {
-		const sizeSpan = await this.fileElement.findElement(By.css("span[data-dz-size]"));
+		const sizeSpan = await this.findElement(By.css("span[data-dz-size]"));
 		return sizeSpan.getText();
 	}
 	
 	async remove() {
-		const removeButton = await this.fileElement.findElement(By.css("button[data-dz-remove]"));
+		const removeButton = await this.findElement(By.css("button.vl-upload__file__close"));
 		return removeButton.click();
 	}
+	
+	async getErrorMessage() {
+		const errorMsg = await this.findElement(By.css(".dz-error-message"));
+		return errorMsg.getText();
+	}
+
+	async isProcessing() {
+		const classes = await this.getClassList();
+		return classes.includes("dz-processing");
+	}
+
+	async isSuccess() {
+		const classes = await this.getClassList();
+		return classes.includes("dz-success");
+	}
+
+	async isError() {
+		const classes = await this.getClassList();
+		return classes.includes("dz-error");
+	}
+	
+	
 }
 
 module.exports = VlUpload;
