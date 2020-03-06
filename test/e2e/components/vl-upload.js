@@ -1,5 +1,5 @@
 const { VlElement } = require('vl-ui-core').Test;
-const { By } = require('selenium-webdriver');
+const { By } = require('vl-ui-core').Test.Setup;
 
 class VlUpload extends VlElement { 
 	async uploadFile(path) {
@@ -56,8 +56,17 @@ class VlUploadFile extends VlElement  {
 	}
 	
 	async remove() {
+		const success = await this.isSuccess();
+		const error = await this.isError();
+		const processing = await this.isProcessing();
 		const removeButton = await this.findElement(By.css("button.vl-upload__file__close"));
-		return removeButton.click();
+		if (processing && !(success || error)) {
+			await removeButton.click();
+			const alert = await this.driver.switchTo().alert();
+			return alert.accept();
+		} else {
+			return removeButton.click();
+		}
 	}
 	
 	async getErrorMessage() {

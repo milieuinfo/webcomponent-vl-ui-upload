@@ -10,18 +10,18 @@ describe('vl-upload', async () => {
     const uploadServerPort = 8888;
     const uploadServerPath = "/post";
     
-    beforeEach(async () => {
-    	fileUploadServer.reset();
-    	await vlUploadPage.clearAllUploads();
-    });
-    
     before((done) => {
     	vlUploadPage.load().then(() => {
     		vlUploadPage.changeAllUploadUrlsTo(`http://localhost:${uploadServerPort}${uploadServerPath}`).then(() => {
-    	    	fileUploadServer = new FileUploadServer(uploadServerPort, uploadServerPath);
-    	    	fileUploadServer.start(done);
+    			fileUploadServer = new FileUploadServer(uploadServerPort, uploadServerPath);
+    			fileUploadServer.start(done);
     		});
     	});
+    });
+    
+    beforeEach(async () => {
+    	fileUploadServer.reset();
+    	await vlUploadPage.clearAllUploads();
     });
     
     after(() => {
@@ -57,7 +57,7 @@ describe('vl-upload', async () => {
     	assert.eventually.isFalse(files[0].isError());
     });
     
-    it("Als gebruiker kan ik een  bestand direct laten opladen bij het selecteren", async () => {
+    it("Als gebruiker kan ik een bestand direct laten opladen bij het selecteren", async () => {
     	const upload = await vlUploadPage.getUploadAutoProcess();
     	const file = path.resolve(__dirname, './bestand.pdf');
     	await upload.uploadFile(file);
@@ -157,11 +157,36 @@ describe('vl-upload', async () => {
     	await upload.uploadFile(path.resolve(__dirname, './textfile1.txt'));
     	await assert.eventually.equal(vlUploadPage.getVlUploadLogText(), "Bestanden in vl-upload: textfile1.txt");
     });
+
+    it("Als gebruiker kan ik een gekozen bestand verwijderen", async () => {
+    	const upload = await vlUploadPage.getUpload();
+    	const file = path.resolve(__dirname, './bestand.pdf');
+    	await upload.uploadFile(file);
+    	const filesBefore = await upload.getFiles();
+    	assert.equal(filesBefore.length, 1);
+    	await filesBefore[0].remove();
+    	const filesAfter = await upload.getFiles();
+    	assert.equal(filesAfter.length, 0);
+    });
+
+
+    it("Als gebruiker kan ik het opladen van een bestand ook annuleren tijdens dat het aan het opladen is", async () => {
+    	const upload = await vlUploadPage.getUploadAutoProcess();
+    	fileUploadServer.haltUploads();
+    	const file = path.resolve(__dirname, './bestand.pdf');
+    	await upload.uploadFile(file);
+    	const filesBefore = await upload.getFiles();
+    	assert.equal(filesBefore.length, 1);
+    	await filesBefore[0].remove();
+    	const filesAfter = await upload.getFiles();
+    	assert.equal(filesAfter.length, 0);
+    });
     
     class FileUploadServer {
     	constructor(port, path) {
     		this.__uploadedFiles = [];
     		this.__failUploads = false;
+    		this.__haltUploads = false;
     		var upload = Multer({ storage: Multer.memoryStorage() });
     		this.express = Express();
     		this.express.use(function(request, response, next) {
@@ -171,7 +196,12 @@ describe('vl-upload', async () => {
     		});
     		this.express.post(path, upload.array("files"), (request, response) => {
     			this.__uploadedFiles = this.__uploadedFiles.concat(request.files.map(file => file.originalname));
-    			response.status(this.__failUploads ? 500: 200).send(this.__failUploads ? "Uw bestand kon niet verwerkt worden": "OK");
+    			if (this.__haltUploads) {
+    				response.status(200);
+    				response.write("Halting ...");
+    			} else {
+    				response.status(this.__failUploads ? 500: 200).send(this.__failUploads ? "Uw bestand kon niet verwerkt worden": "OK");
+    			}
     		});
     		this.port = port;
     	}
@@ -184,6 +214,10 @@ describe('vl-upload', async () => {
         	this.server.close();
     	}
     	
+    	haltUploads() {
+    		this.__haltUploads = true;
+    	}
+    	
     	failUploads() {
     		this.__failUploads = true;
     	}
@@ -194,6 +228,7 @@ describe('vl-upload', async () => {
     	
     	reset() {
     		this.__failUploads = false;
+    		this.__haltUploads = false;
     		this.__uploadedFiles = [];
     	}
     }

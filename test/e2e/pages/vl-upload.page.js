@@ -1,7 +1,7 @@
 const VlUpload = require('../components/vl-upload');
 const { Page } = require('vl-ui-core').Test;
 const { Config } = require('vl-ui-core').Test;
-const { By } = require('selenium-webdriver');
+const { By } = require('vl-ui-core').Test.Setup;
 
 class VlUploadPage extends Page {
     async _getUpload(selector) {
