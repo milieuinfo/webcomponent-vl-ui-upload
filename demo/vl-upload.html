@@ -10,6 +10,10 @@
   </head>
 
   <body>
+  	<button id="clear-all" onclick="document.querySelectorAll('vl-upload').forEach(upload => upload.clear());">
+  		Verwijder bestanden uit alle uploads
+  	</button>
+  
     <h1>vl-ui-upload demo</h1>
     <p>
       Om de bestanden effectief op te laden, moet je <strong>vl.upload.dropzoneInstances[i].processQueue()</strong>
@@ -25,11 +29,11 @@
       <h2>Upload</h2>
       <pre>
         <code class="line-numbers language-markup">
-            &lt;vl-upload url="http://example.com" id="upload-1"&gt;&lt;/vl-upload&gt;
+            &lt;vl-upload url="http://httpbin.org/post" id="vl-upload"&gt;&lt;/vl-upload&gt;
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://example.com" input-name="files" id="upload-1"></vl-upload>
+        <vl-upload url="http://httpbin.org/post" input-name="files" id="vl-upload"></vl-upload>
       </div>
     </div>
 
@@ -37,11 +41,11 @@
       <h2>Upload bij toevoegen van bestand</h2>
       <pre>
         <code class="line-numbers language-markup">
-            &lt;vl-upload url="http://example.com" autoprocess="true"&gt;&lt;/vl-upload&gt;
+            &lt;vl-upload url="http://httpbin.org/post" autoprocess="true"&gt;&lt;/vl-upload&gt;
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://example.com" input-name="files" autoprocess="true"></vl-upload>
+        <vl-upload id="vl-upload-auto-process" url="http://httpbin.org/post" input-name="files" autoprocess="true"></vl-upload>
       </div>
     </div>
 
@@ -49,11 +53,11 @@
       <h2>Upload Error</h2>
       <pre>
         <code class="line-numbers language-markup">
-            &lt;vl-upload url="http://example.com" error&gt;&lt;/vl-upload&gt;
+            &lt;vl-upload url="http://httpbin.org/post" error&gt;&lt;/vl-upload&gt;
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://example.com" input-name="files" error></vl-upload>
+        <vl-upload id="vl-upload-error" url="http://httpbin.org/post" input-name="files" error></vl-upload>
       </div>
     </div>
 
@@ -61,25 +65,25 @@
       <h2>Upload Clear</h2>
       <pre>
         <code class="line-numbers language-markup">
-            &lt;vl-upload url="http://example.com"&gt;&lt;/vl-upload&gt;
+            &lt;vl-upload url="http://httpbin.org/post"&gt;&lt;/vl-upload&gt;
 
             &lt;button is="vl-button" onclick="clear()"&gt;Clear&lt;/button&gt;
 
             &lt;script type="text/javascript"&gt;
               function clear() {
-                document.querySelector("vl-upload[id=\"upload-4\"]").clear();
+                document.querySelector("#vl-upload-clear").clear();
               }
             &lt;/script&gt;
         </code>
       </pre>
       <div class="demo">
-        <vl-upload id="upload-4" url="http://example.com" input-name="files"></vl-upload>
+        <vl-upload id="vl-upload-clear" url="http://httpbin.org/post" input-name="files"></vl-upload>
 
-        <button is="vl-button" onclick="clearList()">Clear</button>
+        <button id="vl-upload-clear-button" is="vl-button" onclick="clearList()">Clear</button>
 
         <script type="text/javascript">
           function clearList() {
-            document.querySelector("vl-upload[id=\"upload-4\"]").clear();
+            document.querySelector("#vl-upload-clear").clear();
           }
         </script>
       </div>
@@ -87,22 +91,22 @@
 
     <div>
       <h2>Beperkte Upload (aantal en grootte)</h2>
-      Beperkt aantal bestanden opladen, met een bepaalde grootte (20MB).
+      Beperkt aantal bestanden opladen, met een bepaalde grootte (2MB).
       <pre>
         <code class="line-numbers language-markup">
-            &lt;vl-upload url="http://example.com"
+            &lt;vl-upload url="http://httpbin.org/post"
               input-name="files"
               error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
               error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden."
-              max-files="5" max-size="20000000"&gt;
+              max-files="5" max-size="2000000"&gt;
             &lt;/vl-upload&gt;
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://example.com" input-name="files"
+        <vl-upload id="vl-upload-max-5" url="http://httpbin.org/post" input-name="files"
                    error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
                    error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden." max-files="5"
-                   max-size="20000000"></vl-upload>
+                   max-size="2000000"></vl-upload>
       </div>
     </div>
 
@@ -111,7 +115,7 @@
       Beperkt aantal bestanden opladen en dubbels zijn niet toegelaten.
       <pre>
         <code class="line-numbers language-markup">
-            &lt;vl-upload url="http://example.com"
+            &lt;vl-upload url="http://httpbin.org/post"
               input-name="files"
               error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
               error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden."
@@ -120,7 +124,7 @@
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://example.com" input-name="files"
+        <vl-upload id="vl-upload-geen-dubbels" url="http://httpbin.org/post" input-name="files"
                    error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
                    error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden." max-files="2"
                    max-size="20000000" disallow-duplicates="true"></vl-upload>
@@ -132,7 +136,7 @@
       Beperkt aantal bestanden opladen, van een bepaald type (mime of extensie).
       <pre>
         <code class="line-numbers language-markup">
-            &lt;vl-upload url="http://example.com"
+            &lt;vl-upload url="http://httpbin.org/post"
               input-name="files" max-files="10"
               accepted-files="application/pdf, .png"
               error-message-accepted-files="Je kan enkel :fileType bestanden opladen"&gt;
@@ -140,7 +144,7 @@
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://example.com" input-name="files" max-files="10" max-size="20000000"
+        <vl-upload id="vl-upload-file-types" url="http://httpbin.org/post" input-name="files" max-files="10" max-size="20000000"
                    accepted-files="application/pdf, .png"
                    error-message-accepted-files="Je kan enkel :fileType bestanden opladen"></vl-upload>
       </div>
@@ -151,11 +155,11 @@
       Dropzone over heel de pagina
       <pre>
         <code class="line-numbers language-markup">
-            &lt;vl-upload url="http://example.com" input-name="files" full-body-drop&gt;&lt;/vl-upload&gt;
+            &lt;vl-upload url="http://httpbin.org/post" input-name="files" full-body-drop&gt;&lt;/vl-upload&gt;
         </code>
       </pre>
       <div class="demo">
-        <vl-upload url="http://example.com" input-name="files" full-body-drop></vl-upload>
+        <vl-upload id="vl-upload-full-body-drop" url="http://httpbin.org/post" input-name="files" full-body-drop></vl-upload>
       </div>
     </div>
 
@@ -176,28 +180,32 @@
           &lt;button is="vl-button" onclick="addListener()"&gt;Voeg listener toe&lt;/button&gt;
           &lt;script&gt;
             function addListener() {
-              document.querySelector('vl-upload[id="upload-1"]').on('vl.upload.hook.fileChange',
+              document.querySelector('vl-upload[id="vl-upload"]').on('vl.upload.hook.fileChange',
                   function (event) {
                     console.log(event);
                     console.log(vl.upload.dropzoneInstances[0].files);
+	                document.querySelector("#vl-upload-log").innerText = "Bestanden in vl-upload: " + vl.upload.dropzoneInstances[0].files.map(f => f.name);
                   });
             }
           &lt;/script&gt;
+          &lt;span id="vl-upload-log"&gt;&lt;/span&gt;
         </code>
       </pre>
 
       <div class="demo">
 
-        <button is="vl-button" onclick="addListener()">Voeg listener toe</button>
+        <button id="vl-upload-listener-button" is="vl-button" onclick="addListener()">Voeg listener toe</button>
         <script>
           function addListener() {
-            document.querySelector('vl-upload[id="upload-1"]').on('vl.upload.hook.fileChange',
+            document.querySelector('vl-upload[id="vl-upload"]').on('vl.upload.hook.fileChange',
                 function (event) {
                   console.log(event);
                   console.log(vl.upload.dropzoneInstances[0].files);
+                  document.querySelector("#vl-upload-log").innerText = "Bestanden in vl-upload: " + vl.upload.dropzoneInstances[0].files.map(f => f.name);
                 });
           }
         </script>
+        <span id="vl-upload-log"></span>
       </div>
     </div>
 
