@@ -66,8 +66,10 @@ export class VlUpload extends VlElement(HTMLElement) {
   }
 
   get _dropzone() {
-    return vl.upload.dropzoneInstances.filter(
-        dropzone => dropzone.element === this._element)[0];
+	if (vl && vl.upload && vl.upload.dropzoneInstances) {
+		return vl.upload.dropzoneInstances.filter(
+				dropzone => dropzone.element === this._element)[0];
+	}
   }
 
   /**
