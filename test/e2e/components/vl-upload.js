@@ -38,8 +38,7 @@ class VlUpload extends VlElement {
 	}
 	
 	async isDuplicatesDisallowed() {
-		const duplicatesDisallowed = await this.getAttribute("disallow-duplicates");
-		return duplicatesDisallowed == "true";
+		return this.hasAttribute("disallow-duplicates");
 	}
 }
 
@@ -75,18 +74,15 @@ class VlUploadFile extends VlElement  {
 	}
 
 	async isProcessing() {
-		const classes = await this.getClassList();
-		return classes.includes("dz-processing");
+		return this.hasClass("dz-processing");
 	}
 
 	async isSuccess() {
-		const classes = await this.getClassList();
-		return classes.includes("dz-success");
+		return this.hasClass("dz-success");
 	}
 
 	async isError() {
-		const classes = await this.getClassList();
-		return classes.includes("dz-error");
+		return this.hasClass("dz-error");
 	}
 	
 	

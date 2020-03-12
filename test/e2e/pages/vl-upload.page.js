@@ -54,9 +54,8 @@ class VlUploadPage extends Page {
     	return log.getText();
     }
 
-    async clearUploadClear() {
-    	const clearButton = await this.driver.findElement(By.css("#vl-upload-clear-button"));
-    	return clearButton.click();
+    async uploadClearButton() {
+    	return await this.driver.findElement(By.css("#vl-upload-clear-button"));
     }
     
     async changeAllUploadUrlsTo(url) {
@@ -75,8 +74,7 @@ class VlUploadPage extends Page {
     }
     
     async uploadFiles() {
-    	const script = `document.querySelector("#vl-upload").upload();`;
-    	return this.driver.executeScript(script);
+    	return this.driver.executeScript(`document.querySelector("#vl-upload").upload();`);
     }
     
     async load() {

@@ -10,13 +10,11 @@ describe('vl-upload', async () => {
     const uploadServerPort = 8888;
     const uploadServerPath = "/post";
     
-    before((done) => {
-    	vlUploadPage.load().then(() => {
-    		vlUploadPage.changeAllUploadUrlsTo(`http://localhost:${uploadServerPort}${uploadServerPath}`).then(() => {
-    			fileUploadServer = new FileUploadServer(uploadServerPort, uploadServerPath);
-    			fileUploadServer.start(done);
-    		});
-    	});
+    before(async () => {
+    	await vlUploadPage.load();
+    	await vlUploadPage.changeAllUploadUrlsTo(`http://localhost:${uploadServerPort}${uploadServerPath}`);
+		fileUploadServer = new FileUploadServer(uploadServerPort, uploadServerPath);
+    	await fileUploadServer.start();
     });
     
     beforeEach(async () => {
@@ -28,12 +26,15 @@ describe('vl-upload', async () => {
     	fileUploadServer.stop();
     });
     
+    function file(name) {
+    	return path.resolve(__dirname, `./${name}`);
+    }
+    
     it("Als gebruiker kan ik een bestand selecteren om op te laden, maar het nog niet onmiddellijk opladen", async () => {
     	const upload = await vlUploadPage.getUpload();
-    	const file = path.resolve(__dirname, './bestand.pdf');
-    	await upload.uploadFile(file);
+    	await upload.uploadFile(file('bestand.pdf'));
+    	await assert.eventually.lengthOf(upload.getFiles(), 1);
     	const files = await upload.getFiles();
-    	assert.equal(files.length, 1);
     	await assert.eventually.equal(files[0].getName(), "bestand.pdf");
     	await assert.eventually.equal(files[0].getSize(), "13.1 KB");
     	assert.equal(fileUploadServer.uploadedFiles.length, 0);
@@ -44,14 +45,13 @@ describe('vl-upload', async () => {
    
     it("Als gebruiker kan ik verschillende bestanden selecteren om op te laden en ze dan programmatorisch opladen", async () => {
     	const upload = await vlUploadPage.getUpload();
-    	const file = path.resolve(__dirname, './bestand.pdf');
-    	await upload.uploadFile(file);
+    	await upload.uploadFile(file('bestand.pdf'));
     	await vlUploadPage.uploadFiles();
     	await driver.wait(async () => {
     		return fileUploadServer.uploadedFiles.length == 1 && fileUploadServer.uploadedFiles[0] == "bestand.pdf";
     	});
+    	await assert.eventually.lengthOf(upload.getFiles(), 1);
     	const files = await upload.getFiles();
-    	assert.equal(files.length, 1);
     	assert.eventually.isTrue(files[0].isProcessing());
     	assert.eventually.isTrue(files[0].isSuccess());
     	assert.eventually.isFalse(files[0].isError());
@@ -59,8 +59,7 @@ describe('vl-upload', async () => {
     
     it("Als gebruiker kan ik een bestand direct laten opladen bij het selecteren", async () => {
     	const upload = await vlUploadPage.getUploadAutoProcess();
-    	const file = path.resolve(__dirname, './bestand.pdf');
-    	await upload.uploadFile(file);
+    	await upload.uploadFile(file('bestand.pdf'));
     	await driver.wait(async () => {
     		const files = await upload.getFiles();
             return files.length == 1 && fileUploadServer.uploadedFiles.length == 1 && fileUploadServer.uploadedFiles[0] == "bestand.pdf";
@@ -76,11 +75,10 @@ describe('vl-upload', async () => {
     
     it("Als gebruiker zie ik een foutboodschap bij een bestand als het opladen mislukt", async () => {
     	const upload = await vlUploadPage.getUploadAutoProcess();
-    	const file = path.resolve(__dirname, './bestand.pdf');
     	fileUploadServer.failUploads();
-    	await upload.uploadFile(file);
+    	await upload.uploadFile(file("bestand.pdf"));
+    	await assert.eventually.lengthOf(upload.getFiles(), 1);
     	const files = await upload.getFiles();
-    	assert.equal(files.length, 1);
     	await assert.eventually.equal(files[0].getErrorMessage(), "Uw bestand kon niet verwerkt worden");
     	assert.eventually.isTrue(files[0].isProcessing());
     	assert.eventually.isFalse(files[0].isSuccess());
@@ -89,20 +87,18 @@ describe('vl-upload', async () => {
 
     it("Als gebruiker kan ik de lijst gekozen files programmatorisch leeg maken", async () => {
     	const upload = await vlUploadPage.getUploadClear();
-    	const file = path.resolve(__dirname, './bestand.pdf');
-    	await upload.uploadFile(file);
-    	const filesBefore = await upload.getFiles();
-    	assert.equal(filesBefore.length, 1);
-    	await vlUploadPage.clearUploadClear();
-    	const filesAfter = await upload.getFiles();
-    	assert.equal(filesAfter.length, 0);
+    	await upload.uploadFile(file("bestand.pdf"));
+    	await assert.eventually.lengthOf(upload.getFiles(), 1);
+    	const clearButton = await vlUploadPage.uploadClearButton();     	
+    	await clearButton.click();
+    	await assert.eventually.lengthOf(upload.getFiles(), 0);
     });
     
     it("Als gebruiker kan ik het aantal files dat mag gekozen worden beperken", async () => {
     	const upload = await vlUploadPage.getUploadMax5();
     	await assert.eventually.equal(upload.getMaximumNumberOfAllowedFiles(), 5);
     	for (let i = 1; i <= 6; i++) {
-    		await upload.uploadFile(path.resolve(__dirname, `./textfile${i}.txt`));
+    		await upload.uploadFile(file(`textfile${i}.txt`));
     	}
     	const files = await upload.getFiles();
     	for (let i = 1; i <= 5; i++) {
@@ -114,7 +110,7 @@ describe('vl-upload', async () => {
     it("Als gebruiker kan ik de maximum bestandsgrootte bepalen", async () => {
     	const upload = await vlUploadPage.getUploadMaxSize();
     	await assert.eventually.equal(upload.getMaximumFilesize(), 2000000);
-    	await upload.uploadFile(path.resolve(__dirname, './largefile.bin'));
+    	await upload.uploadFile(file('largefile.bin'));
     	const filesTooBig = await upload.getFiles();
     	//TODO de foutboodschap die hier uit komt is fout (2MB ipv 2KB)
     	//dit is een openstaande bug die opgelost is in de volgende versie van webuniversum
@@ -124,21 +120,19 @@ describe('vl-upload', async () => {
     it("Als gebruiker kan ik er voor zorgen dat hetzelfde bestand geen 2 keer kan opgeladen worden", async () => {
     	const upload = await vlUploadPage.getUploadGeenDubbels();
     	await assert.eventually.isTrue(upload.isDuplicatesDisallowed());
-    	await upload.uploadFile(path.resolve(__dirname, './textfile1.txt'));
-    	await upload.uploadFile(path.resolve(__dirname, './textfile1.txt'));
-    	let files = await upload.getFiles();
-    	assert.equal(files.length, 1);
-    	await upload.uploadFile(path.resolve(__dirname, './textfile2.txt'));
-    	files = await upload.getFiles();
-    	assert.equal(files.length, 2);
+    	await upload.uploadFile(file('textfile1.txt'));
+    	await upload.uploadFile(file('textfile1.txt'));
+    	await assert.eventually.lengthOf(upload.getFiles(), 1);
+    	await upload.uploadFile(file('textfile2.txt'));
+    	await assert.eventually.lengthOf(upload.getFiles(), 2);
     });
 
     it("Als gebruiker kan ik enkel bepaalde filetypes toelaten om opgeladen te worden", async () => {
     	const upload = await vlUploadPage.getUploadFileTypes();
     	await assert.eventually.equal(upload.getAcceptedFileTypes(), "application/pdf, .png");
-    	await upload.uploadFile(path.resolve(__dirname, './textfile1.txt'));
+    	await upload.uploadFile(file('textfile1.txt'));
+    	await assert.eventually.lengthOf(upload.getFiles(), 1);
     	let files = await upload.getFiles();
-    	assert.equal(files.length, 1);
     	//TODO de foutboodschap die hier uit komt is fout (fileType niet vervangen)
     	//dit is een openstaande bug die mogelijks opgelost is/wordt in de volgende versie van webuniversum
     	await assert.eventually.equal(files[0].getErrorMessage(), "Je kan enkel :fileType bestanden opladen");
@@ -154,32 +148,28 @@ describe('vl-upload', async () => {
     it("Als gebruiker kan ik events ontvangen wanneer er bestanden worden opgeladen", async () => {
     	const upload = await vlUploadPage.getUpload();
     	await vlUploadPage.listenForEventsOnUpload();
-    	await upload.uploadFile(path.resolve(__dirname, './textfile1.txt'));
+    	await upload.uploadFile(file('textfile1.txt'));
     	await assert.eventually.equal(vlUploadPage.getVlUploadLogText(), "Bestanden in vl-upload: textfile1.txt");
     });
 
     it("Als gebruiker kan ik een gekozen bestand verwijderen", async () => {
     	const upload = await vlUploadPage.getUpload();
-    	const file = path.resolve(__dirname, './bestand.pdf');
-    	await upload.uploadFile(file);
-    	const filesBefore = await upload.getFiles();
-    	assert.equal(filesBefore.length, 1);
-    	await filesBefore[0].remove();
-    	const filesAfter = await upload.getFiles();
-    	assert.equal(filesAfter.length, 0);
+    	await upload.uploadFile(file("bestand.pdf"));
+    	await assert.eventually.lengthOf(upload.getFiles(), 1);
+    	const files = await upload.getFiles();
+    	await files[0].remove();
+    	await assert.eventually.lengthOf(upload.getFiles(), 0);
     });
 
 
     it("Als gebruiker kan ik het opladen van een bestand ook annuleren tijdens dat het aan het opladen is", async () => {
     	const upload = await vlUploadPage.getUploadAutoProcess();
     	fileUploadServer.haltUploads();
-    	const file = path.resolve(__dirname, './bestand.pdf');
-    	await upload.uploadFile(file);
-    	const filesBefore = await upload.getFiles();
-    	assert.equal(filesBefore.length, 1);
-    	await filesBefore[0].remove();
-    	const filesAfter = await upload.getFiles();
-    	assert.equal(filesAfter.length, 0);
+    	await upload.uploadFile(file("bestand.pdf"));
+    	await assert.eventually.lengthOf(upload.getFiles(), 1);
+    	const files = await upload.getFiles();
+    	await files[0].remove();
+    	await assert.eventually.lengthOf(upload.getFiles(), 0);
     });
     
     class FileUploadServer {
@@ -207,7 +197,9 @@ describe('vl-upload', async () => {
     	}
     	
     	start(startedCallback) {
-    		this.server = this.express.listen(this.port, startedCallback);
+    		return new Promise((resolve)  => {
+    			this.server = this.express.listen(this.port, resolve);
+    		});
     	}
     	
     	stop() {
