@@ -3,6 +3,7 @@ const VlUploadPage = require('./pages/vl-upload.page');
 const path = require('path');
 const Express = require("express");
 const Multer = require("multer");
+const remote = require('selenium-webdriver/remote');
 
 describe('vl-upload', async () => {
     const vlUploadPage = new VlUploadPage(driver);
@@ -15,6 +16,7 @@ describe('vl-upload', async () => {
     	await vlUploadPage.changeAllUploadUrlsTo(`http://localhost:${uploadServerPort}${uploadServerPath}`);
 		fileUploadServer = new FileUploadServer(uploadServerPort, uploadServerPath);
     	await fileUploadServer.start();
+    	driver.setFileDetector(new remote.FileDetector);
     });
     
     beforeEach(async () => {
