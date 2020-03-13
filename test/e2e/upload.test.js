@@ -1,4 +1,5 @@
 const { assert, driver } = require('vl-ui-core').Test.Setup;
+const { Config } = require('vl-ui-core').Test;
 const VlUploadPage = require('./pages/vl-upload.page');
 const path = require('path');
 const Express = require("express");
@@ -12,8 +13,9 @@ describe('vl-upload', async () => {
     const uploadServerPath = "/post";
     
     before(async () => {
+    	const host = Config.baseUrl.match(/http:\/\/(.*):(.*)/)[1];
     	await vlUploadPage.load();
-    	await vlUploadPage.changeAllUploadUrlsTo(`http://localhost:${uploadServerPort}${uploadServerPath}`);
+    	await vlUploadPage.changeAllUploadUrlsTo(`http://${host}:${uploadServerPort}${uploadServerPath}`);
 		fileUploadServer = new FileUploadServer(uploadServerPort, uploadServerPath);
     	await fileUploadServer.start();
     	driver.setFileDetector(new remote.FileDetector);
