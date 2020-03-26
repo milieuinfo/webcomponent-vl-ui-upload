@@ -69,8 +69,10 @@ export class VlUpload extends VlElement(HTMLElement) {
   }
 
   get _dropzone() {
-    return vl.upload.dropzoneInstances.filter(
-        dropzone => dropzone.element === this._element)[0];
+	if (vl && vl.upload && vl.upload.dropzoneInstances) {
+		return vl.upload.dropzoneInstances.filter(
+				dropzone => dropzone.element === this._element)[0];
+	}
   }
 
   /**
@@ -196,6 +198,9 @@ export class VlUpload extends VlElement(HTMLElement) {
 
   _urlChangedCallback(oldValue, newValue) {
     this._element.setAttribute(this._prefix + 'url', newValue);
+    if (this._dropzone && this._dropzone.options) {
+    	this._dropzone.options.url = newValue;
+    } 
   }
 
   _input_nameChangedCallback(oldValue, newValue) {
