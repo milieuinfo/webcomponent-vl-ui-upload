@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "@govflanders/vl-ui-core": "3.9.1",
-    "@govflanders/vl-ui-util": "3.9.1",
+    "@govflanders/vl-ui-util": "3.9.2",
     "vl-ui-core": "^5.1.2",
     "vl-ui-icon": "^5.0.0",
     "vl-ui-link": "^4.0.0"
@@ -60,6 +60,6 @@
     "express": "4.17.1",
     "multer": "1.4.2",
     "vl-ui-button": "^4.0.0",
-    "vl-ui-util": "5.0.10"
+    "vl-ui-util": "^5.1.6"
   }
 }
