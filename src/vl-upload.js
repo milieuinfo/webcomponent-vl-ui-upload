@@ -102,7 +102,7 @@ export class VlUpload extends VlElement(HTMLElement) {
           <div class="vl-upload__element">
             <div class="vl-upload__element__label">
               <button type="button" class="vl-upload__element__button vl-link">
-                <span is="vl-icon" icon="paperclip"></span>
+                <span is="vl-icon" data-vl-icon="paperclip"></span>
                 <span class="vl-upload__element__button__container"></span>
               </button>
               <small></small>
@@ -115,7 +115,7 @@ export class VlUpload extends VlElement(HTMLElement) {
             <div class="vl-upload__files__container"></div>
             <div class="vl-upload__files__input__container"></div>
             <button class="vl-upload__files__close vl-link vl-link--icon">
-              <span is="vl-icon" icon="trash" link></span>
+              <span is="vl-icon" data-vl-icon="trash" data-vl-link></span>
               Verwijder alle bestanden
             </button>
           </div>
@@ -124,7 +124,7 @@ export class VlUpload extends VlElement(HTMLElement) {
         <template id="previewTemplate">
           <div class="vl-upload__file">
             <p class="vl-upload__file__name">
-              <span is="vl-icon" class="vl-upload__file__name__icon" icon="document"></span>
+              <span is="vl-icon" class="vl-upload__file__name__icon" data-vl-icon="document"></span>
               <span data-dz-name></span>
               <span class="vl-upload__file__size">
             (<span data-dz-size></span>)
@@ -134,7 +134,7 @@ export class VlUpload extends VlElement(HTMLElement) {
               <span data-dz-errormessage></span>
             </div>
             <button type="button" class="vl-upload__file__close vl-link vl-link--icon" data-dz-remove>
-              <span is="vl-icon" icon="cross"></span>
+              <span is="vl-icon" data-vl-icon="cross"></span>
             </button>
           </div>
         </template>
@@ -142,7 +142,7 @@ export class VlUpload extends VlElement(HTMLElement) {
         <template id="uploadOverlay">
           <div class="vl-upload__overlay">
             <p class="vl-upload__overlay__text">
-              <span is="vl-icon" icon="paperclip" link></span>
+              <span is="vl-icon" data-vl-icon="paperclip" link></span>
             </p>
           </div>
         </template>`);
