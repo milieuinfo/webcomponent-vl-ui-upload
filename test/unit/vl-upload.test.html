@@ -24,19 +24,19 @@
         setup((done) => {
           window.vl = {
             upload: {
-              dress: sinon.spy()
-            }
+              dress: sinon.spy(),
+            },
           };
 
           // dress method wordt gecalled, wachten tot deze effectief uitgevoerd wordt.
           (async () => {
             while (!window.vl || !window.vl.upload) {
-              await new Promise(resolve => setTimeout(resolve, 100));
+              await new Promise((resolve) => setTimeout(resolve, 100));
             }
           })();
 
           upload = fixture('vl-upload-fixture');
-          window.vl.upload.dropzoneInstances = [{element: upload._element, files: [], processQueue: sinon.spy(), removeAllFiles: sinon.spy(), options: {}}]
+          window.vl.upload.dropzoneInstances = [{element: upload._element, files: [], processQueue: sinon.spy(), removeAllFiles: sinon.spy(), options: {}}];
 
           customElements.whenDefined('vl-upload').then(done);
         });
@@ -47,7 +47,7 @@
 
         test('de dress methode voegt de templates aan de body toe', () => {
           ['uploadTemplate', 'previewFilesWrapper', 'previewTemplate', 'uploadOverlay'].forEach(
-              template => should.exist(document.body.querySelector('#' + template)));
+              (template) => should.exist(document.body.querySelector('#' + template)));
         });
 
         test('de dress methode called vl.upload.dress met de upload', () => {
@@ -60,8 +60,8 @@
         });
 
         test('de upload methode met url parameter zet url en called processQueue() van de dropzone', () => {
-          upload.upload("http://www.testexample.com");
-          assert(upload._dropzone.options.url === "http://www.testexample.com");
+          upload.upload('http://www.testexample.com');
+          assert(upload._dropzone.options.url === 'http://www.testexample.com');
           assert(upload._dropzone.processQueue.should.have.been.calledOnce);
         });
 
@@ -149,7 +149,6 @@
           upload.setAttribute('disallow-duplicates', 'true');
           assert(upload._upload.getAttribute(upload._prefix + 'disallow-duplicates') === 'true');
         });
-
       });
     </script>
   </body>

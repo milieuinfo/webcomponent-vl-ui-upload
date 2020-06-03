@@ -1,3 +1,3 @@
-module.exports = { 
-    VlUpload: require('../dist/vl-upload.src.js').VlUpload
-}
+module.exports = {
+  VlUpload: require('../dist/vl-upload.src.js').VlUpload,
+};
