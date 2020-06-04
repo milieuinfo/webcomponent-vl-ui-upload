@@ -2,6 +2,8 @@ const VlUpload = require('../components/vl-upload');
 const {Page} = require('vl-ui-core').Test;
 const {Config} = require('vl-ui-core').Test;
 const {By} = require('vl-ui-core').Test.Setup;
+const {VlHeader} = require('vl-ui-header').Test;
+const {VlFooter} = require('vl-ui-footer').Test;
 
 class VlUploadPage extends Page {
   async _getUpload(selector) {
@@ -79,6 +81,10 @@ class VlUploadPage extends Page {
 
   async load() {
     await super.load(Config.baseUrl + '/demo/vl-upload.html');
+    const header = await new VlHeader(this.driver);
+    const footer = await new VlFooter(this.driver);
+    await header.remove();
+    await footer.remove();
   }
 }
 

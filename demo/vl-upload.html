@@ -43,9 +43,10 @@
             <vl-upload id="vl-upload-clear" url="http://httpbin.org/post" input-name="files"></vl-upload>
             <button id="vl-upload-clear-button" is="vl-button" onclick="clearList()">Clear</button>
             <script type="text/javascript">
-                function clearList() {
-                    document.querySelector("#vl-upload-clear").clear();
-                }
+                // eslint-disable-next-line no-unused-vars
+                const clearList = () => {
+                  document.querySelector('#vl-upload-clear').clear();
+                };
             </script>
         </vl-demo>
 
@@ -90,14 +91,15 @@
             </p>
             <button id="vl-upload-listener-button" is="vl-button" onclick="addListener()">Voeg listener toe</button>
             <script>
-                function addListener() {
-                    document.querySelector('vl-upload[id="vl-upload"]').on('vl.upload.hook.fileChange',
-                        function (event) {
-                            console.log(event);
-                            console.log(vl.upload.dropzoneInstances[0].files);
-                            document.querySelector("#vl-upload-log").innerText = "Bestanden in vl-upload: " + vl.upload.dropzoneInstances[0].files.map(f => f.name);
-                        });
-                }
+                // eslint-disable-next-line no-unused-vars
+                const addListener = () => {
+                  document.querySelector('vl-upload[id="vl-upload"]').on('vl.upload.hook.fileChange',
+                      function(event) {
+                        console.log(event);
+                        console.log(vl.upload.dropzoneInstances[0].files);
+                        document.querySelector('#vl-upload-log').innerText = 'Bestanden in vl-upload: ' + vl.upload.dropzoneInstances[0].files.map((f) => f.name);
+                      });
+                };
             </script>
             <span id="vl-upload-log"></span>
         </vl-demo>
