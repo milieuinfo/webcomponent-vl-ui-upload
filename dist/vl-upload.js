@@ -1,4 +1,4 @@
-import {VlElement, define} from '/node_modules/vl-ui-core/dist/vl-core.js';
+import {vlElement, define} from '/node_modules/vl-ui-core/dist/vl-core.js';
 import '/node_modules/vl-ui-icon/dist/vl-icon.js';
 import '/node_modules/@govflanders/vl-ui-util/dist/js/util.js';
 import '/node_modules/@govflanders/vl-ui-core/dist/js/core.js';
@@ -9,7 +9,8 @@ import '/node_modules/vl-ui-upload/lib/upload.js';
  * @class
  * @classdesc Gebruik de upload component om één of meerdere bestanden te selecteren of te slepen naar het upload veld. De gebruiker kan alternatief ook één of meerdere bestanden uploaden door op de link in het upload veld te klikken en de bestanden te selecteren in het Bestand menu.
  *
- * @extends VlElement
+ * @extends HTMLElement
+ * @mixin vlElement
  *
  * @property {URL} url - Attribuut om de url naar waar de component moet uploaden, te definiëren.
  * @property {string} input-name - Attribuut om de key te definiëren waarmee het bestand wordt opgeladen.
@@ -21,13 +22,12 @@ import '/node_modules/vl-ui-upload/lib/upload.js';
  * @property {list} accepted-files - Attribuut om te op te lijsten welke bestanden worden geaccepteerd door component (extensie en mimetype).
  * @property {boolean} full-body-drop - Attribuut om te activeren of deactiveren dat het de dropzone over het heel scherm is.
  * @property {boolean} autoprocess - Attribuut om te activeren of deactiveren dat het het gedropte bestand direct moet opgeladen worden.
- * 
+ *
  * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-upload/releases/latest|Release notes}
  * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-upload/issues|Issues}
  * @see {@link https://webcomponenten.omgeving.vlaanderen.be/demo/vl-upload.html|Demo}
  */
-export class VlUpload extends VlElement(HTMLElement) {
-
+export class VlUpload extends vlElement(HTMLElement) {
   static get _observedAttributes() {
     return ['url', 'input-name', 'error-message-filesize', 'error-message-accepted-files',
       'error-message-maxfiles', 'max-files', 'max-size', 'accepted-files', 'full-body-drop', 'autoprocess',
@@ -66,15 +66,15 @@ export class VlUpload extends VlElement(HTMLElement) {
   }
 
   get _dropzone() {
-	if (vl && vl.upload && vl.upload.dropzoneInstances) {
-		return vl.upload.dropzoneInstances.filter(
-				dropzone => dropzone.element === this._element)[0];
-	}
+    if (vl && vl.upload && vl.upload.dropzoneInstances) {
+      return vl.upload.dropzoneInstances.filter(
+          (dropzone) => dropzone.element === this._element)[0];
+    }
   }
 
   /**
    * Haal de geaccepteerde bestanden (zonder error) op, die toegevoegd zijn aan de dropzone.
-   * @returns {File[]}
+   * @return {File[]}
    */
   get acceptedFiles() {
     return this._dropzone.getAcceptedFiles();
@@ -82,7 +82,7 @@ export class VlUpload extends VlElement(HTMLElement) {
 
   /**
    * Haal de niet-geaccepteerde bestanden (met error) op, die toegevoegd zijn aan de dropzone.
-   * @returns {File[]}
+   * @return {File[]}
    */
   get rejectedFiles() {
     return this._dropzone.getRejectedFiles();
@@ -90,7 +90,7 @@ export class VlUpload extends VlElement(HTMLElement) {
 
   /**
    * Haal alle bestanden op die toegevoegd zijn aan de dropzone.
-   * @returns {File[]}
+   * @return {File[]}
    */
   get files() {
     return this._dropzone.files;
@@ -102,7 +102,7 @@ export class VlUpload extends VlElement(HTMLElement) {
           <div class="vl-upload__element">
             <div class="vl-upload__element__label">
               <button type="button" class="vl-upload__element__button vl-link">
-                <span is="vl-icon" icon="paperclip"></span>
+                <span is="vl-icon" data-vl-icon="paperclip"></span>
                 <span class="vl-upload__element__button__container"></span>
               </button>
               <small></small>
@@ -115,7 +115,7 @@ export class VlUpload extends VlElement(HTMLElement) {
             <div class="vl-upload__files__container"></div>
             <div class="vl-upload__files__input__container"></div>
             <button class="vl-upload__files__close vl-link vl-link--icon">
-              <span is="vl-icon" icon="trash" link></span>
+              <span is="vl-icon" data-vl-icon="trash" data-vl-link></span>
               Verwijder alle bestanden
             </button>
           </div>
@@ -124,7 +124,7 @@ export class VlUpload extends VlElement(HTMLElement) {
         <template id="previewTemplate">
           <div class="vl-upload__file">
             <p class="vl-upload__file__name">
-              <span is="vl-icon" class="vl-upload__file__name__icon" icon="document"></span>
+              <span is="vl-icon" class="vl-upload__file__name__icon" data-vl-icon="document"></span>
               <span data-dz-name></span>
               <span class="vl-upload__file__size">
             (<span data-dz-size></span>)
@@ -134,7 +134,7 @@ export class VlUpload extends VlElement(HTMLElement) {
               <span data-dz-errormessage></span>
             </div>
             <button type="button" class="vl-upload__file__close vl-link vl-link--icon" data-dz-remove>
-              <span is="vl-icon" icon="cross"></span>
+              <span is="vl-icon" data-vl-icon="cross"></span>
             </button>
           </div>
         </template>
@@ -142,7 +142,7 @@ export class VlUpload extends VlElement(HTMLElement) {
         <template id="uploadOverlay">
           <div class="vl-upload__overlay">
             <p class="vl-upload__overlay__text">
-              <span is="vl-icon" icon="paperclip" link></span>
+              <span is="vl-icon" data-vl-icon="paperclip" link></span>
             </p>
           </div>
         </template>`);
@@ -154,19 +154,19 @@ export class VlUpload extends VlElement(HTMLElement) {
 
   /**
    * Initialiseer de modal config.
-   * @returns void
+   * @return {void}
    */
   dress() {
     if (!this._dressed) {
-      document.body.appendChild(this._templates)
+      document.body.appendChild(this._templates);
       vl.upload.dress(this._upload);
     }
   }
 
   /**
    * Handmatig de upload aanroepen. Indien een url gegeven is, laad op naar die url.
-   * @param url
-   * @returns void
+   * @param {String} url
+   * @return {void}
    */
   upload(url) {
     if (url) {
@@ -177,7 +177,7 @@ export class VlUpload extends VlElement(HTMLElement) {
 
   /**
    * Verwijder alle files in de dropzone.
-   * @returns void
+   * @return {void}
    */
   clear() {
     this._dropzone.removeAllFiles();
@@ -185,9 +185,9 @@ export class VlUpload extends VlElement(HTMLElement) {
 
   /**
    * Wrapper om alle events te kunnen catchen van de upload (zoals vl.upload.hook.fileChange alsook de events van [DropZoneJs]{@link https://www.dropzonejs.com/#event-list})
-   * @param event
-   * @param callback
-   * @returns void
+   * @param {String} event
+   * @param {Function} callback
+   * @return {void}
    */
   on(event, callback) {
     this._element.addEventListener(event, callback);
@@ -196,43 +196,43 @@ export class VlUpload extends VlElement(HTMLElement) {
   _urlChangedCallback(oldValue, newValue) {
     this._element.setAttribute(this._prefix + 'url', newValue);
     if (this._dropzone && this._dropzone.options) {
-    	this._dropzone.options.url = newValue;
-    } 
+      this._dropzone.options.url = newValue;
+    }
   }
 
-  _input_nameChangedCallback(oldValue, newValue) {
+  _inputNameChangedCallback(oldValue, newValue) {
     this._element.setAttribute(this._prefix + 'input-name', newValue);
   }
 
-  _error_message_filesizeChangedCallback(oldValue, newValue) {
+  _errorMessageFilesizeChangedCallback(oldValue, newValue) {
     this._element.setAttribute(this._prefix + 'error-message-filesize',
         newValue);
   }
 
-  _error_message_accepted_filesChangedCallback(oldValue, newValue) {
+  _errorMessageAcceptedFilesChangedCallback(oldValue, newValue) {
     this._element.setAttribute(this._prefix + 'error-message-accepted-files',
         newValue);
   }
 
-  _error_message_maxfilesChangedCallback(oldValue, newValue) {
+  _errorMessageMaxfilesChangedCallback(oldValue, newValue) {
     this._element.setAttribute(this._prefix + 'error-message-maxfiles',
         newValue);
   }
 
-  _max_filesChangedCallback(oldValue, newValue) {
+  _maxFilesChangedCallback(oldValue, newValue) {
     this._element.setAttribute(this._prefix + 'max-files', newValue);
   }
 
-  _max_sizeChangedCallback(oldValue, newValue) {
+  _maxSizeChangedCallback(oldValue, newValue) {
     this._element.setAttribute(this._prefix + 'max-size', newValue);
   }
 
-  _accepted_filesChangedCallback(oldValue, newValue) {
+  _acceptedFilesChangedCallback(oldValue, newValue) {
     this._element.setAttribute(this._prefix + 'accepted-files', newValue);
     this._element.setAttribute('accept', newValue);
   }
 
-  _full_body_dropChangedCallback(oldValue, newValue) {
+  _fullBodyDropChangedCallback(oldValue, newValue) {
     this._element.setAttribute(this._prefix + 'full-body-drop', '');
   }
 
@@ -240,10 +240,9 @@ export class VlUpload extends VlElement(HTMLElement) {
     this._element.setAttribute(this._prefix + 'autoprocess', newValue);
   }
 
-  _disallow_duplicatesChangedCallback(oldValue, newValue) {
+  _disallowDuplicatesChangedCallback(oldValue, newValue) {
     this._element.setAttribute(this._prefix+'disallow-duplicates', newValue);
   }
-
 }
 
 define('vl-upload', VlUpload);
