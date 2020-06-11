@@ -10,7 +10,6 @@ import '/node_modules/vl-ui-upload/lib/upload.js';
  * @classdesc Gebruik de upload component om één of meerdere bestanden te selecteren of te slepen naar het upload veld. De gebruiker kan alternatief ook één of meerdere bestanden uploaden door op de link in het upload veld te klikken en de bestanden te selecteren in het Bestand menu.
  *
  * @extends HTMLElement
- * @mixin vlElement
  *
  * @property {URL} url - Attribuut om de url naar waar de component moet uploaden, te definiëren.
  * @property {string} input-name - Attribuut om de key te definiëren waarmee het bestand wordt opgeladen.
