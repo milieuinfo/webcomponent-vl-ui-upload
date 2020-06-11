@@ -78,7 +78,7 @@ class VlUploadPage extends Page {
   }
 
   async load() {
-    await super.load(Config.baseUrl + '/demo/vl-upload.html?no-header=true&no-footer=true');
+    await super.load(Config.baseUrl + '/demo/vl-upload.html');
   }
 }
 
