@@ -33,7 +33,7 @@
     "test:e2e:grid": "npm explore vl-ui-util -- npm run test:component:e2e:grid",
     "release": "npm explore vl-ui-util -- npm run release",
     "release:prepare": "npm explore vl-ui-util -- npm run release-component:prepare $(pwd) upload",
-    "release:testless": "npm explore vl-ui-util -- npm run release:testless",
+    "release:testless": "np --yolo",
     "demo": "http-server"
   },
   "dependencies": {
@@ -49,7 +49,7 @@
     "vl-ui-link": "^4.0.4"
   },
   "devDependencies": {
-    "@govflanders/vl-ui-upload": "3.9.1",
+    "@govflanders/vl-ui-upload": "3.10.1",
     "express": "4.17.1",
     "multer": "1.4.2",
     "vl-ui-button": "^5.0.5",
