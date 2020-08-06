@@ -44,9 +44,9 @@ export class VlUpload extends vlElement(HTMLElement) {
   constructor() {
     super(`
       <style>
+        @import '/src/style.css';
         @import '/node_modules/vl-ui-link/dist/style.css';
         @import '/node_modules/vl-ui-icon/dist/style.css';
-        @import '/src/style.css';
       </style>
       <div class="vl-upload" data-vl-upload data-vl-upload-url="http://www.example.com"></div>
     `);
