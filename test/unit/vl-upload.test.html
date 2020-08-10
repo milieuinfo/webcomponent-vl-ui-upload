@@ -8,6 +8,7 @@
 
     <script type="module" src="../../src/vl-upload.js"></script>
   </head>
+
   <body>
     <test-fixture id="vl-upload-fixture">
       <template>
@@ -72,81 +73,81 @@
 
         test('verander url attribute van de upload', () => {
           assert(upload._upload.getAttribute(upload._prefix +'url') === 'http://www.example.com');
-          upload.setAttribute('url', 'http://www.newexample.com');
+          upload.setAttribute('data-vl-url', 'http://www.newexample.com');
           assert(upload._upload.getAttribute(upload._prefix + 'url') === 'http://www.newexample.com');
         });
 
         test('verander input-name attribute van de upload', () => {
           assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'input-name'));
-          assert.isFalse(upload.hasAttribute('input-name'));
-          upload.setAttribute('input-name', 'files');
+          assert.isFalse(upload.hasAttribute('data-vl-input-name'));
+          upload.setAttribute('data-vl-input-name', 'files');
           assert(upload._upload.getAttribute(upload._prefix + 'input-name') === 'files');
         });
 
         test('verander error-message-accepted-files attribute van de upload', () => {
           assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'error-message-accepted-files'));
-          assert.isFalse(upload.hasAttribute('error-message-accepted-files'));
-          upload.setAttribute('error-message-accepted-files', 'File not accepted');
+          assert.isFalse(upload.hasAttribute('data-vl-error-message-accepted-files'));
+          upload.setAttribute('data-vl-error-message-accepted-files', 'File not accepted');
           assert(upload._upload.getAttribute(upload._prefix + 'error-message-accepted-files') === 'File not accepted');
         });
 
         test('verander error-message-filesize attribute van de upload', () => {
           assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'error-message-filesize'));
-          assert.isFalse(upload.hasAttribute('error-message-filesize'));
-          upload.setAttribute('error-message-filesize', 'Too much');
+          assert.isFalse(upload.hasAttribute('data-vl-error-message-filesize'));
+          upload.setAttribute('data-vl-error-message-filesize', 'Too much');
           assert(upload._upload.getAttribute(upload._prefix + 'error-message-filesize') === 'Too much');
         });
 
         test('verander error-message-maxfiles attribute van de upload', () => {
           assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'error-message-maxfiles'));
-          assert.isFalse(upload.hasAttribute('error-message-maxfiles'));
-          upload.setAttribute('error-message-maxfiles', 'Too much');
+          assert.isFalse(upload.hasAttribute('data-vl-error-message-maxfiles'));
+          upload.setAttribute('data-vl-error-message-maxfiles', 'Too much');
           assert(upload._upload.getAttribute(upload._prefix + 'error-message-maxfiles') === 'Too much');
         });
 
         test('verander max-files attribute van de upload', () => {
           assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'max-files'));
-          assert.isFalse(upload.hasAttribute('max-files'));
-          upload.setAttribute('max-files', '5');
+          assert.isFalse(upload.hasAttribute('data-vl-max-files'));
+          upload.setAttribute('data-vl-max-files', '5');
           assert(upload._upload.getAttribute(upload._prefix + 'max-files') === '5');
         });
 
         test('verander max-size attribute van de upload', () => {
           assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'max-size'));
-          assert.isFalse(upload.hasAttribute('max-size'));
-          upload.setAttribute('max-size', '200');
+          assert.isFalse(upload.hasAttribute('data-vl-max-size'));
+          upload.setAttribute('data-vl-max-size', '200');
           assert(upload._upload.getAttribute(upload._prefix + 'max-size') === '200');
         });
 
         test('verander accepted-files attribute van de upload', () => {
           assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'accepted-files'));
-          assert.isFalse(upload.hasAttribute('accepted-files'));
-          upload.setAttribute('accepted-files', 'application/pdf');
+          assert.isFalse(upload.hasAttribute('data-vl-accepted-files'));
+          upload.setAttribute('data-vl-accepted-files', 'application/pdf');
           assert(upload._upload.getAttribute(upload._prefix + 'accepted-files') === 'application/pdf');
         });
 
         test('verander full-body-drop attribute van de upload', () => {
           assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'full-body-drop'));
-          assert.isFalse(upload.hasAttribute('full-body-drop'));
-          upload.setAttribute('full-body-drop', '');
+          assert.isFalse(upload.hasAttribute('data-vl-full-body-drop'));
+          upload.setAttribute('data-vl-full-body-drop', '');
           assert(upload._upload.hasAttribute(upload._prefix + 'full-body-drop'));
         });
 
         test('verander autoprocess attribute van de upload', () => {
           assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'autoprocess'));
-          upload.setAttribute('autoprocess', 'true');
+          upload.setAttribute('data-vl-autoprocess', 'true');
           assert(upload._upload.getAttribute(upload._prefix + 'autoprocess') === 'true');
         });
 
         test('verander error attribute van de upload', () => {
           assert.isFalse(upload._upload.classList.contains('vl-upload--error'));
-          upload.setAttribute('error', '');
+          upload.setAttribute('data-vl-error', '');
           assert(upload._upload.classList.contains('vl-upload--error'));
         });
 
         test('verander disallow-duplicates attribute van de upload', () => {
           assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'disallow-duplicates'));
-          upload.setAttribute('disallow-duplicates', 'true');
+          upload.setAttribute('data-vl-disallow-duplicates', 'true');
           assert(upload._upload.getAttribute(upload._prefix + 'disallow-duplicates') === 'true');
         });
       });

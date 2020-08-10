@@ -20,20 +20,20 @@
         </p>
 
         <vl-demo data-vl-title="Upload">
-            <vl-upload url="http://httpbin.org/post" input-name="files" id="vl-upload"></vl-upload>
+            <vl-upload url="http://httpbin.org/post" data-vl-input-name="files" id="vl-upload"></vl-upload>
         </vl-demo>
 
         <vl-demo data-vl-title="Upload bij toevoegen van bestand">
-            <vl-upload id="vl-upload-auto-process" url="http://httpbin.org/post" input-name="files" autoprocess="true">
+            <vl-upload id="vl-upload-auto-process" url="http://httpbin.org/post" data-vl-input-name="files" data-vl-autoprocess="true">
             </vl-upload>
         </vl-demo>
 
         <vl-demo data-vl-title="Upload error">
-            <vl-upload id="vl-upload-error" url="http://httpbin.org/post" input-name="files" error></vl-upload>
+            <vl-upload id="vl-upload-error" url="http://httpbin.org/post" data-vl-input-name="files" data-vl-error></vl-upload>
         </vl-demo>
 
         <vl-demo data-vl-title="Upload clear">
-            <vl-upload id="vl-upload-clear" url="http://httpbin.org/post" input-name="files"></vl-upload>
+            <vl-upload id="vl-upload-clear" data-vl-url="http://httpbin.org/post" data-vl-input-name="files"></vl-upload>
             <button id="vl-upload-clear-button" is="vl-button" onclick="clearList()">Clear</button>
             <script type="text/javascript">
                 // eslint-disable-next-line no-unused-vars
@@ -44,26 +44,26 @@
         </vl-demo>
 
         <vl-demo data-vl-title="Beperkte upload (aantal en grootte)">
-            <vl-upload id="vl-upload-max-5" url="http://httpbin.org/post" input-name="files"
-                error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
-                error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden." max-files="5" max-size="2000000"></vl-upload>
+            <vl-upload id="vl-upload-max-5" data-vl-url="http://httpbin.org/post" data-vl-input-name="files"
+                data-vl-error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
+                data-vl-error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden." data-vl-max-files="5" data-vl-max-size="2000000"></vl-upload>
         </vl-demo>
 
         <vl-demo data-vl-title="Beperkte upload zonder dubbels">
-            <vl-upload id="vl-upload-geen-dubbels" url="http://httpbin.org/post" input-name="files"
+            <vl-upload id="vl-upload-geen-dubbels" data-vl-url="http://httpbin.org/post" data-vl-input-name="files"
                 error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
-                error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden." max-files="2" max-size="20000000"
+                error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden." data-vl-max-files="2" data-vl-max-size="20000000"
                 disallow-duplicates="true"></vl-upload>
         </vl-demo>
 
         <vl-demo data-vl-title="Beperkte upload (aantal en type)">
-            <vl-upload id="vl-upload-file-types" url="http://httpbin.org/post" input-name="files" max-files="10"
-                max-size="20000000" accepted-files="application/pdf, .png"
-                error-message-accepted-files="Je kan enkel :fileType bestanden opladen"></vl-upload>
+            <vl-upload id="vl-upload-file-types" data-vl-url="http://httpbin.org/post" data-vl-input-name="files" data-vl-max-files="10"
+                data-vl-max-size="20000000" data-vl-accepted-files="application/pdf, .png"
+                data-vl-error-message-accepted-files="Je kan enkel :fileType bestanden opladen"></vl-upload>
         </vl-demo>
 
         <vl-demo data-vl-title="Full body Dropzone upload">
-            <vl-upload id="vl-upload-full-body-drop" url="http://httpbin.org/post" input-name="files" full-body-drop>
+            <vl-upload id="vl-upload-full-body-drop" data-vl-url="http://httpbin.org/post" data-vl-input-name="files" data-vl-full-body-drop>
             </vl-upload>
         </vl-demo>
 
