@@ -4,14 +4,16 @@
 <head>
     <title>vl-upload voorbeeld</title>
     <script type="module" src="/node_modules/vl-ui-demo/dist/vl-demo-all.js"></script>
-
-    <script type="module" src="/src/vl-upload.js"></script>
+    <script type="module" src="/node_modules/vl-ui-body/dist/vl-body.js"></script>
     <script type="module" src="/node_modules/vl-ui-button/dist/vl-button.js"></script>
 
+    <script type="module" src="/src/vl-upload.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/node_modules/vl-ui-body/dist/style.css" />
     <link rel="stylesheet" type="text/css" href="/node_modules/vl-ui-button/dist/style.css" />
 </head>
 
-<body>
+<body is="vl-body">
     <vl-demo-page data-vl-webcomponent="vl-button" data-vl-link="https://overheid.vlaanderen.be/webuniversum/v3/documentation/forms/vl-ui-upload">
         <p>
             Om de bestanden effectief op te laden, moet je <strong>vl.upload.dropzoneInstances[i].processQueue()</strong>
@@ -24,8 +26,7 @@
         </vl-demo>
 
         <vl-demo data-vl-title="Upload bij toevoegen van bestand">
-            <vl-upload id="vl-upload-auto-process" url="http://httpbin.org/post" data-vl-input-name="files" data-vl-autoprocess="true">
-            </vl-upload>
+            <vl-upload id="vl-upload-auto-process" url="http://httpbin.org/post" data-vl-input-name="files" data-vl-autoprocess="true"></vl-upload>
         </vl-demo>
 
         <vl-demo data-vl-title="Upload error">
@@ -34,7 +35,9 @@
 
         <vl-demo data-vl-title="Upload clear">
             <vl-upload id="vl-upload-clear" data-vl-url="http://httpbin.org/post" data-vl-input-name="files"></vl-upload>
-            <button id="vl-upload-clear-button" is="vl-button" onclick="clearList()">Clear</button>
+            <div is="vl-action-group" slot="actions">
+                <button id="vl-upload-clear-button" is="vl-button" onclick="clearList()">Clear</button>
+            </div>
             <script type="text/javascript">
                 // eslint-disable-next-line no-unused-vars
                 const clearList = () => {
@@ -63,8 +66,7 @@
         </vl-demo>
 
         <vl-demo data-vl-title="Full body Dropzone upload">
-            <vl-upload id="vl-upload-full-body-drop" data-vl-url="http://httpbin.org/post" data-vl-input-name="files" data-vl-full-body-drop>
-            </vl-upload>
+            <vl-upload id="vl-upload-full-body-drop" data-vl-url="http://httpbin.org/post" data-vl-input-name="files" data-vl-full-body-drop></vl-upload>
         </vl-demo>
 
         <vl-demo data-vl-title="Event listener">
