@@ -52,8 +52,8 @@
     "@govflanders/vl-ui-upload": "^3.11.5",
     "express": "^4.17.1",
     "multer": "^1.4.2",
+    "vl-ui-body": "^1.0.4",
     "vl-ui-button": "^5.0.6",
-    "vl-ui-body": "^1.0.3",
-    "vl-ui-util": "^5.2.12"
+    "vl-ui-util": "^5.2.13"
   }
 }

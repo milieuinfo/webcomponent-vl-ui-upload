@@ -116,9 +116,7 @@ describe('vl-upload', async () => {
     await assert.eventually.equal(upload.getMaximumFilesize(), 2000000);
     await upload.uploadFile(file('largefile.bin'));
     const filesTooBig = await upload.getFiles();
-    // TODO de foutboodschap die hier uit komt is fout (2MB ipv 2KB)
-    // dit is een openstaande bug die opgelost is in de volgende versie van webuniversum
-    await assert.eventually.equal(filesTooBig[0].getErrorMessage(), 'De grootte van het bestand mag maximaal 2 KB zijn.');
+    await assert.eventually.equal(filesTooBig[0].getErrorMessage(), 'De grootte van het bestand mag maximaal 2 MB zijn.');
   });
 
   it('Als gebruiker kan ik er voor zorgen dat hetzelfde bestand geen 2 keer kan opgeladen worden', async () => {
