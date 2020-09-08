@@ -72,6 +72,14 @@ export class VlUpload extends vlElement(HTMLElement) {
   }
 
   /**
+   * Geeft het upload element.
+   * @return {HTMLElement}
+   */
+  get uploadElement() {
+    return this.shadowRoot.querySelector('.vl-upload__element');
+  }
+
+  /**
    * Haal de geaccepteerde bestanden (zonder error) op, die toegevoegd zijn aan de dropzone.
    * @return {File[]}
    */

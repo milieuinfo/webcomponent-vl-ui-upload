@@ -16,7 +16,9 @@
       </template>
     </test-fixture>
 
-    <script>
+    <script type="module">
+      import {awaitUntil} from 'vl-ui-core/dist/vl-core';
+
       suite('vl-upload', () => {
         const should = chai.should();
 
@@ -29,17 +31,11 @@
             },
           };
 
-          // dress method wordt gecalled, wachten tot deze effectief uitgevoerd wordt.
-          (async () => {
-            while (!window.vl || !window.vl.upload) {
-              await new Promise((resolve) => setTimeout(resolve, 100));
-            }
-          })();
-
-          upload = fixture('vl-upload-fixture');
-          window.vl.upload.dropzoneInstances = [{element: upload._element, files: [], processQueue: sinon.spy(), removeAllFiles: sinon.spy(), options: {}}];
-
-          customElements.whenDefined('vl-upload').then(done);
+          awaitUntil(() => window.vl && window.vl.upload).then(() => {
+            upload = fixture('vl-upload-fixture');
+            window.vl.upload.dropzoneInstances = [{element: upload._element, files: [], processQueue: sinon.spy(), removeAllFiles: sinon.spy(), options: {}}];
+            customElements.whenDefined('vl-upload').then(done);
+          });
         });
 
         test('heeft de vl-upload class', () => {
@@ -47,26 +43,25 @@
         });
 
         test('de dress methode voegt de templates aan de body toe', () => {
-          ['uploadTemplate', 'previewFilesWrapper', 'previewTemplate', 'uploadOverlay'].forEach(
-              (template) => should.exist(document.body.querySelector('#' + template)));
+          ['uploadTemplate', 'previewFilesWrapper', 'previewTemplate', 'uploadOverlay'].forEach((template) => should.exist(document.body.querySelector('#' + template)));
         });
 
-        test('de dress methode called vl.upload.dress met de upload', () => {
+        test('de dress methode voert achterliggend de juiste upload dress methode aan', () => {
           assert(window.vl.upload.dress.calledWith(upload._upload));
         });
 
-        test('de upload methode called processQueue() van de dropzone', () => {
+        test('de upload methode initialiseert de queue van de dropzone', () => {
           upload.upload();
           assert(upload._dropzone.processQueue.should.have.been.calledOnce);
         });
 
-        test('de upload methode met url parameter zet url en called processQueue() van de dropzone', () => {
+        test('de upload methode met url parameter zet url en initialiseert de queue van de dropzone', () => {
           upload.upload('http://www.testexample.com');
           assert(upload._dropzone.options.url === 'http://www.testexample.com');
           assert(upload._dropzone.processQueue.should.have.been.calledOnce);
         });
 
-        test('de clear methode met called removeAllFiles() van de dropzone', () => {
+        test('de clear methode roept de juiste verwijder methode aan van de dropzone', () => {
           upload.clear();
           assert(upload._dropzone.removeAllFiles.should.have.been.calledOnce);
         });
@@ -149,6 +144,13 @@
           assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'disallow-duplicates'));
           upload.setAttribute('data-vl-disallow-duplicates', 'true');
           assert(upload._upload.getAttribute(upload._prefix + 'disallow-duplicates') === 'true');
+        });
+
+        test('het upload input element kan opgevraagd worden', () => {
+          awaitUntil(() => upload._dressed).then(() => {
+            should.exist(upload.uploadElement);
+            assert.isTrue(upload.uploadElement.classList.contains('vl-upload__element'));
+          });
         });
       });
     </script>
