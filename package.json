@@ -39,7 +39,7 @@
   "dependencies": {
     "@govflanders/vl-ui-core": "^4.0.5",
     "@govflanders/vl-ui-util": "^3.11.5",
-    "vl-ui-core": "^6.0.0",
+    "vl-ui-core": "^6.0.1",
     "vl-ui-icon": "^5.2.0",
     "vl-ui-link": "^4.0.5"
   },
@@ -54,6 +54,6 @@
     "multer": "^1.4.2",
     "vl-ui-body": "^1.0.4",
     "vl-ui-button": "^5.0.6",
-    "vl-ui-util": "^5.2.13"
+    "vl-ui-util": "^5.2.14"
   }
 }

@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <script src="../../node_modules/@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
-    <script src="../../node_modules/web-component-tester/browser.js"></script>
-    <script src="../../node_modules/sinon/pkg/sinon.js"></script>
+    <script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="/node_modules/web-component-tester/browser.js"></script>
+    <script src="/node_modules/sinon/pkg/sinon.js"></script>
 
     <script type="module" src="../../src/vl-upload.js"></script>
   </head>
@@ -16,63 +16,72 @@
       </template>
     </test-fixture>
 
+    <test-fixture id="vl-uploads-fixture">
+      <template>
+        <vl-upload url="http://www.example.com"/>
+        <vl-upload url="http://www.example.com"/>
+        <vl-upload url="http://www.example.com"/>
+      </template>
+    </test-fixture>
+
     <script type="module">
       import {awaitUntil} from 'vl-ui-core/dist/vl-core';
 
       suite('vl-upload', () => {
+        const sandbox = sinon.createSandbox();
         const should = chai.should();
 
-        let upload;
-
-        setup((done) => {
-          window.vl = {
-            upload: {
-              dress: sinon.spy(),
-            },
-          };
-
-          awaitUntil(() => window.vl && window.vl.upload).then(() => {
-            upload = fixture('vl-upload-fixture');
-            window.vl.upload.dropzoneInstances = [{element: upload._element, files: [], processQueue: sinon.spy(), removeAllFiles: sinon.spy(), options: {}}];
-            customElements.whenDefined('vl-upload').then(done);
-          });
+        teardown(() => {
+          sandbox.restore();
         });
 
         test('heeft de vl-upload class', () => {
+          const upload = fixture('vl-upload-fixture');
           assert(upload._upload.classList.contains('vl-upload'));
         });
 
         test('de dress methode voegt de templates aan de body toe', () => {
+          fixture('vl-upload-fixture');
           ['uploadTemplate', 'previewFilesWrapper', 'previewTemplate', 'uploadOverlay'].forEach((template) => should.exist(document.body.querySelector('#' + template)));
         });
 
         test('de dress methode voert achterliggend de juiste upload dress methode aan', () => {
-          assert(window.vl.upload.dress.calledWith(upload._upload));
+          sandbox.spy(vl.upload, 'dress');
+          const upload = fixture('vl-upload-fixture');
+          assert(vl.upload.dress.calledWith(upload._upload));
         });
 
         test('de upload methode initialiseert de queue van de dropzone', () => {
+          const upload = fixture('vl-upload-fixture');
+          vl.upload.dropzoneInstances = [{element: upload._element, files: [], processQueue: sinon.spy(), options: {}}];
           upload.upload();
           assert(upload._dropzone.processQueue.should.have.been.calledOnce);
         });
 
         test('de upload methode met url parameter zet url en initialiseert de queue van de dropzone', () => {
+          const upload = fixture('vl-upload-fixture');
+          vl.upload.dropzoneInstances = [{element: upload._element, files: [], processQueue: sinon.spy(), options: {}}];
           upload.upload('http://www.testexample.com');
           assert(upload._dropzone.options.url === 'http://www.testexample.com');
           assert(upload._dropzone.processQueue.should.have.been.calledOnce);
         });
 
         test('de clear methode roept de juiste verwijder methode aan van de dropzone', () => {
+          const upload = fixture('vl-upload-fixture');
+          vl.upload.dropzoneInstances = [{element: upload._element, files: [], removeAllFiles: sinon.spy(), options: {}}];
           upload.clear();
           assert(upload._dropzone.removeAllFiles.should.have.been.calledOnce);
         });
 
         test('verander url attribute van de upload', () => {
+          const upload = fixture('vl-upload-fixture');
           assert(upload._upload.getAttribute(upload._prefix +'url') === 'http://www.example.com');
           upload.setAttribute('data-vl-url', 'http://www.newexample.com');
           assert(upload._upload.getAttribute(upload._prefix + 'url') === 'http://www.newexample.com');
         });
 
         test('verander input-name attribute van de upload', () => {
+          const upload = fixture('vl-upload-fixture');
           assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'input-name'));
           assert.isFalse(upload.hasAttribute('data-vl-input-name'));
           upload.setAttribute('data-vl-input-name', 'files');
@@ -80,6 +89,7 @@
         });
 
         test('verander error-message-accepted-files attribute van de upload', () => {
+          const upload = fixture('vl-upload-fixture');
           assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'error-message-accepted-files'));
           assert.isFalse(upload.hasAttribute('data-vl-error-message-accepted-files'));
           upload.setAttribute('data-vl-error-message-accepted-files', 'File not accepted');
@@ -87,6 +97,7 @@
         });
 
         test('verander error-message-filesize attribute van de upload', () => {
+          const upload = fixture('vl-upload-fixture');
           assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'error-message-filesize'));
           assert.isFalse(upload.hasAttribute('data-vl-error-message-filesize'));
           upload.setAttribute('data-vl-error-message-filesize', 'Too much');
@@ -94,6 +105,7 @@
         });
 
         test('verander error-message-maxfiles attribute van de upload', () => {
+          const upload = fixture('vl-upload-fixture');
           assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'error-message-maxfiles'));
           assert.isFalse(upload.hasAttribute('data-vl-error-message-maxfiles'));
           upload.setAttribute('data-vl-error-message-maxfiles', 'Too much');
@@ -101,6 +113,7 @@
         });
 
         test('verander max-files attribute van de upload', () => {
+          const upload = fixture('vl-upload-fixture');
           assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'max-files'));
           assert.isFalse(upload.hasAttribute('data-vl-max-files'));
           upload.setAttribute('data-vl-max-files', '5');
@@ -108,6 +121,7 @@
         });
 
         test('verander max-size attribute van de upload', () => {
+          const upload = fixture('vl-upload-fixture');
           assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'max-size'));
           assert.isFalse(upload.hasAttribute('data-vl-max-size'));
           upload.setAttribute('data-vl-max-size', '200');
@@ -115,6 +129,7 @@
         });
 
         test('verander accepted-files attribute van de upload', () => {
+          const upload = fixture('vl-upload-fixture');
           assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'accepted-files'));
           assert.isFalse(upload.hasAttribute('data-vl-accepted-files'));
           upload.setAttribute('data-vl-accepted-files', 'application/pdf');
@@ -122,6 +137,7 @@
         });
 
         test('verander full-body-drop attribute van de upload', () => {
+          const upload = fixture('vl-upload-fixture');
           assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'full-body-drop'));
           assert.isFalse(upload.hasAttribute('data-vl-full-body-drop'));
           upload.setAttribute('data-vl-full-body-drop', '');
@@ -129,28 +145,40 @@
         });
 
         test('verander autoprocess attribute van de upload', () => {
+          const upload = fixture('vl-upload-fixture');
           assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'autoprocess'));
           upload.setAttribute('data-vl-autoprocess', 'true');
           assert(upload._upload.getAttribute(upload._prefix + 'autoprocess') === 'true');
         });
 
         test('verander error attribute van de upload', () => {
+          const upload = fixture('vl-upload-fixture');
           assert.isFalse(upload._upload.classList.contains('vl-upload--error'));
           upload.setAttribute('data-vl-error', '');
           assert(upload._upload.classList.contains('vl-upload--error'));
         });
 
         test('verander disallow-duplicates attribute van de upload', () => {
+          const upload = fixture('vl-upload-fixture');
           assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'disallow-duplicates'));
           upload.setAttribute('data-vl-disallow-duplicates', 'true');
           assert(upload._upload.getAttribute(upload._prefix + 'disallow-duplicates') === 'true');
         });
 
         test('het upload input element kan opgevraagd worden', () => {
+          const upload = fixture('vl-upload-fixture');
           awaitUntil(() => upload._dressed).then(() => {
             should.exist(upload.uploadElement);
             assert.isTrue(upload.uploadElement.classList.contains('vl-upload__element'));
           });
+        });
+
+        test('de templates worden slechts één keer aangemaakt', () => {
+          fixture('vl-uploads-fixture');
+          assert.lengthOf(document.body.querySelectorAll('#uploadTemplate'), 1);
+          assert.lengthOf(document.body.querySelectorAll('#previewFilesWrapper'), 1);
+          assert.lengthOf(document.body.querySelectorAll('#previewTemplate'), 1);
+          assert.lengthOf(document.body.querySelectorAll('#uploadOverlay'), 1);
         });
       });
     </script>

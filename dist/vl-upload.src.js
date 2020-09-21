@@ -57,6 +57,7 @@ export class VlUpload extends vlElement(HTMLElement) {
   }
 
   connectedCallback() {
+    this._appendTemplates();
     this.dress();
   }
 
@@ -106,7 +107,23 @@ export class VlUpload extends vlElement(HTMLElement) {
     return this._dropzone.files;
   }
 
-  get _templates() {
+  get _hasUploadTemplate() {
+    return document.body.querySelector('#uploadTemplate');
+  }
+
+  get _hasPreviewFilesWrapperTemplate() {
+    return document.body.querySelector('#previewFilesWrapper');
+  }
+
+  get _hasPreviewTemplate() {
+    return document.body.querySelector('#previewTemplate');
+  }
+
+  get _hasUploadOverlayTemplate() {
+    return document.body.querySelector('#uploadOverlay');
+  }
+
+  get _uploadTemplate() {
     return this._template(`
       <template id="uploadTemplate">
         <div class="vl-upload__element">
@@ -119,7 +136,11 @@ export class VlUpload extends vlElement(HTMLElement) {
           </div>
         </div>
       </template>
-  
+    `);
+  }
+
+  get _previewFilesWrapperTemplate() {
+    return this._template(`
       <template id="previewFilesWrapper">
         <div class="vl-upload__files">
           <div class="vl-upload__files__container"></div>
@@ -130,15 +151,19 @@ export class VlUpload extends vlElement(HTMLElement) {
           </button>
         </div>
       </template>
+    `);
+  }
 
+  get _previewTemplate() {
+    return this._template(`
       <template id="previewTemplate">
         <div class="vl-upload__file">
           <p class="vl-upload__file__name">
             <span is="vl-icon" class="vl-upload__file__name__icon" data-vl-icon="document"></span>
             <span data-dz-name></span>
             <span class="vl-upload__file__size">
-          (<span data-dz-size></span>)
-        </span>
+              (<span data-dz-size></span>)
+            </span>
           </p>
           <div class="dz-error-message">
             <span data-dz-errormessage></span>
@@ -148,7 +173,11 @@ export class VlUpload extends vlElement(HTMLElement) {
           </button>
         </div>
       </template>
+    `);
+  }
 
+  get _uploadOverlayTemplate() {
+    return this._template(`
       <template id="uploadOverlay">
         <div class="vl-upload__overlay">
           <p class="vl-upload__overlay__text">
@@ -169,7 +198,6 @@ export class VlUpload extends vlElement(HTMLElement) {
    */
   dress() {
     if (!this._dressed) {
-      document.body.appendChild(this._templates);
       vl.upload.dress(this._upload);
     }
   }
@@ -253,6 +281,24 @@ export class VlUpload extends vlElement(HTMLElement) {
 
   _disallowDuplicatesChangedCallback(oldValue, newValue) {
     this._element.setAttribute(this._prefix+'disallow-duplicates', newValue);
+  }
+
+  _appendTemplates() {
+    if (!this._hasUploadTemplate) {
+      document.body.appendChild(this._uploadTemplate);
+    }
+
+    if (!this._hasPreviewFilesWrapperTemplate) {
+      document.body.appendChild(this._previewFilesWrapperTemplate);
+    }
+
+    if (!this._hasPreviewTemplate) {
+      document.body.appendChild(this._previewTemplate);
+    }
+
+    if (!this._hasUploadOverlayTemplate) {
+      document.body.appendChild(this._uploadOverlayTemplate);
+    }
   }
 }
 
