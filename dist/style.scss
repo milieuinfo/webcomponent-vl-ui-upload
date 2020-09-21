@@ -18,6 +18,10 @@
 // ==========================================================================
 @import "vl-ui-util/src/scss/util";
 
+.vl-upload {
+  margin-bottom: 0rem;
+}
+
 .vl-upload--error {
   .vl-upload__element {
     border-color: $vl-upload-file-error-color;
