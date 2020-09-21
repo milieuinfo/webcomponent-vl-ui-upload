@@ -1,5 +1,4 @@
 import {vlElement, define} from '/node_modules/vl-ui-core/dist/vl-core.js';
-import '/node_modules/vl-ui-icon/dist/vl-icon.js';
 import '/node_modules/@govflanders/vl-ui-util/dist/js/util.js';
 import '/node_modules/@govflanders/vl-ui-core/dist/js/core.js';
 import '/node_modules/vl-ui-upload/lib/upload.js';
@@ -47,7 +46,6 @@ export class VlUpload extends vlElement(HTMLElement) {
       <style>
         @import '/node_modules/vl-ui-upload/dist/style.css';
         @import '/node_modules/vl-ui-link/dist/style.css';
-        @import '/node_modules/vl-ui-icon/dist/style.css';
       </style>
       <div class="vl-upload" data-vl-upload data-vl-upload-url="http://www.example.com"></div>
     `);
@@ -126,7 +124,7 @@ export class VlUpload extends vlElement(HTMLElement) {
         <div class="vl-upload__element">
           <div class="vl-upload__element__label">
             <button type="button" class="vl-upload__element__button vl-link">
-              <span is="vl-icon" data-vl-icon="paperclip"></span>
+              <i class="vl-vi vl-vi-paperclip" aria-hidden="true"></i>
               <span class="vl-upload__element__button__container"></span>
             </button>
             <small></small>
@@ -143,7 +141,7 @@ export class VlUpload extends vlElement(HTMLElement) {
           <div class="vl-upload__files__container"></div>
           <div class="vl-upload__files__input__container"></div>
           <button class="vl-upload__files__close vl-link vl-link--icon">
-            <span is="vl-icon" data-vl-icon="trash" data-vl-link></span>
+            <span class="vl-link__icon vl-vi vl-vi-trash" aria-hidden="true"></span>  
             Verwijder alle bestanden
           </button>
         </div>
@@ -156,7 +154,7 @@ export class VlUpload extends vlElement(HTMLElement) {
       <template id="previewTemplate">
         <div class="vl-upload__file">
           <p class="vl-upload__file__name">
-            <span is="vl-icon" class="vl-upload__file__name__icon" data-vl-icon="document"></span>
+            <span class="vl-upload__file__name__icon vl-vi vl-vi-document" aria-hidden="true"></span>
             <span data-dz-name></span>
             <span class="vl-upload__file__size">
               (<span data-dz-size></span>)
@@ -166,7 +164,7 @@ export class VlUpload extends vlElement(HTMLElement) {
             <span data-dz-errormessage></span>
           </div>
           <button type="button" class="vl-upload__file__close vl-link vl-link--icon" data-dz-remove>
-            <span is="vl-icon" data-vl-icon="cross"></span>
+            <span class="vl-vi vl-vi-cross" aria-hidden="true"></span>
           </button>
         </div>
       </template>
@@ -178,7 +176,7 @@ export class VlUpload extends vlElement(HTMLElement) {
       <template id="uploadOverlay">
         <div class="vl-upload__overlay">
           <p class="vl-upload__overlay__text">
-            <span is="vl-icon" data-vl-icon="paperclip" link></span>
+            <span class="vl-link__icon vl-vi vl-vi-paperclip" aria-hidden="true"></span>
           </p>
         </div>
       </template>
