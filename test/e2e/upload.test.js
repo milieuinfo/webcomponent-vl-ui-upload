@@ -98,19 +98,6 @@ describe('vl-upload', async () => {
     await assert.eventually.lengthOf(upload.getFiles(), 0);
   });
 
-  it('Als gebruiker kan ik het aantal files dat mag gekozen worden beperken', async () => {
-    const upload = await vlUploadPage.getUploadMax5();
-    await assert.eventually.equal(upload.getMaximumNumberOfAllowedFiles(), 5);
-    for (let i = 1; i <= 6; i++) {
-      await upload.uploadFile(file(`textfile${i}.txt`));
-    }
-    const files = await upload.getFiles();
-    for (let i = 1; i <= 5; i++) {
-      await assert.eventually.equal(files[i - 1].getErrorMessage(), '');
-    }
-    await assert.eventually.equal(files[5].getErrorMessage(), 'Je kan maximaal 5 file(s) uploaden.');
-  });
-
   it('Als gebruiker kan ik de maximum bestandsgrootte bepalen', async () => {
     const upload = await vlUploadPage.getUploadMaxSize();
     await assert.eventually.equal(upload.getMaximumFilesize(), 2000000);
@@ -163,7 +150,6 @@ describe('vl-upload', async () => {
     await assert.eventually.lengthOf(upload.getFiles(), 0);
   });
 
-
   it('Als gebruiker kan ik het opladen van een bestand ook annuleren tijdens dat het aan het opladen is', async () => {
     const upload = await vlUploadPage.getUploadAutoProcess();
     fileUploadServer.haltUploads();
@@ -172,6 +158,19 @@ describe('vl-upload', async () => {
     const files = await upload.getFiles();
     await files[0].remove();
     await assert.eventually.lengthOf(upload.getFiles(), 0);
+  });
+
+  it('Als gebruiker kan ik het aantal files dat mag gekozen worden beperken', async () => {
+    const upload = await vlUploadPage.getUploadMax5();
+    await assert.eventually.equal(upload.getMaximumNumberOfAllowedFiles(), 5);
+    for (let i = 1; i <= 6; i++) {
+      await upload.uploadFile(file(`textfile${i}.txt`));
+    }
+    const files = await upload.getFiles();
+    for (let i = 1; i <= 5; i++) {
+      await assert.eventually.equal(files[i - 1].getErrorMessage(), '');
+    }
+    await assert.eventually.equal(files[5].getErrorMessage(), 'Je kan maximaal 5 file(s) uploaden.');
   });
 
   class FileUploadServer {
