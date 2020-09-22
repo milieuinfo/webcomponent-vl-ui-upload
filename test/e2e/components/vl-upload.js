@@ -9,7 +9,9 @@ class VlUpload extends VlElement {
 
   async getFiles() {
     const files = await this.shadowRoot.findElements(By.css('.vl-upload__files__container .vl-upload__file'));
-    return await Promise.all(files.map((file) => new VlUploadFile(this.driver, file)));
+    if (files) {
+      return await Promise.all(files.map((file) => new VlUploadFile(this.driver, file)));
+    }
   }
 
   async isError() {
