@@ -20,14 +20,6 @@ class VlUpload extends VlElement {
     return this.hasAttribute('full-body-drop');
   }
 
-  async removeFiles() {
-    const files = await this.getFiles();
-    if (files) {
-      files.reverse();
-      await Promise.all(files.map((f) => f.remove()));
-    }
-  }
-
   async getMaximumFilesize() {
     return this.getAttribute('max-size');
   }
@@ -61,7 +53,7 @@ class VlUploadFile extends VlElement {
     const error = await this.isError();
     const processing = await this.isProcessing();
     const removeButton = await this.findElement(By.css('button.vl-upload__file__close'));
-    if (removeButton && processing && !(success || error)) {
+    if (processing && !(success || error)) {
       await removeButton.click();
       const alert = await this.driver.switchTo().alert();
       await alert.accept();

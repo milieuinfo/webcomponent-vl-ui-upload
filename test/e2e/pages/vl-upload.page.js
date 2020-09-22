@@ -65,12 +65,7 @@ class VlUploadPage extends Page {
 
   async clearAllUploads() {
     const uploads = await this.driver.findElements(By.css('vl-upload'));
-    await Promise.all(uploads.map((upload) => this.clearUpload(upload)));
-  }
-
-  async clearUpload(uploadElement) {
-    const upload = await new VlUpload(this.driver, await uploadElement);
-    return upload.removeFiles();
+    await Promise.all(uploads.map((upload) => this.driver.executeScript('arguments[0].clear();', upload)));
   }
 
   async uploadFiles() {
