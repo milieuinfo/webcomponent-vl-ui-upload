@@ -22,7 +22,9 @@ class VlUpload extends VlElement {
 
   async removeFiles() {
     const files = await this.getFiles();
-    await Promise.all(files.map((f) => f.remove()));
+    if (files) {
+      await Promise.all(files.map((f) => f.remove()));
+    }
   }
 
   async getMaximumFilesize() {
