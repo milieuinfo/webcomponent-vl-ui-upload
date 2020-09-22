@@ -58,7 +58,7 @@ class VlUploadFile extends VlElement {
     const error = await this.isError();
     const processing = await this.isProcessing();
     const removeButton = await this.findElement(By.css('button.vl-upload__file__close'));
-    if (processing && !(success || error)) {
+    if (removeButton && processing && !(success || error)) {
       await removeButton.click();
       const alert = await this.driver.switchTo().alert();
       return alert.accept();
