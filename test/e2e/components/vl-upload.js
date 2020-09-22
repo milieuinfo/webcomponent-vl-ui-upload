@@ -9,9 +9,7 @@ class VlUpload extends VlElement {
 
   async getFiles() {
     const files = await this.shadowRoot.findElements(By.css('.vl-upload__files__container .vl-upload__file'));
-    if (files) {
-      return await Promise.all(files.map((file) => new VlUploadFile(this.driver, file)));
-    }
+    return await Promise.all(files.map((file) => new VlUploadFile(this.driver, file)));
   }
 
   async isError() {
@@ -25,6 +23,7 @@ class VlUpload extends VlElement {
   async removeFiles() {
     const files = await this.getFiles();
     if (files) {
+      files.reverse();
       await Promise.all(files.map((f) => f.remove()));
     }
   }
@@ -65,9 +64,9 @@ class VlUploadFile extends VlElement {
     if (removeButton && processing && !(success || error)) {
       await removeButton.click();
       const alert = await this.driver.switchTo().alert();
-      return alert.accept();
+      await alert.accept();
     } else {
-      return removeButton.click();
+      await removeButton.click();
     }
   }
 
