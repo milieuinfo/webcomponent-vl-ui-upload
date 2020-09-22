@@ -239,18 +239,15 @@ export class VlUpload extends vlElement(HTMLElement) {
   }
 
   _errorMessageFilesizeChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix + 'error-message-filesize',
-        newValue);
+    this._element.setAttribute(this._prefix + 'error-message-filesize', newValue);
   }
 
   _errorMessageAcceptedFilesChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix + 'error-message-accepted-files',
-        newValue);
+    this._element.setAttribute(this._prefix + 'error-message-accepted-files', newValue);
   }
 
   _errorMessageMaxfilesChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix + 'error-message-maxfiles',
-        newValue);
+    this._element.setAttribute(this._prefix + 'error-message-maxfiles', newValue);
   }
 
   _maxFilesChangedCallback(oldValue, newValue) {
