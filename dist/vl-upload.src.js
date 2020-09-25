@@ -227,6 +227,7 @@ export class VlUpload extends vlElement(HTMLElement) {
    */
   on(event, callback) {
     this._element.addEventListener(event, callback);
+    this._dropzone.on(event, callback);
   }
 
   /**
