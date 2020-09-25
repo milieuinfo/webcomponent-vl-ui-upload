@@ -233,17 +233,11 @@ export class VlUpload extends vlElement(HTMLElement) {
    * @param {Number} size
    * @return {void}
    */
-  addFile({name, size}) {
-    this._dropzone.addFile({name: name, size: size});
-  }
-
-  /**
-   * Handmatig bestanden toevoegen
-   * @param {Object[]} files
-   * @return {void}
-   */
-  addFiles(files) {
-    files.forEach((file) => this.addFile(file));
+  addFile({name, size, url}) {
+    const file = {name: name, size: size};
+    this._dropzone.files.push(file);
+    this._dropzone.emit('addedfile', file);
+    this._dropzone.emit('complete', file);
   }
 
   _urlChangedCallback(oldValue, newValue) {
