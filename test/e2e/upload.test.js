@@ -107,7 +107,7 @@ describe('vl-upload', async () => {
   });
 
   it('Als gebruiker kan ik er voor zorgen dat hetzelfde bestand geen 2 keer kan opgeladen worden', async () => {
-    const upload = await vlUploadPage.getUploadGeenDubbels();
+    const upload = await vlUploadPage.getUploadUnique();
     await assert.eventually.isTrue(upload.isDuplicatesDisallowed());
     await upload.uploadFile(file('textfile1.txt'));
     await upload.uploadFile(file('textfile1.txt'));

@@ -53,7 +53,7 @@
         </vl-demo>
 
         <vl-demo data-vl-title="Beperkte upload zonder dubbels">
-            <vl-upload id="vl-upload-geen-dubbels" data-vl-url="http://httpbin.org/post" data-vl-input-name="files"
+            <vl-upload id="vl-upload-unique" data-vl-url="http://httpbin.org/post" data-vl-input-name="files"
                 error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
                 error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden." data-vl-max-files="2" data-vl-max-size="20000000"
                 disallow-duplicates="true"></vl-upload>
@@ -83,6 +83,13 @@
                 };
             </script>
             <span id="vl-upload-log"></span>
+        </vl-demo>
+
+        <vl-demo data-vl-title="Full body Dropzone upload">
+            <vl-upload id="vl-upload-programatically" data-vl-input-name="files"></vl-upload>
+            <button is="vl-button" id="add-file" slot="actions" onclick="document.querySelector('#vl-upload-programatically').addFile({name: 'Bestand', size: '1000'});">
+                Voeg programmatisch bestand toe
+            </button>
         </vl-demo>
 
         <vl-demo data-vl-title="Verwijder bestanden">

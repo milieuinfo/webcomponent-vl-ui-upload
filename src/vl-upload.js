@@ -227,6 +227,16 @@ export class VlUpload extends vlElement(HTMLElement) {
     this._element.addEventListener(event, callback);
   }
 
+  /**
+   * Handmatig bestand toevoegen
+   * @param {String} name
+   * @param {Number} size
+   * @return {void}
+   */
+  addFile({name, size}) {
+    this._dropzone.addFile({name: name, size: size});
+  }
+
   _urlChangedCallback(oldValue, newValue) {
     this._element.setAttribute(this._prefix + 'url', newValue);
     if (this._dropzone && this._dropzone.options) {

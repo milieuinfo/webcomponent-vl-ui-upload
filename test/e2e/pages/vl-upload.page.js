@@ -32,8 +32,8 @@ class VlUploadPage extends Page {
     return this._getUpload('#vl-upload-max-5');
   }
 
-  async getUploadGeenDubbels() {
-    return this._getUpload('#vl-upload-geen-dubbels');
+  async getUploadUnique() {
+    return this._getUpload('#vl-upload-unique');
   }
 
   async getUploadFileTypes() {
