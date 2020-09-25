@@ -236,8 +236,8 @@ export class VlUpload extends vlElement(HTMLElement) {
    * @param {Number} size
    * @return {void}
    */
-  addFile({name, size, url}) {
-    const file = {name: name, size: size};
+  addFile({name, size, id}) {
+    const file = {name: name, size: size, id: id};
     this._dropzone.files.push(file);
     this._dropzone.emit('addedfile', file);
     this._dropzone.emit('complete', file);
