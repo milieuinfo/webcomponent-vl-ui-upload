@@ -180,6 +180,28 @@
           assert.lengthOf(document.body.querySelectorAll('#previewTemplate'), 1);
           assert.lengthOf(document.body.querySelectorAll('#uploadOverlay'), 1);
         });
+
+        test('er kan geluisterd worden naar Dropzone events', () => {
+          const upload = fixture('vl-upload-fixture');
+          sandbox.spy(upload._dropzone, 'on');
+          const event = 'event';
+          const callback = () => {};
+          upload.on(event, callback);
+          assert(upload._dropzone.on.calledWith(event, callback));
+        });
+
+        test('er kan programmatisch een bestand toegevoegd worden aan de lijst van opgeladen bestanden', () => {
+          const upload = fixture('vl-upload-fixture');
+          sandbox.spy(upload._dropzone, 'emit');
+          const name = 'name';
+          const size = '1000';
+          const id = '1';
+          const file = {name: name, size: size, id: id};
+          upload.addFile(file);
+          assert(upload._dropzone.emit.calledWithMatch('addedfile', file));
+          assert(upload._dropzone.emit.calledWithMatch('complete', file));
+          assert.include(upload._dropzone.files[0], file);
+        });
       });
     </script>
   </body>
