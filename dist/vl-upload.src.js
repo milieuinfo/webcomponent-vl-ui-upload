@@ -234,6 +234,7 @@ export class VlUpload extends vlElement(HTMLElement) {
    * Handmatig bestand toevoegen
    * @param {String} name
    * @param {Number} size
+   * @param {Number} id
    * @return {void}
    */
   addFile({name, size, id}) {
