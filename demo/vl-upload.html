@@ -65,7 +65,7 @@
                 data-vl-error-message-accepted-files="Je kan enkel :fileType bestanden opladen"></vl-upload>
         </vl-demo>
 
-        <vl-demo data-vl-title="Full body Dropzone upload">
+        <vl-demo data-vl-title="Volledig scherm upload">
             <vl-upload id="vl-upload-full-body-drop" data-vl-url="http://httpbin.org/post" data-vl-input-name="files" data-vl-full-body-drop></vl-upload>
         </vl-demo>
 
@@ -85,9 +85,9 @@
             <span id="vl-upload-log"></span>
         </vl-demo>
 
-        <vl-demo data-vl-title="Full body Dropzone upload">
-            <vl-upload id="vl-upload-programatically" data-vl-input-name="files"></vl-upload>
-            <button is="vl-button" id="add-file" slot="actions" onclick="document.querySelector('#vl-upload-programatically').addFile({name: 'Bestand', size: '1000'});">
+        <vl-demo data-vl-title="Programmatische upload">
+            <vl-upload id="vl-upload-programmatically" data-vl-input-name="files"></vl-upload>
+            <button is="vl-button" id="add-file" slot="actions" onclick="document.querySelector('#vl-upload-programmatically').addFile({name: 'bestand.pdf', size: '1000'});">
                 Voeg programmatisch bestand toe
             </button>
         </vl-demo>
