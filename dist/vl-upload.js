@@ -11,7 +11,7 @@ import '/node_modules/vl-ui-upload/lib/upload.js';
  * @extends HTMLElement
  * @mixes vlElement
  *
- * @property {File[]} data-vl-accepted-files - Attribuut om op te lijsten welke bestanden worden geaccepteerd door component (extensie en mimetype).
+ * @property {File[]} data-vl-accepted-files - Attribuut om te bepalen welke bestanden worden geaccepteerd door component (extensie en mimetype).
  * @property {boolean} data-vl-autoprocess - Attribuut om te activeren of deactiveren dat het het gedropte bestand direct moet opgeladen worden.
  * @property {boolean} data-vl-disallow-duplicates - Attribuut om te voorkomen dat dezelfde bijlage meerdere keren kan opgeladen worden.
  * @property {string} data-vl-error-message-accepted-files - Attribuut om de message te definiëren wanneer er niet-geaccepteerde bestanden zijn toegevoegd.
