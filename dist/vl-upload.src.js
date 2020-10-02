@@ -11,9 +11,9 @@ import 'vl-ui-upload/lib/upload.js';
  * @extends HTMLElement
  * @mixes vlElement
  *
- * @property {File[]} data-vl-accepted-files - Attribuut om te op te lijsten welke bestanden worden geaccepteerd door component (extensie en mimetype).
+ * @property {File[]} data-vl-accepted-files - Attribuut om op te lijsten welke bestanden worden geaccepteerd door component (extensie en mimetype).
  * @property {boolean} data-vl-autoprocess - Attribuut om te activeren of deactiveren dat het het gedropte bestand direct moet opgeladen worden.
- * @property {boolean} data-vl-disallow-dusplicates - Attribuut om te voorkomen dat dezelfde bijlage meerdere keren kan opgeladen worden.
+ * @property {boolean} data-vl-disallow-duplicates - Attribuut om te voorkomen dat dezelfde bijlage meerdere keren kan opgeladen worden.
  * @property {string} data-vl-error-message-accepted-files - Attribuut om de message te definiëren wanneer er niet-geaccepteerde bestanden zijn toegevoegd.
  * @property {string} data-vl-error-message-filesize - Attribuut om de message te definiëren wanneer er te grote bestanden zijn toegevoegd.
  * @property {string} data-vl-error-message-maxfiles - Attribuut om de message te definiëren wanneer er teveel bestanden zijn toegevoegd.
@@ -255,7 +255,7 @@ export class VlUpload extends vlElement(HTMLElement) {
   }
 
   _disallowDuplicatesChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix+'disallow-duplicates', newValue);
+    this._element.setAttribute(this._prefix + 'disallow-duplicates', newValue);
   }
 
   _errorMessageAcceptedFilesChangedCallback(oldValue, newValue) {
