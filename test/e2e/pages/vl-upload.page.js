@@ -44,6 +44,10 @@ class VlUploadPage extends Page {
     return this._getUpload('#vl-upload-programmatically');
   }
 
+  async getUploadCustomText() {
+    return this._getUpload('#vl-upload-custom-text');
+  }
+
   async listenForEventsOnUpload() {
     const addListenerButton = await this.driver.findElement(By.css('#vl-upload-listener-button'));
     return addListenerButton.click();
@@ -55,7 +59,7 @@ class VlUploadPage extends Page {
   }
 
   async uploadClearButton() {
-    return await this.driver.findElement(By.css('#vl-upload-clear-button'));
+    return this.driver.findElement(By.css('#vl-upload-clear-button'));
   }
 
   async changeAllUploadUrlsTo(url) {

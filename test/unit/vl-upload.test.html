@@ -24,6 +24,12 @@
       </template>
     </test-fixture>
 
+    <test-fixture id="vl-upload-custom-text-fixture">
+      <template>
+        <vl-upload url="http://www.example.com" data-vl-title="title" data-vl-sub-title="sub-title"/>
+      </template>
+    </test-fixture>
+
     <script type="module">
       import {awaitUntil} from 'vl-ui-core/dist/vl-core';
 
@@ -201,6 +207,12 @@
           assert(upload._dropzone.emit.calledWithMatch('addedfile', file));
           assert(upload._dropzone.emit.calledWithMatch('complete', file));
           assert.include(upload._dropzone.files[0], file);
+        });
+
+        test('de titel en sub-titel kan gepersonaliseerd worden', () => {
+          const upload = fixture('vl-upload-custom-text-fixture');
+          vl.i18n.i18n['upload.add_files'] = upload.getAttribute('title');
+          vl.i18n.i18n['upload.add_files_subtitle'] = upload.getAttribute('sub-title');
         });
       });
     </script>
