@@ -35,6 +35,16 @@ class VlUpload extends VlElement {
   async isDuplicatesDisallowed() {
     return this.hasAttribute('disallow-duplicates');
   }
+
+  async getTitle() {
+    const element = await this.shadowRoot.findElement(By.css('.vl-upload__element__button__container'));
+    return element.getText();
+  }
+
+  async getSubTitle() {
+    const element = await this.shadowRoot.findElement(By.css('.vl-upload__element__label small'));
+    return element.getText();
+  }
 }
 
 class VlUploadFile extends VlElement {

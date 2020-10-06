@@ -29,10 +29,6 @@
             <vl-upload id="vl-upload-auto-process" url="http://httpbin.org/post" data-vl-input-name="files" data-vl-autoprocess="true"></vl-upload>
         </vl-demo>
 
-        <vl-demo data-vl-title="Upload error">
-            <vl-upload id="vl-upload-error" url="http://httpbin.org/post" data-vl-input-name="files" data-vl-error></vl-upload>
-        </vl-demo>
-
         <vl-demo data-vl-title="Upload clear">
             <vl-upload id="vl-upload-clear" data-vl-url="http://httpbin.org/post" data-vl-input-name="files"></vl-upload>
             <div slot="actions">
@@ -96,6 +92,14 @@
             <button is="vl-button" id="clear-all" onclick="document.querySelectorAll('vl-upload').forEach(upload => upload.clear());">
                 Verwijder bestanden uit alle uploads
             </button>
+        </vl-demo>
+
+        <vl-demo data-vl-title="Upload error">
+            <vl-upload id="vl-upload-error" url="http://httpbin.org/post" data-vl-input-name="files" data-vl-error></vl-upload>
+        </vl-demo>
+
+        <vl-demo data-vl-title="Upload met custom tekst">
+            <vl-upload id="vl-upload-custom-text" url="http://httpbin.org/post" data-vl-input-name="files" id="vl-upload" data-vl-title="Afbeelding toevoegen" data-vl-sub-title="Sleep de afbeelding naar hier om toe te voegen"></vl-upload>
         </vl-demo>
     </vl-demo-page>
 </body>

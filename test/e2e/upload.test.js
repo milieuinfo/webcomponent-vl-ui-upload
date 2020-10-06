@@ -183,6 +183,15 @@ describe('vl-upload', async () => {
     await assert.eventually.equal(files[0].getSize(), '1 KB');
   });
 
+  it('als gebruiker kan ik het verschil zien tussen een upload met gepersonaliseerde titel en subtitel en een gewone variant', async () => {
+    let upload = await vlUploadPage.getUpload();
+    await assert.eventually.equal(upload.getTitle(), 'Bijlage toevoegen');
+    await assert.eventually.equal(upload.getSubTitle(), 'Sleep de bijlage naar hier om toe te voegen');
+    upload = await vlUploadPage.getUploadCustomText();
+    await assert.eventually.equal(upload.getTitle(), 'Afbeelding toevoegen');
+    await assert.eventually.equal(upload.getSubTitle(), 'Sleep de afbeelding naar hier om toe te voegen');
+  });
+
   class FileUploadServer {
     constructor(port, path) {
       this.__uploadedFiles = [];

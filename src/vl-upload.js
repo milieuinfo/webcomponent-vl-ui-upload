@@ -11,16 +11,19 @@ import '/lib/upload.js';
  * @extends HTMLElement
  * @mixes vlElement
  *
- * @property {URL} data-vl-url - Attribuut om de url naar waar de component moet uploaden, te definiëren.
- * @property {string} data-vl-input-name - Attribuut om de key te definiëren waarmee het bestand wordt opgeladen.
- * @property {string} data-vl-error-message-filesize - Attribuut om de message te definiëren wanneer er te grote bestanden zijn toegevoegd.
+ * @property {File[]} data-vl-accepted-files - Attribuut om te bepalen welke bestanden worden geaccepteerd door component (extensie en mimetype).
+ * @property {boolean} data-vl-autoprocess - Attribuut om te activeren of deactiveren dat het het gedropte bestand direct moet opgeladen worden.
+ * @property {boolean} data-vl-disallow-duplicates - Attribuut om te voorkomen dat dezelfde bijlage meerdere keren kan opgeladen worden.
  * @property {string} data-vl-error-message-accepted-files - Attribuut om de message te definiëren wanneer er niet-geaccepteerde bestanden zijn toegevoegd.
+ * @property {string} data-vl-error-message-filesize - Attribuut om de message te definiëren wanneer er te grote bestanden zijn toegevoegd.
  * @property {string} data-vl-error-message-maxfiles - Attribuut om de message te definiëren wanneer er teveel bestanden zijn toegevoegd.
+ * @property {boolean} data-vl-full-body-drop - Attribuut om te activeren of deactiveren dat het de dropzone over het heel scherm is.
+ * @property {string} data-vl-input-name - Attribuut om de key te definiëren waarmee het bestand wordt opgeladen.
  * @property {number} data-vl-max-files - Attribuut om het maximaal aantal bestanden dat opgeladen mag worden, aan te duiden.
  * @property {number} data-vl-max-size - Attribuut om de maximum grootte van een bestand dat opgeladen kan worden (20000000 = 2MB), aan te duiden.
- * @property {list} data-vl-accepted-files - Attribuut om te op te lijsten welke bestanden worden geaccepteerd door component (extensie en mimetype).
- * @property {boolean} data-vl-full-body-drop - Attribuut om te activeren of deactiveren dat het de dropzone over het heel scherm is.
- * @property {boolean} data-vl-autoprocess - Attribuut om te activeren of deactiveren dat het het gedropte bestand direct moet opgeladen worden.
+ * @property {number} data-vl-sub-title - Attribuut om de subtitel te bepalen.
+ * @property {number} data-vl-title - Attribuut om de titel te bepalen.
+ * @property {URL} data-vl-url - Attribuut om de url naar waar de component moet uploaden, te definiëren.
  *
  * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-upload/releases/latest|Release notes}
  * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-upload/issues|Issues}
@@ -28,9 +31,7 @@ import '/lib/upload.js';
  */
 export class VlUpload extends vlElement(HTMLElement) {
   static get _observedAttributes() {
-    return ['url', 'input-name', 'error-message-filesize', 'error-message-accepted-files',
-      'error-message-maxfiles', 'max-files', 'max-size', 'accepted-files', 'full-body-drop', 'autoprocess',
-      'disallow-duplicates'];
+    return ['accepted-files', 'autoprocess', 'error-message-accepted-files', 'error-message-filesize', 'error-message-maxfiles', 'full-body-drop', 'input-name', 'max-files', 'max-size', 'disallow-duplicates', 'title', 'sub-title', 'url'];
   }
 
   static get _observedChildClassAttributes() {
@@ -242,27 +243,37 @@ export class VlUpload extends vlElement(HTMLElement) {
     this._dropzone.emit('complete', file);
   }
 
-  _urlChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix + 'url', newValue);
-    if (this._dropzone && this._dropzone.options) {
-      this._dropzone.options.url = newValue;
-    }
+  _acceptedFilesChangedCallback(oldValue, newValue) {
+    this._element.setAttribute(this._prefix + 'accepted-files', newValue);
+    this._element.setAttribute('accept', newValue);
   }
 
-  _inputNameChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix + 'input-name', newValue);
+  _autoprocessChangedCallback(oldValue, newValue) {
+    this._element.setAttribute(this._prefix + 'autoprocess', newValue);
   }
 
-  _errorMessageFilesizeChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix + 'error-message-filesize', newValue);
+  _disallowDuplicatesChangedCallback(oldValue, newValue) {
+    this._element.setAttribute(this._prefix + 'disallow-duplicates', newValue);
   }
 
   _errorMessageAcceptedFilesChangedCallback(oldValue, newValue) {
     this._element.setAttribute(this._prefix + 'error-message-accepted-files', newValue);
   }
 
+  _errorMessageFilesizeChangedCallback(oldValue, newValue) {
+    this._element.setAttribute(this._prefix + 'error-message-filesize', newValue);
+  }
+
   _errorMessageMaxfilesChangedCallback(oldValue, newValue) {
     this._element.setAttribute(this._prefix + 'error-message-maxfiles', newValue);
+  }
+
+  _fullBodyDropChangedCallback(oldValue, newValue) {
+    this._element.setAttribute(this._prefix + 'full-body-drop', '');
+  }
+
+  _inputNameChangedCallback(oldValue, newValue) {
+    this._element.setAttribute(this._prefix + 'input-name', newValue);
   }
 
   _maxFilesChangedCallback(oldValue, newValue) {
@@ -273,21 +284,19 @@ export class VlUpload extends vlElement(HTMLElement) {
     this._element.setAttribute(this._prefix + 'max-size', newValue);
   }
 
-  _acceptedFilesChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix + 'accepted-files', newValue);
-    this._element.setAttribute('accept', newValue);
+  _titleChangedCallback(oldValue, newValue) {
+    this._changeTranslation('add_files', newValue);
   }
 
-  _fullBodyDropChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix + 'full-body-drop', '');
+  _subTitleChangedCallback(oldValue, newValue) {
+    this._changeTranslation('add_files_subtitle', newValue);
   }
 
-  _autoprocessChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix + 'autoprocess', newValue);
-  }
-
-  _disallowDuplicatesChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix+'disallow-duplicates', newValue);
+  _urlChangedCallback(oldValue, newValue) {
+    this._element.setAttribute(this._prefix + 'url', newValue);
+    if (this._dropzone && this._dropzone.options) {
+      this._dropzone.options.url = newValue;
+    }
   }
 
   _appendTemplates() {
@@ -306,6 +315,10 @@ export class VlUpload extends vlElement(HTMLElement) {
     if (!this._hasUploadOverlayTemplate) {
       document.body.appendChild(this._uploadOverlayTemplate);
     }
+  }
+
+  _changeTranslation(key, value) {
+    vl.i18n.i18n[`upload.${key}`] = value;
   }
 }
 
