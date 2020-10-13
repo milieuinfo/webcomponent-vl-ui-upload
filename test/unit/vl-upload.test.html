@@ -211,8 +211,8 @@
 
         test('de titel en sub-titel kan gepersonaliseerd worden', () => {
           const upload = fixture('vl-upload-custom-text-fixture');
-          vl.i18n.i18n['upload.add_files'] = upload.getAttribute('title');
-          vl.i18n.i18n['upload.add_files_subtitle'] = upload.getAttribute('sub-title');
+          assert.equal(upload.getTranslation('upload.add_files'), upload.getAttribute('title'));
+          assert.equal(upload.getTranslation('upload.add_files_subtitle'), upload.getAttribute('sub-title'));
         });
       });
     </script>
