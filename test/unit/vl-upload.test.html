@@ -214,6 +214,12 @@
           vl.i18n.i18n['upload.add_files'] = upload.getAttribute('title');
           vl.i18n.i18n['upload.add_files_subtitle'] = upload.getAttribute('sub-title');
         });
+
+        test('kan programmatisch focus activeren', (done) => {
+          const upload = fixture('vl-upload-fixture');
+          upload._button.addEventListener('focus', () => done());
+          upload.focus();
+        });
       });
     </script>
   </body>

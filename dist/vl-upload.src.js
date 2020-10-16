@@ -59,20 +59,6 @@ export class VlUpload extends vlElement(HTMLElement) {
     this.dress();
   }
 
-  get _upload() {
-    return this._element;
-  }
-
-  get _dressed() {
-    return !!this.getAttribute('data-vl-upload-dressed');
-  }
-
-  get _dropzone() {
-    if (vl && vl.upload && vl.upload.dropzoneInstances) {
-      return vl.upload.dropzoneInstances.filter((dropzone) => dropzone.element === this._element)[0];
-    }
-  }
-
   /**
    * Geeft het upload element.
    * @return {HTMLElement}
@@ -103,6 +89,24 @@ export class VlUpload extends vlElement(HTMLElement) {
    */
   get files() {
     return this._dropzone.files;
+  }
+
+  get _upload() {
+    return this._element;
+  }
+
+  get _dressed() {
+    return !!this.getAttribute('data-vl-upload-dressed');
+  }
+
+  get _dropzone() {
+    if (vl && vl.upload && vl.upload.dropzoneInstances) {
+      return vl.upload.dropzoneInstances.filter((dropzone) => dropzone.element === this._element)[0];
+    }
+  }
+
+  get _button() {
+    return this._shadow.querySelector('.vl-upload__element__button');
   }
 
   get _hasUploadTemplate() {
@@ -243,6 +247,13 @@ export class VlUpload extends vlElement(HTMLElement) {
     this._dropzone.files.push(file);
     this._dropzone.emit('addedfile', file);
     this._dropzone.emit('complete', file);
+  }
+
+  /**
+   * Geeft focus aan het link element.
+   */
+  focus() {
+    this._button.focus();
   }
 
   _acceptedFilesChangedCallback(oldValue, newValue) {

@@ -101,6 +101,11 @@
         <vl-demo data-vl-title="Upload met custom tekst">
             <vl-upload id="vl-upload-custom-text" url="http://httpbin.org/post" data-vl-input-name="files" id="vl-upload" data-vl-title="Afbeelding toevoegen" data-vl-sub-title="Sleep de afbeelding naar hier om toe te voegen"></vl-upload>
         </vl-demo>
+
+        <vl-demo data-vl-title="Upload focus">
+            <vl-upload url="http://httpbin.org/post" data-vl-input-name="files" id="vl-upload-focus"></vl-upload>
+            <button is="vl-button" onclick="document.getElementById('vl-upload-focus').focus();" slot="actions">Focus</button>
+        </vl-demo>
     </vl-demo-page>
 </body>
 
