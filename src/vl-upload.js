@@ -1,6 +1,4 @@
 import {vlElement, define} from '/node_modules/vl-ui-core/dist/vl-core.js';
-import '/node_modules/@govflanders/vl-ui-util/dist/js/util.js';
-import '/node_modules/@govflanders/vl-ui-core/dist/js/core.js';
 import '/lib/upload.js';
 
 /**
@@ -296,11 +294,11 @@ export class VlUpload extends vlElement(HTMLElement) {
   }
 
   _titleChangedCallback(oldValue, newValue) {
-    this._changeTranslation('add_files', newValue);
+    this._changeTranslation('upload.add_files', newValue);
   }
 
   _subTitleChangedCallback(oldValue, newValue) {
-    this._changeTranslation('add_files_subtitle', newValue);
+    this._changeTranslation('upload.add_files_subtitle', newValue);
   }
 
   _urlChangedCallback(oldValue, newValue) {
@@ -326,10 +324,6 @@ export class VlUpload extends vlElement(HTMLElement) {
     if (!this._hasUploadOverlayTemplate) {
       document.body.appendChild(this._uploadOverlayTemplate);
     }
-  }
-
-  _changeTranslation(key, value) {
-    vl.i18n.i18n[`upload.${key}`] = value;
   }
 }
 

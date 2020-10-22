@@ -42,9 +42,9 @@ describe('vl-upload', async () => {
     await assert.eventually.equal(files[0].getName(), 'bestand.pdf');
     await assert.eventually.equal(files[0].getSize(), '13.1 KB');
     assert.equal(fileUploadServer.uploadedFiles.length, 0);
-    assert.eventually.isFalse(files[0].isProcessing());
-    assert.eventually.isFalse(files[0].isSuccess());
-    assert.eventually.isFalse(files[0].isError());
+    await assert.eventually.isFalse(files[0].isProcessing());
+    await assert.eventually.isFalse(files[0].isSuccess());
+    await assert.eventually.isFalse(files[0].isError());
   });
 
   it('als gebruiker kan ik verschillende bestanden selecteren om op te laden en ze dan programmatorisch opladen', async () => {
@@ -56,9 +56,9 @@ describe('vl-upload', async () => {
     });
     await assert.eventually.lengthOf(upload.getFiles(), 1);
     const files = await upload.getFiles();
-    assert.eventually.isTrue(files[0].isProcessing());
-    assert.eventually.isTrue(files[0].isSuccess());
-    assert.eventually.isFalse(files[0].isError());
+    await assert.eventually.isTrue(files[0].isProcessing());
+    await assert.eventually.isTrue(files[0].isSuccess());
+    await assert.eventually.isFalse(files[0].isError());
   });
 
   it('als gebruiker kan ik een bestand direct laten opladen bij het selecteren', async () => {
@@ -84,9 +84,9 @@ describe('vl-upload', async () => {
     await assert.eventually.lengthOf(upload.getFiles(), 1);
     const files = await upload.getFiles();
     await assert.eventually.equal(files[0].getErrorMessage(), 'Uw bestand kon niet verwerkt worden');
-    assert.eventually.isTrue(files[0].isProcessing());
-    assert.eventually.isFalse(files[0].isSuccess());
-    assert.eventually.isTrue(files[0].isError());
+    await assert.eventually.isTrue(files[0].isProcessing());
+    await assert.eventually.isFalse(files[0].isSuccess());
+    await assert.eventually.isTrue(files[0].isError());
   });
 
   it('als gebruiker kan ik de lijst gekozen files programmatorisch leeg maken', async () => {
