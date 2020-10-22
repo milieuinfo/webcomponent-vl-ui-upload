@@ -122,9 +122,7 @@ describe('vl-upload', async () => {
     await upload.uploadFile(file('textfile1.txt'));
     await assert.eventually.lengthOf(upload.getFiles(), 1);
     const files = await upload.getFiles();
-    // TODO de foutboodschap die hier uit komt is fout (fileType niet vervangen)
-    // dit is een openstaande bug die mogelijks opgelost is/wordt in de volgende versie van webuniversum
-    await assert.eventually.equal(files[0].getErrorMessage(), 'Je kan enkel :fileType bestanden opladen');
+    await assert.eventually.equal(files[0].getErrorMessage(), 'Je kan enkel application/pdf, .png bestanden opladen');
   });
 
   it('als gebruiker kan ik het verschil zien tussen een upload over de gehele body of niet', async () => {
