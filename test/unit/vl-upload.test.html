@@ -230,6 +230,19 @@
           upload.addFile(file2);
           assert.lengthOf(upload.value, 2);
         });
+
+        test('bij het toevoegen van een bestand wordt het change event verstuurd', (done) => {
+          const upload = fixture('vl-upload-fixture');
+          upload.addEventListener('change', () => done());
+          upload.addFile({name: 'name1', size: '1000', id: '1'});
+        });
+
+        test('bij het verwijderen van een bestand wordt het change event verstuurd', (done) => {
+          const upload = fixture('vl-upload-fixture');
+          upload.addFile({name: 'name1', size: '1000', id: '1'});
+          upload.addEventListener('change', () => done());
+          upload.clear();
+        });
       });
     </script>
   </body>
