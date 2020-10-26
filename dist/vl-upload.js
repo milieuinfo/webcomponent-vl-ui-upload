@@ -61,6 +61,13 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
   }
 
   /**
+   * Geeft de bestanden die toegevoegd zijn.
+   */
+  get value() {
+    return this.files;
+  }
+
+  /**
    * Geeft het upload element.
    * @return {HTMLElement}
    */
@@ -69,7 +76,7 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
   }
 
   /**
-   * Haal de geaccepteerde bestanden (zonder error) op, die toegevoegd zijn aan de dropzone.
+   * Haal de geaccepteerde bestanden (zonder error) op, die toegevoegd zijn.
    * @return {File[]}
    */
   get acceptedFiles() {
@@ -77,7 +84,7 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
   }
 
   /**
-   * Haal de niet-geaccepteerde bestanden (met error) op, die toegevoegd zijn aan de dropzone.
+   * Haal de niet-geaccepteerde bestanden (met error) op, die toegevoegd zijn.
    * @return {File[]}
    */
   get rejectedFiles() {
@@ -85,7 +92,7 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
   }
 
   /**
-   * Haal alle bestanden op die toegevoegd zijn aan de dropzone.
+   * Haal alle bestanden op die toegevoegd zijn.
    * @return {File[]}
    */
   get files() {
