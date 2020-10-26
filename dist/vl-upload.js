@@ -62,6 +62,7 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
 
   /**
    * Geeft de bestanden die toegevoegd zijn.
+   * @return {File[]}
    */
   get value() {
     if (this.files && this.files.length > 0) {
