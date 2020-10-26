@@ -204,6 +204,7 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
   dress() {
     if (!this._dressed) {
       vl.upload.dress(this._upload);
+      this._dressFormValidation();
     }
   }
 
