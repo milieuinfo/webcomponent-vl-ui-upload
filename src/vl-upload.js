@@ -65,7 +65,7 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
    */
   get value() {
     if (this.files && this.files.length > 0) {
-      return this.files.map((file) => file.upload.filename);
+      return this.files;
     }
   }
 
@@ -212,6 +212,8 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
     if (!this._dressed) {
       vl.upload.dress(this._upload);
       this._dressFormValidation();
+      this._dropzone.on('addedfile', () => this.dispatchEvent(new Event('change')));
+      this._dropzone.on('removedfile', () => this.dispatchEvent(new Event('change')));
     }
   }
 

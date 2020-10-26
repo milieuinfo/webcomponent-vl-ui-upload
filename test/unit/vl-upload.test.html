@@ -220,6 +220,16 @@
           upload._button.addEventListener('focus', () => done());
           upload.focus();
         });
+
+        test('kan de bestandsnamen opvragen via de value getter', () => {
+          const upload = fixture('vl-upload-fixture');
+          const file1 = {name: 'name1', size: '1000', id: '1'};
+          const file2 = {name: 'name2', size: '1000', id: '2'};
+          upload.addFile(file1);
+          assert.lengthOf(upload.value, 1);
+          upload.addFile(file2);
+          assert.lengthOf(upload.value, 2);
+        });
       });
     </script>
   </body>
