@@ -1,7 +1,10 @@
 import {vlElement, define} from '/node_modules/vl-ui-core/dist/vl-core.js';
-import '/node_modules/@govflanders/vl-ui-util/dist/js/util.js';
-import '/node_modules/@govflanders/vl-ui-core/dist/js/core.js';
+import {vlFormValidation, vlFormValidationElement} from '/node_modules/vl-ui-form-validation/dist/vl-form-validation-all.js';
 import '/node_modules/vl-ui-upload/lib/upload.js';
+
+Promise.all([
+  vlFormValidation.ready(),
+]).then(() => define('vl-upload', VlUpload));
 
 /**
  * VlUpload
@@ -29,9 +32,9 @@ import '/node_modules/vl-ui-upload/lib/upload.js';
  * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-upload/issues|Issues}
  * @see {@link https://webcomponenten.omgeving.vlaanderen.be/demo/vl-upload.html|Demo}
  */
-export class VlUpload extends vlElement(HTMLElement) {
+export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
   static get _observedAttributes() {
-    return ['accepted-files', 'autoprocess', 'error-message-accepted-files', 'error-message-filesize', 'error-message-maxfiles', 'full-body-drop', 'input-name', 'max-files', 'max-size', 'disallow-duplicates', 'title', 'sub-title', 'url'];
+    return vlFormValidation._observedAttributes().concat(['accepted-files', 'autoprocess', 'error-message-accepted-files', 'error-message-filesize', 'error-message-maxfiles', 'full-body-drop', 'input-name', 'max-files', 'max-size', 'disallow-duplicates', 'title', 'sub-title', 'url']);
   }
 
   static get _observedChildClassAttributes() {
@@ -296,11 +299,11 @@ export class VlUpload extends vlElement(HTMLElement) {
   }
 
   _titleChangedCallback(oldValue, newValue) {
-    this._changeTranslation('add_files', newValue);
+    this._changeTranslation('upload.add_files', newValue);
   }
 
   _subTitleChangedCallback(oldValue, newValue) {
-    this._changeTranslation('add_files_subtitle', newValue);
+    this._changeTranslation('upload.add_files_subtitle', newValue);
   }
 
   _urlChangedCallback(oldValue, newValue) {
@@ -327,10 +330,4 @@ export class VlUpload extends vlElement(HTMLElement) {
       document.body.appendChild(this._uploadOverlayTemplate);
     }
   }
-
-  _changeTranslation(key, value) {
-    vl.i18n.i18n[`upload.${key}`] = value;
-  }
 }
-
-define('vl-upload', VlUpload);

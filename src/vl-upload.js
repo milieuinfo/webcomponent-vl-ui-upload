@@ -1,5 +1,10 @@
 import {vlElement, define} from '/node_modules/vl-ui-core/dist/vl-core.js';
+import {vlFormValidation, vlFormValidationElement} from '/node_modules/vl-ui-form-validation/dist/vl-form-validation-all.js';
 import '/lib/upload.js';
+
+Promise.all([
+  vlFormValidation.ready(),
+]).then(() => define('vl-upload', VlUpload));
 
 /**
  * VlUpload
@@ -27,9 +32,9 @@ import '/lib/upload.js';
  * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-upload/issues|Issues}
  * @see {@link https://webcomponenten.omgeving.vlaanderen.be/demo/vl-upload.html|Demo}
  */
-export class VlUpload extends vlElement(HTMLElement) {
+export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
   static get _observedAttributes() {
-    return ['accepted-files', 'autoprocess', 'error-message-accepted-files', 'error-message-filesize', 'error-message-maxfiles', 'full-body-drop', 'input-name', 'max-files', 'max-size', 'disallow-duplicates', 'title', 'sub-title', 'url'];
+    return vlFormValidation._observedAttributes().concat(['accepted-files', 'autoprocess', 'error-message-accepted-files', 'error-message-filesize', 'error-message-maxfiles', 'full-body-drop', 'input-name', 'max-files', 'max-size', 'disallow-duplicates', 'title', 'sub-title', 'url']);
   }
 
   static get _observedChildClassAttributes() {
@@ -326,5 +331,3 @@ export class VlUpload extends vlElement(HTMLElement) {
     }
   }
 }
-
-define('vl-upload', VlUpload);
