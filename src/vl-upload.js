@@ -66,7 +66,7 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
    */
   get value() {
     if (this.files && this.files.length > 0) {
-      return this.files;
+      return this.files.filter((file) => file.accepted);
     }
   }
 
