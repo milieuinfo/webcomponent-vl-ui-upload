@@ -213,8 +213,8 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
     if (!this._dressed) {
       vl.upload.dress(this._upload);
       this._dressFormValidation();
-      this._dropzone.on('addedfile', () => this.dispatchEvent(new Event('change')));
-      this._dropzone.on('removedfile', () => this.dispatchEvent(new Event('change')));
+      this._dropzone.on('addedfile', () => setTimeout(() => this.dispatchEvent(new Event('change'))));
+      this._dropzone.on('removedfile', () => setTimeout(() => this.dispatchEvent(new Event('change'))));
     }
   }
 
