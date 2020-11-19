@@ -1,6 +1,4 @@
 import {vlElement, define} from '/node_modules/vl-ui-core/dist/vl-core.js';
-import '/node_modules/@govflanders/vl-ui-util/dist/js/util.js';
-import '/node_modules/@govflanders/vl-ui-core/dist/js/core.js';
 import '/node_modules/vl-ui-upload/lib/upload.js';
 
 /**
@@ -14,6 +12,7 @@ import '/node_modules/vl-ui-upload/lib/upload.js';
  * @property {File[]} data-vl-accepted-files - Attribuut om te bepalen welke bestanden worden geaccepteerd door component (extensie en mimetype).
  * @property {boolean} data-vl-autoprocess - Attribuut om te activeren of deactiveren dat het het gedropte bestand direct moet opgeladen worden.
  * @property {boolean} data-vl-disallow-duplicates - Attribuut om te voorkomen dat dezelfde bijlage meerdere keren kan opgeladen worden.
+ * @property {string} data-vl-error - Attribuut om aan te geven dat het upload element een fout bevat.
  * @property {string} data-vl-error-message-accepted-files - Attribuut om de message te definiëren wanneer er niet-geaccepteerde bestanden zijn toegevoegd.
  * @property {string} data-vl-error-message-filesize - Attribuut om de message te definiëren wanneer er te grote bestanden zijn toegevoegd.
  * @property {string} data-vl-error-message-maxfiles - Attribuut om de message te definiëren wanneer er teveel bestanden zijn toegevoegd.
@@ -22,6 +21,7 @@ import '/node_modules/vl-ui-upload/lib/upload.js';
  * @property {number} data-vl-max-files - Attribuut om het maximaal aantal bestanden dat opgeladen mag worden, aan te duiden.
  * @property {number} data-vl-max-size - Attribuut om de maximum grootte van een bestand dat opgeladen kan worden (20000000 = 2MB), aan te duiden.
  * @property {number} data-vl-sub-title - Attribuut om de subtitel te bepalen.
+ * @property {string} data-vl-success - Attribuut om aan te geven dat het upload element geen fout bevat.
  * @property {number} data-vl-title - Attribuut om de titel te bepalen.
  * @property {URL} data-vl-url - Attribuut om de url naar waar de component moet uploaden, te definiëren.
  *
@@ -35,7 +35,7 @@ export class VlUpload extends vlElement(HTMLElement) {
   }
 
   static get _observedChildClassAttributes() {
-    return ['error'];
+    return ['error', 'success'];
   }
 
   get _classPrefix() {
@@ -296,11 +296,11 @@ export class VlUpload extends vlElement(HTMLElement) {
   }
 
   _titleChangedCallback(oldValue, newValue) {
-    this._changeTranslation('add_files', newValue);
+    this._changeTranslation('upload.add_files', newValue);
   }
 
   _subTitleChangedCallback(oldValue, newValue) {
-    this._changeTranslation('add_files_subtitle', newValue);
+    this._changeTranslation('upload.add_files_subtitle', newValue);
   }
 
   _urlChangedCallback(oldValue, newValue) {
@@ -326,10 +326,6 @@ export class VlUpload extends vlElement(HTMLElement) {
     if (!this._hasUploadOverlayTemplate) {
       document.body.appendChild(this._uploadOverlayTemplate);
     }
-  }
-
-  _changeTranslation(key, value) {
-    vl.i18n.i18n[`upload.${key}`] = value;
   }
 }
 
