@@ -1,4 +1,4 @@
-const {assert, driver} = require('vl-ui-core').Test.Setup;
+const {assert, getDriver} = require('vl-ui-core').Test.Setup;
 const {Config} = require('vl-ui-core').Test;
 const VlUploadPage = require('./pages/vl-upload.page');
 const path = require('path');
@@ -7,12 +7,15 @@ const Multer = require('multer');
 const remote = require('selenium-webdriver/remote');
 
 describe('vl-upload', async () => {
-  const vlUploadPage = new VlUploadPage(driver);
+  let driver;
+  let vlUploadPage;
   let fileUploadServer;
   const uploadServerPort = 8888;
   const uploadServerPath = '/post';
 
   before(async () => {
+    driver = getDriver();
+    vlUploadPage = new VlUploadPage(driver);
     const host = Config.baseUrl.match(/http:\/\/(.*):(.*)/)[1];
     await vlUploadPage.load();
     await vlUploadPage.changeAllUploadUrlsTo(`http://${host}:${uploadServerPort}${uploadServerPath}`);
@@ -51,9 +54,7 @@ describe('vl-upload', async () => {
     const upload = await vlUploadPage.getUpload();
     await upload.uploadFile(file('bestand.pdf'));
     await vlUploadPage.uploadFiles();
-    await driver.wait(async () => {
-      return fileUploadServer.uploadedFiles.length == 1 && fileUploadServer.uploadedFiles[0] == 'bestand.pdf';
-    });
+    await driver.wait(async () => fileUploadServer.uploadedFiles.length == 1 && fileUploadServer.uploadedFiles[0] == 'bestand.pdf');
     await assert.eventually.lengthOf(upload.getFiles(), 1);
     const files = await upload.getFiles();
     await assert.eventually.isTrue(files[0].isProcessing());
