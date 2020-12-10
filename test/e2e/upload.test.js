@@ -34,7 +34,7 @@ describe('vl-upload', async () => {
   });
 
   const file = (name) => {
-    return `//local//file/` + path.resolve(__dirname, `./${name}`);
+    return path.resolve(__dirname, `./${name}`);
   };
 
   it('als gebruiker kan ik een bestand selecteren om op te laden, maar het nog niet onmiddellijk opladen', async () => {
