@@ -1,7 +1,7 @@
 const {assert, getDriver} = require('vl-ui-core').Test.Setup;
 const {Config} = require('vl-ui-core').Test;
 const VlUploadPage = require('./pages/vl-upload.page');
-const path = require('path');
+// const path = require('path');
 const Express = require('express');
 const Multer = require('multer');
 const remote = require('selenium-webdriver/remote');
@@ -33,9 +33,9 @@ describe('vl-upload', async () => {
     fileUploadServer.stop();
   });
 
-  const file = (name) => {
-    return path.resolve(__dirname, `./${name}`);
-  };
+  // const file = (name) => {
+  //   return path.resolve(__dirname, `./${name}`);
+  // };
 
   // it('als gebruiker kan ik een bestand selecteren om op te laden, maar het nog niet onmiddellijk opladen', async () => {
   //   const upload = await vlUploadPage.getUpload();
