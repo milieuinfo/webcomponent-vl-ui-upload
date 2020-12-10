@@ -37,12 +37,12 @@
     "demo": "http-server"
   },
   "dependencies": {
-    "vl-ui-core": "^7.0.1",
+    "vl-ui-core": "milieuinfo/webcomponent-vl-ui-core#upload",
     "vl-ui-link": "^4.0.7"
   },
   "peerDependencies": {
-    "vl-ui-core": "^6.1.0",
-    "vl-ui-link": "^4.0.5"
+    "vl-ui-core": "milieuinfo/webcomponent-vl-ui-core#upload",
+    "vl-ui-link": "^4.0.7"
   },
   "devDependencies": {
     "@govflanders/vl-ui-upload": "^3.12.3",
@@ -50,7 +50,6 @@
     "multer": "^1.4.2",
     "vl-ui-body": "^1.0.7",
     "vl-ui-button": "^5.0.8",
-    "vl-ui-util": "^5.3.4",
-    "selenium-webdriver": "^4.0.0-alpha.8"
+    "vl-ui-util": "^5.3.4"
   }
 }
