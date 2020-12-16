@@ -21,17 +21,3 @@
 .vl-upload {
   margin-bottom: 0rem;
 }
-
-.vl-upload--error {
-  .vl-upload__element {
-    border-color: $vl-upload-file-error-color;
-    background-color: #fae6e6;
-    .vl-upload__element__label > * {
-      color: $vl-upload-file-error-color;
-    }
-  }
-}
-
-.vl-upload__file.dz-error:before {
-  content: '\f294';
-}
