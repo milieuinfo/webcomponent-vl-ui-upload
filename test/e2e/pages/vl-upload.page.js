@@ -48,6 +48,10 @@ class VlUploadPage extends Page {
     return this._getUpload('#vl-upload-custom-text');
   }
 
+  async getUploadDisabled() {
+    return this._getUpload('#vl-upload-disabled');
+  }
+
   async listenForEventsOnUpload() {
     const addListenerButton = await this.driver.findElement(By.css('#vl-upload-listener-button'));
     return addListenerButton.click();
