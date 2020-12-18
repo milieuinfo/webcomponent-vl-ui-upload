@@ -157,11 +157,13 @@
           assert(upload._upload.getAttribute(upload._prefix + 'autoprocess') === 'true');
         });
 
-        test('verander error attribute van de upload', () => {
-          const upload = fixture('vl-upload-fixture');
-          assert.isFalse(upload._upload.classList.contains('vl-upload--error'));
-          upload.setAttribute('data-vl-error', '');
-          assert(upload._upload.classList.contains('vl-upload--error'));
+        test('stijl attributen zorgen ervoor dat de correcte class toegevoegd wordt', () => {
+          ['error', 'success'].forEach((attribute) => {
+            const upload = fixture('vl-upload-fixture');
+            assert.isFalse(upload._upload.classList.contains(`vl-upload--${attribute}`));
+            upload.setAttribute(`data-vl-${attribute}`, '');
+            assert(upload._upload.classList.contains(`vl-upload--${attribute}`));
+          });
         });
 
         test('verander disallow-duplicates attribute van de upload', () => {

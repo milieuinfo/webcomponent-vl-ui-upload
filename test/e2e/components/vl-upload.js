@@ -16,6 +16,10 @@ class VlUpload extends VlElement {
     return this.hasAttribute('error');
   }
 
+  async isSuccess() {
+    return this.hasAttribute('success');
+  }
+
   async isFullBodyDrop() {
     return this.hasAttribute('full-body-drop');
   }
