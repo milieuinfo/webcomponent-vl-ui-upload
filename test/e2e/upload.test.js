@@ -1,7 +1,7 @@
 const {assert, getDriver} = require('vl-ui-core').Test.Setup;
 const {Config} = require('vl-ui-core').Test;
 const VlUploadPage = require('./pages/vl-upload.page');
-// const path = require('path');
+const path = require('path');
 const Express = require('express');
 const Multer = require('multer');
 const remote = require('selenium-webdriver/remote');
