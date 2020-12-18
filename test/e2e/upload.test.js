@@ -68,7 +68,7 @@ describe('vl-upload', async () => {
     const upload = await vlUploadPage.getUpload();
     await upload.uploadFile(file(PDF_FILE));
     await vlUploadPage.uploadFiles();
-    await driver.wait(async () => fileUploadServer.uploadedFiles.length == 1 && fileUploadServer.uploadedFiles[0] == PDF_FILE);
+    await driver.wait(async () => fileUploadServer.uploadedFiles.length == 1);
     await assert.eventually.lengthOf(upload.getFiles(), 1);
     const files = await upload.getFiles();
     await assert.eventually.isTrue(files[0].isProcessing());
@@ -81,7 +81,7 @@ describe('vl-upload', async () => {
     await upload.uploadFile(file(PDF_FILE));
     await driver.wait(async () => {
       const files = await upload.getFiles();
-      return files.length == 1 && fileUploadServer.uploadedFiles.length == 1 && fileUploadServer.uploadedFiles[0] == PDF_FILE;
+      return files.length == 1 && fileUploadServer.uploadedFiles.length == 1;
     });
   });
 
