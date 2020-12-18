@@ -21,17 +21,3 @@
 .vl-upload {
   margin-bottom: 0rem;
 }
-
-.vl-upload--success {
-  .vl-upload__element {
-    border-color: #3ca854;
-    background-color: #ecf6ee;;
-    .vl-upload__element__label > * {
-      color: #3ca854;
-    }
-  }
-}
-
-.vl-upload__file.dz-success:before {
-  content: '\f294';
-}
