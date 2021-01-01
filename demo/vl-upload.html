@@ -10,6 +10,7 @@
     <script type="module" src="/src/vl-upload.js"></script>
 
     <link rel="stylesheet" type="text/css" href="/node_modules/vl-ui-body/dist/style.css" />
+    <link rel="stylesheet" type="text/css" href="/node_modules/vl-ui-demo/dist/style.css" />
     <link rel="stylesheet" type="text/css" href="/node_modules/vl-ui-button/dist/style.css" />
 </head>
 
@@ -45,19 +46,19 @@
         <vl-demo data-vl-title="Beperkte upload (aantal en grootte)">
             <vl-upload id="vl-upload-max-5" data-vl-url="http://httpbin.org/post" data-vl-input-name="files"
                 data-vl-error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
-                data-vl-error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden." data-vl-max-files="5" data-vl-max-size="2000000"></vl-upload>
+                data-vl-error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden." data-vl-max-files="5" data-vl-max-size="1000000"></vl-upload>
         </vl-demo>
 
         <vl-demo data-vl-title="Beperkte upload zonder dubbels">
             <vl-upload id="vl-upload-unique" data-vl-url="http://httpbin.org/post" data-vl-input-name="files"
                 error-message-filesize="De grootte van het bestand mag maximaal :maxFsz zijn."
-                error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden." data-vl-max-files="2" data-vl-max-size="20000000"
+                error-message-maxfiles="Je kan maximaal :maxfl file(s) uploaden." data-vl-max-files="2" data-vl-max-size="10000000"
                 disallow-duplicates="true"></vl-upload>
         </vl-demo>
 
         <vl-demo data-vl-title="Beperkte upload (aantal en type)">
             <vl-upload id="vl-upload-file-types" data-vl-url="http://httpbin.org/post" data-vl-input-name="files" data-vl-max-files="10"
-                data-vl-max-size="20000000" data-vl-accepted-files="application/pdf, .png"
+                data-vl-max-size="10000000" data-vl-accepted-files="application/pdf, .png"
                 data-vl-error-message-accepted-files="Je kan enkel :filetype bestanden opladen"></vl-upload>
         </vl-demo>
 
@@ -96,6 +97,10 @@
 
         <vl-demo data-vl-title="Upload error">
             <vl-upload id="vl-upload-error" url="http://httpbin.org/post" data-vl-input-name="files" data-vl-error></vl-upload>
+        </vl-demo>
+
+        <vl-demo data-vl-title="Upload succes">
+            <vl-upload id="vl-upload-success" url="http://httpbin.org/post" data-vl-input-name="files" data-vl-success></vl-upload>
         </vl-demo>
 
         <vl-demo data-vl-title="Upload met custom tekst">

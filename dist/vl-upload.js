@@ -1,5 +1,4 @@
 import {vlElement, define} from '/node_modules/vl-ui-core/dist/vl-core.js';
-import {vlFormValidation, vlFormValidationElement} from '/node_modules/vl-ui-form-validation/dist/vl-form-validation-all.js';
 import '/node_modules/vl-ui-upload/lib/upload.js';
 
 Promise.all([
@@ -17,6 +16,7 @@ Promise.all([
  * @property {File[]} data-vl-accepted-files - Attribuut om te bepalen welke bestanden worden geaccepteerd door component (extensie en mimetype).
  * @property {boolean} data-vl-autoprocess - Attribuut om te activeren of deactiveren dat het het gedropte bestand direct moet opgeladen worden.
  * @property {boolean} data-vl-disallow-duplicates - Attribuut om te voorkomen dat dezelfde bijlage meerdere keren kan opgeladen worden.
+ * @property {string} data-vl-error - Attribuut om aan te geven dat het upload element een fout bevat.
  * @property {string} data-vl-error-message-accepted-files - Attribuut om de message te definiëren wanneer er niet-geaccepteerde bestanden zijn toegevoegd.
  * @property {string} data-vl-error-message-filesize - Attribuut om de message te definiëren wanneer er te grote bestanden zijn toegevoegd.
  * @property {string} data-vl-error-message-maxfiles - Attribuut om de message te definiëren wanneer er teveel bestanden zijn toegevoegd.
@@ -25,6 +25,7 @@ Promise.all([
  * @property {number} data-vl-max-files - Attribuut om het maximaal aantal bestanden dat opgeladen mag worden, aan te duiden.
  * @property {number} data-vl-max-size - Attribuut om de maximum grootte van een bestand dat opgeladen kan worden (20000000 = 2MB), aan te duiden.
  * @property {number} data-vl-sub-title - Attribuut om de subtitel te bepalen.
+ * @property {string} data-vl-success - Attribuut om aan te geven dat het upload element geen fout bevat.
  * @property {number} data-vl-title - Attribuut om de titel te bepalen.
  * @property {URL} data-vl-url - Attribuut om de url naar waar de component moet uploaden, te definiëren.
  *
@@ -38,7 +39,7 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
   }
 
   static get _observedChildClassAttributes() {
-    return ['error'];
+    return ['error', 'success'];
   }
 
   get _classPrefix() {
