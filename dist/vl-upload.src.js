@@ -1,4 +1,5 @@
 import {vlElement, define} from 'vl-ui-core';
+import {vlFormValidation, vlFormValidationElement} from 'vl-ui-form-validation';
 import 'vl-ui-upload/lib/upload.js';
 
 Promise.all([
