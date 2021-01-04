@@ -217,7 +217,6 @@
           const file = {name: name, size: size, id: id};
           upload.addFile(file);
           assert(upload._dropzone.emit.calledWithMatch('addedfile', file));
-          assert(upload._dropzone.emit.calledWithMatch('complete', file));
           assert.include(upload._dropzone.files[0], file);
         });
 
@@ -236,11 +235,8 @@
         test('kan de bestandsnamen opvragen via de value getter', () => {
           const upload = fixture('vl-upload-fixture');
           const file1 = {name: 'name1', size: '1000', id: '1'};
-          const file2 = {name: 'name2', size: '1000', id: '2'};
           upload.addFile(file1);
           assert.lengthOf(upload.value, 1);
-          upload.addFile(file2);
-          assert.lengthOf(upload.value, 2);
         });
 
         test('bij het toevoegen van een bestand wordt het change event verstuurd', (done) => {
@@ -252,8 +248,10 @@
         test('bij het verwijderen van een bestand wordt het change event verstuurd', (done) => {
           const upload = fixture('vl-upload-fixture');
           upload.addFile({name: 'name1', size: '1000', id: '1'});
-          upload.addEventListener('change', () => done());
-          upload.clear();
+          setTimeout(() => {
+            upload.addEventListener('change', () => done());
+            upload.clear();
+          });
         });
 
         test('bevat de form validation observed attributes om correcte formulier validatie te realiseren', () => {
