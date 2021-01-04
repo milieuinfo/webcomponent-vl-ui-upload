@@ -1,5 +1,10 @@
 import {vlElement, define} from 'vl-ui-core';
+import {vlFormValidation, vlFormValidationElement} from 'vl-ui-form-validation';
 import 'vl-ui-upload/lib/upload.js';
+
+Promise.all([
+  vlFormValidation.ready(),
+]).then(() => define('vl-upload', VlUpload));
 
 /**
  * VlUpload
@@ -29,9 +34,9 @@ import 'vl-ui-upload/lib/upload.js';
  * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-upload/issues|Issues}
  * @see {@link https://webcomponenten.omgeving.vlaanderen.be/demo/vl-upload.html|Demo}
  */
-export class VlUpload extends vlElement(HTMLElement) {
+export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
   static get _observedAttributes() {
-    return ['accepted-files', 'autoprocess', 'error-message-accepted-files', 'error-message-filesize', 'error-message-maxfiles', 'full-body-drop', 'input-name', 'max-files', 'max-size', 'disallow-duplicates', 'title', 'sub-title', 'url'];
+    return vlFormValidation._observedAttributes().concat(['accepted-files', 'autoprocess', 'error-message-accepted-files', 'error-message-filesize', 'error-message-maxfiles', 'full-body-drop', 'input-name', 'max-files', 'max-size', 'disallow-duplicates', 'title', 'sub-title', 'url']);
   }
 
   static get _observedChildClassAttributes() {
@@ -60,6 +65,16 @@ export class VlUpload extends vlElement(HTMLElement) {
   }
 
   /**
+   * Geeft de bestanden die toegevoegd zijn.
+   * @return {File[]}
+   */
+  get value() {
+    if (this.acceptedFiles && this.acceptedFiles.length > 0) {
+      return this.acceptedFiles;
+    }
+  }
+
+  /**
    * Geeft het upload element.
    * @return {HTMLElement}
    */
@@ -68,7 +83,7 @@ export class VlUpload extends vlElement(HTMLElement) {
   }
 
   /**
-   * Haal de geaccepteerde bestanden (zonder error) op, die toegevoegd zijn aan de dropzone.
+   * Haal de geaccepteerde bestanden (zonder error) op, die toegevoegd zijn.
    * @return {File[]}
    */
   get acceptedFiles() {
@@ -76,7 +91,7 @@ export class VlUpload extends vlElement(HTMLElement) {
   }
 
   /**
-   * Haal de niet-geaccepteerde bestanden (met error) op, die toegevoegd zijn aan de dropzone.
+   * Haal de niet-geaccepteerde bestanden (met error) op, die toegevoegd zijn.
    * @return {File[]}
    */
   get rejectedFiles() {
@@ -84,7 +99,7 @@ export class VlUpload extends vlElement(HTMLElement) {
   }
 
   /**
-   * Haal alle bestanden op die toegevoegd zijn aan de dropzone.
+   * Haal alle bestanden op die toegevoegd zijn.
    * @return {File[]}
    */
   get files() {
@@ -201,6 +216,9 @@ export class VlUpload extends vlElement(HTMLElement) {
   dress() {
     if (!this._dressed) {
       vl.upload.dress(this._upload);
+      this._dressFormValidation();
+      this._dropzone.on('addedfile', () => setTimeout(() => this.dispatchEvent(new Event('change'))));
+      this._dropzone.on('removedfile', () => setTimeout(() => this.dispatchEvent(new Event('change'))));
     }
   }
 
@@ -330,6 +348,4 @@ export class VlUpload extends vlElement(HTMLElement) {
     }
   }
 }
-
-define('vl-upload', VlUpload);
 

@@ -30,7 +30,17 @@
       </template>
     </test-fixture>
 
+    <test-fixture id="vl-upload-form-fixture">
+      <template>
+        <form>
+          <vl-upload url="http://www.example.com"/>
+        </form>
+      </template>
+    </test-fixture>
+
     <script type="module">
+      import {VlUpload} from '../../src/vl-upload';
+      import {vlFormValidation} from 'vl-ui-form-validation/dist/vl-form-validation';
       import {awaitUntil} from 'vl-ui-core/dist/vl-core';
 
       suite('vl-upload', () => {
@@ -207,7 +217,6 @@
           const file = {name: name, size: size, id: id};
           upload.addFile(file);
           assert(upload._dropzone.emit.calledWithMatch('addedfile', file));
-          assert(upload._dropzone.emit.calledWithMatch('complete', file));
           assert.include(upload._dropzone.files[0], file);
         });
 
@@ -221,6 +230,40 @@
           const upload = fixture('vl-upload-fixture');
           upload._button.addEventListener('focus', () => done());
           upload.focus();
+        });
+
+        test('kan de bestandsnamen opvragen via de value getter', () => {
+          const upload = fixture('vl-upload-fixture');
+          const file1 = {name: 'name1', size: '1000', id: '1'};
+          upload.addFile(file1);
+          assert.lengthOf(upload.value, 1);
+        });
+
+        test('bij het toevoegen van een bestand wordt het change event verstuurd', (done) => {
+          const upload = fixture('vl-upload-fixture');
+          upload.addEventListener('change', () => done());
+          upload.addFile({name: 'name1', size: '1000', id: '1'});
+        });
+
+        test('bij het verwijderen van een bestand wordt het change event verstuurd', (done) => {
+          const upload = fixture('vl-upload-fixture');
+          upload.addFile({name: 'name1', size: '1000', id: '1'});
+          setTimeout(() => {
+            upload.addEventListener('change', () => done());
+            upload.clear();
+          });
+        });
+
+        test('bevat de form validation observed attributes om correcte formulier validatie te realiseren', () => {
+          vlFormValidation._observedAttributes().forEach((attribute) => assert.include(VlUpload._observedAttributes, attribute));
+        });
+
+        test('de upload zal pas de validation dress functie uitvoeren als het onderdeel van een formulier is', () => {
+          sandbox.spy(vl.formValidation, 'dress');
+          fixture('vl-upload-fixture');
+          assert(vl.formValidation.dress.notCalled);
+          const upload = fixture('vl-upload-form-fixture').querySelector('vl-upload');
+          assert(vl.formValidation.dress.calledWith(upload.form));
         });
       });
     </script>
