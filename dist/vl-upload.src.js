@@ -262,9 +262,7 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
    */
   addFile({name, size, id}) {
     const file = {name: name, size: size, id: id};
-    this._dropzone.files.push(file);
-    this._dropzone.emit('addedfile', file);
-    this._dropzone.emit('complete', file);
+    this._dropzone.addFile(file);
   }
 
   /**
