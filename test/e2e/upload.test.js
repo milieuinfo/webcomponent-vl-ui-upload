@@ -92,6 +92,13 @@ describe('vl-upload', async () => {
     await assert.eventually.isTrue(uploadError.isError());
   });
 
+  it('als gebruiker zie ik het onderscheid tussen een gewone upload en een upload in succes state', async () => {
+    const upload = await vlUploadPage.getUpload();
+    const uploadSuccess = await vlUploadPage.getUploadSuccess();
+    await assert.eventually.isFalse(upload.isSuccess());
+    await assert.eventually.isTrue(uploadSuccess.isSuccess());
+  });
+
   it('als gebruiker zie ik een foutboodschap bij een bestand als het opladen mislukt', async () => {
     const upload = await vlUploadPage.getUploadAutoProcess();
     fileUploadServer.failUploads();

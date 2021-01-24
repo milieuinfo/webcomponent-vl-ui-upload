@@ -1,5 +1,10 @@
 import {vlElement, define} from '/node_modules/vl-ui-core/dist/vl-core.js';
+import {vlFormValidation, vlFormValidationElement} from '/node_modules/vl-ui-form-validation/dist/vl-form-validation-all.js';
 import '/node_modules/vl-ui-upload/lib/upload.js';
+
+Promise.all([
+  vlFormValidation.ready(),
+]).then(() => define('vl-upload', VlUpload));
 
 /**
  * VlUpload
@@ -12,6 +17,7 @@ import '/node_modules/vl-ui-upload/lib/upload.js';
  * @property {File[]} data-vl-accepted-files - Attribuut om te bepalen welke bestanden worden geaccepteerd door component (extensie en mimetype).
  * @property {boolean} data-vl-autoprocess - Attribuut om te activeren of deactiveren dat het het gedropte bestand direct moet opgeladen worden.
  * @property {boolean} data-vl-disallow-duplicates - Attribuut om te voorkomen dat dezelfde bijlage meerdere keren kan opgeladen worden.
+ * @property {string} data-vl-error - Attribuut om aan te geven dat het upload element een fout bevat.
  * @property {string} data-vl-error-message-accepted-files - Attribuut om de message te definiëren wanneer er niet-geaccepteerde bestanden zijn toegevoegd.
  * @property {string} data-vl-error-message-filesize - Attribuut om de message te definiëren wanneer er te grote bestanden zijn toegevoegd.
  * @property {string} data-vl-error-message-maxfiles - Attribuut om de message te definiëren wanneer er teveel bestanden zijn toegevoegd.
@@ -20,6 +26,7 @@ import '/node_modules/vl-ui-upload/lib/upload.js';
  * @property {number} data-vl-max-files - Attribuut om het maximaal aantal bestanden dat opgeladen mag worden, aan te duiden.
  * @property {number} data-vl-max-size - Attribuut om de maximum grootte van een bestand dat opgeladen kan worden (20000000 = 2MB), aan te duiden.
  * @property {number} data-vl-sub-title - Attribuut om de subtitel te bepalen.
+ * @property {string} data-vl-success - Attribuut om aan te geven dat het upload element geen fout bevat.
  * @property {number} data-vl-title - Attribuut om de titel te bepalen.
  * @property {URL} data-vl-url - Attribuut om de url naar waar de component moet uploaden, te definiëren.
  *
@@ -27,13 +34,13 @@ import '/node_modules/vl-ui-upload/lib/upload.js';
  * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-upload/issues|Issues}
  * @see {@link https://webcomponenten.omgeving.vlaanderen.be/demo/vl-upload.html|Demo}
  */
-export class VlUpload extends vlElement(HTMLElement) {
+export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
   static get _observedAttributes() {
-    return ['accepted-files', 'autoprocess', 'error-message-accepted-files', 'error-message-filesize', 'error-message-maxfiles', 'full-body-drop', 'input-name', 'max-files', 'max-size', 'disallow-duplicates', 'title', 'sub-title', 'url'];
+    return vlFormValidation._observedAttributes().concat(['accepted-files', 'autoprocess', 'error-message-accepted-files', 'error-message-filesize', 'error-message-maxfiles', 'full-body-drop', 'input-name', 'max-files', 'max-size', 'disallow-duplicates', 'title', 'sub-title', 'url']);
   }
 
   static get _observedChildClassAttributes() {
-    return ['error'];
+    return ['error', 'success'];
   }
 
   get _classPrefix() {
@@ -56,6 +63,16 @@ export class VlUpload extends vlElement(HTMLElement) {
   }
 
   /**
+   * Geeft de bestanden die toegevoegd zijn.
+   * @return {File[]}
+   */
+  get value() {
+    if (this.acceptedFiles && this.acceptedFiles.length > 0) {
+      return this.acceptedFiles;
+    }
+  }
+
+  /**
    * Geeft het upload element.
    * @return {HTMLElement}
    */
@@ -64,7 +81,7 @@ export class VlUpload extends vlElement(HTMLElement) {
   }
 
   /**
-   * Haal de geaccepteerde bestanden (zonder error) op, die toegevoegd zijn aan de dropzone.
+   * Haal de geaccepteerde bestanden (zonder error) op, die toegevoegd zijn.
    * @return {File[]}
    */
   get acceptedFiles() {
@@ -72,7 +89,7 @@ export class VlUpload extends vlElement(HTMLElement) {
   }
 
   /**
-   * Haal de niet-geaccepteerde bestanden (met error) op, die toegevoegd zijn aan de dropzone.
+   * Haal de niet-geaccepteerde bestanden (met error) op, die toegevoegd zijn.
    * @return {File[]}
    */
   get rejectedFiles() {
@@ -80,7 +97,7 @@ export class VlUpload extends vlElement(HTMLElement) {
   }
 
   /**
-   * Haal alle bestanden op die toegevoegd zijn aan de dropzone.
+   * Haal alle bestanden op die toegevoegd zijn.
    * @return {File[]}
    */
   get files() {
@@ -197,6 +214,9 @@ export class VlUpload extends vlElement(HTMLElement) {
   dress() {
     if (!this._dressed) {
       vl.upload.dress(this._upload);
+      this._dressFormValidation();
+      this._dropzone.on('addedfile', () => setTimeout(() => this.dispatchEvent(new Event('change'))));
+      this._dropzone.on('removedfile', () => setTimeout(() => this.dispatchEvent(new Event('change'))));
     }
   }
 
@@ -240,9 +260,7 @@ export class VlUpload extends vlElement(HTMLElement) {
    */
   addFile({name, size, id}) {
     const file = {name: name, size: size, id: id};
-    this._dropzone.files.push(file);
-    this._dropzone.emit('addedfile', file);
-    this._dropzone.emit('complete', file);
+    this._dropzone.addFile(file);
   }
 
   /**
@@ -326,5 +344,3 @@ export class VlUpload extends vlElement(HTMLElement) {
     }
   }
 }
-
-define('vl-upload', VlUpload);

@@ -12,6 +12,10 @@ class VlUploadPage extends Page {
     return this._getUpload('#vl-upload-error');
   }
 
+  async getUploadSuccess() {
+    return this._getUpload('#vl-upload-success');
+  }
+
   async getUploadAutoProcess() {
     return this._getUpload('#vl-upload-auto-process');
   }
