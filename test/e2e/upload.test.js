@@ -210,6 +210,12 @@ describe('vl-upload', async () => {
     await assert.eventually.equal(upload.getSubTitle(), 'Sleep de afbeelding naar hier om toe te voegen');
   });
 
+  it('als gebruiker kan ik geen bestand opladen wanneer het upload element disabled is', async () => {
+    const upload = await vlUploadPage.getUploadDisabled();
+    await upload.uploadFile(file(PDF_FILE));
+    assert.equal(fileUploadServer.uploadedFiles.length, 0);
+  });
+
   class FileUploadServer {
     constructor(port, path) {
       this.__uploadedFiles = [];

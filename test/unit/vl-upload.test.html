@@ -265,6 +265,24 @@
           const upload = fixture('vl-upload-form-fixture').querySelector('vl-upload');
           assert(vl.formValidation.dress.calledWith(upload.form));
         });
+      
+        test('kan het upload input element disablen en enablen', (done) => {
+          const upload = fixture('vl-upload-fixture');
+          assert.isFalse(upload._button.disabled);
+          upload.setAttribute('data-vl-disabled', '');
+          setTimeout(() => {
+            assert.isTrue(upload._button.disabled);
+            upload.enable();
+            setTimeout(() => {
+              assert.isFalse(upload._button.disabled);
+              upload.disable();
+              setTimeout(() => {
+                assert.isTrue(upload._button.disabled);
+                done();
+              });
+            });
+          });
+        });
       });
     </script>
   </body>
