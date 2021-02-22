@@ -38,6 +38,12 @@
       </template>
     </test-fixture>
 
+    <test-fixture id="vl-upload-autoprocess-fixture">
+      <template>
+        <vl-upload url="http://www.example.com" data-vl-autoprocess/>
+      </template>
+    </test-fixture>
+
     <script type="module">
       import {VlUpload} from '../../src/vl-upload';
       import {vlFormValidation} from 'vl-ui-form-validation/dist/vl-form-validation';
@@ -218,6 +224,22 @@
           upload.addFile(file);
           assert(upload._dropzone.emit.calledWithMatch('addedfile', file));
           assert.include(upload._dropzone.files[0], file);
+        });
+
+        test('het programmatisch toevoegen van een bestand wanneer autoprocess actief staat zal achterliggend geen upload uitvoeren', (done) => {
+          const upload = fixture('vl-upload-autoprocess-fixture');
+          sandbox.spy(upload._dropzone, 'processQueue');
+          const name = 'name';
+          const size = '1000';
+          const id = '1';
+          const file = {name: name, size: size, id: id};
+          upload.addFile(file);
+          setTimeout(() => {
+            setTimeout(() => {
+              assert(upload._dropzone.processQueue.notCalled);
+              done();
+            });
+          });
         });
 
         test('de titel en sub-titel kan gepersonaliseerd worden', () => {

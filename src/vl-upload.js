@@ -253,15 +253,22 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
   }
 
   /**
-   * Handmatig bestand toevoegen
+   * Handmatig bestand toevoegen aan de lijst van opgeladen bestanden zonder achterliggende upload
    * @param {String} name
    * @param {Number} size
    * @param {Number} id
    * @return {void}
    */
   addFile({name, size, id}) {
+    const autoprocessActive = this.dataset.vlAutoprocess != undefined;
+    if (autoprocessActive) {
+      this._disableAutoProcessQueue();
+    }
     const file = {name: name, size: size, id: id};
     this._dropzone.addFile(file);
+    if (autoprocessActive) {
+      this._enableAutoProcessQueue();
+    }
   }
 
   /**
@@ -365,5 +372,13 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
     if (!this._hasUploadOverlayTemplate) {
       document.body.appendChild(this._uploadOverlayTemplate);
     }
+  }
+
+  _disableAutoProcessQueue() {
+    this._dropzone.options.autoProcessQueue = false;
+  }
+
+  _enableAutoProcessQueue() {
+    this._dropzone.options.autoProcessQueue = true;
   }
 }
