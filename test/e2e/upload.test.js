@@ -105,7 +105,7 @@ describe('vl-upload', async () => {
     await upload.uploadFile(file(PDF_FILE));
     await assert.eventually.lengthOf(upload.getFiles(), 1);
     const files = await upload.getFiles();
-    await assert.eventually.equal(files[0].getErrorMessage(), 'Uw bestand kon niet verwerkt worden');
+    await driver.wait(async () => await files[0].getErrorMessage() == 'Uw bestand kon niet verwerkt worden');
     await assert.eventually.isTrue(files[0].isProcessing());
     await assert.eventually.isFalse(files[0].isSuccess());
     await assert.eventually.isTrue(files[0].isError());
