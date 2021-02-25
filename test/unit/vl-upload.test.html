@@ -224,6 +224,7 @@
           upload.addFile(file);
           assert(upload._dropzone.emit.calledWithMatch('addedfile', file));
           assert(upload._dropzone.emit.calledWithMatch('complete', file));
+          assert(file.status, 'success');
           assert.include(upload._dropzone.files[0], file);
         });
 
