@@ -1,6 +1,6 @@
 {
   "name": "vl-ui-upload",
-  "version": "3.5.2",
+  "version": "3.5.3",
   "description": "Gebruik de upload component om één of meerdere bestanden te selecteren of te slepen naar het upload veld. De gebruiker kan alternatief ook één of meerdere bestanden uploaden door op de link in het upload veld te klikken en de bestanden te selecteren in het Bestand menu.",
   "author": "DIDM",
   "license": "MIT",
