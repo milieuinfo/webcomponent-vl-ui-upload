@@ -269,6 +269,7 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
     const file = {name: name, size: size, id: id};
     this._dropzone.addFile(file);
     this._dropzone.emit('complete', file);
+    file.status = 'success';
     if (autoprocessActive) {
       this._enableAutoProcessQueue();
     }
