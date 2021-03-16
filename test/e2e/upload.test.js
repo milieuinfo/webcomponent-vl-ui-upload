@@ -33,7 +33,7 @@ describe('vl-upload', async () => {
   });
 
   after(() => {
-    fileUploadServer.stop();
+    return fileUploadServer.stop();
   });
 
   const file = (name) => {
