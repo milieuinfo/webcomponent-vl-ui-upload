@@ -220,6 +220,7 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
       this._dressFormValidation();
       this._dropzone.on('addedfile', () => setTimeout(() => this.dispatchEvent(new Event('change'))));
       this._dropzone.on('removedfile', () => setTimeout(() => this.dispatchEvent(new Event('change'))));
+      this._dropzone.timeout = 0; // 0 value will disable the connection timeout
     }
   }
 
