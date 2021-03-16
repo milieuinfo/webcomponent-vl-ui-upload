@@ -308,6 +308,11 @@
             });
           });
         });
+
+        test('de dropzone timeout wordt overschreven met 0 zodat in praktijk een lange connectie niet geannuleerd wordt', () => {
+          const upload = fixture('vl-upload-fixture');
+          assert.equal(upload._dropzone.timeout, 0);
+        });
       });
     </script>
   </body>
