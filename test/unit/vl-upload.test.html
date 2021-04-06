@@ -30,6 +30,15 @@
       </template>
     </test-fixture>
 
+    <test-fixture id="vl-upload-slots-text-fixture">
+      <template>
+          <vl-upload url="http://httpbin.org/post" data-vl-input-name="files">
+              <span slot="title">Titel</span>
+              <span slot="sub-title">Sub-titel</span>
+          </vl-upload>
+      </template>
+    </test-fixture>
+
     <test-fixture id="vl-upload-form-fixture">
       <template>
         <form>
@@ -251,6 +260,12 @@
           assert.equal(upload.getTranslation('upload.add_files_subtitle'), upload.getAttribute('sub-title'));
         });
 
+        test('de titel en sub-titel kan gepersonaliseerd worden via een slot', () => {
+          const upload = fixture('vl-upload-slots-text-fixture');
+          assert.equal(upload._titleSlotElement.assignedNodes()[0].textContent, 'Titel');
+          assert.equal(upload._subTitleSlotElement.assignedNodes()[0].textContent, 'Sub-titel');
+        });
+
         test('kan programmatisch focus activeren', (done) => {
           const upload = fixture('vl-upload-fixture');
           upload._button.addEventListener('focus', () => done());
@@ -290,7 +305,7 @@
           const upload = fixture('vl-upload-form-fixture').querySelector('vl-upload');
           assert(vl.formValidation.dress.calledWith(upload.form));
         });
-      
+
         test('kan het upload input element disablen en enablen', (done) => {
           const upload = fixture('vl-upload-fixture');
           assert.isFalse(upload._button.disabled);
