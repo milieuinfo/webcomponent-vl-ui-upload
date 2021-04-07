@@ -146,9 +146,26 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
     return this._element.querySelector('slot[name=title]');
   }
 
+  get _titleElement() {
+    return this.uploadElement.querySelector('.vl-upload__element__button__container');
+  }
+
+  set _titleInnerHTML(innerHTML) {
+    this._titleElement.innerHTML = innerHTML;
+  }
+
   get _subTitleSlotElement() {
     return this._element.querySelector('slot[name=sub-title]');
   }
+
+  get _subTitleElement() {
+    return this.uploadElement.querySelector('small');
+  }
+
+  set _subTitleInnerHTML(innerHTML) {
+    this._subTitleElement.innerHTML = innerHTML;
+  }
+
 
   get _uploadTemplate() {
     return this._template(`
@@ -220,6 +237,7 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
   get _prefix() {
     return 'data-vl-upload-';
   }
+
 
   /**
    * Initialiseer de modal config.
@@ -407,14 +425,12 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
     Promise.all([this.uploadElement]).then(() => {
       const subTitleSlotNodes = this._subTitleSlotElement.assignedNodes();
       if (subTitleSlotNodes.length > 0) {
-        const small = this.uploadElement.querySelector('small');
-        small.innerHTML = subTitleSlotNodes[0].outerHTML;
+        this._subTitleInnerHTML = subTitleSlotNodes[0].outerHTML;
       }
 
       const titleSlotNodes = this._titleSlotElement.assignedNodes();
       if (titleSlotNodes.length > 0) {
-        const buttonContainer = this.uploadElement.querySelector('.vl-upload__element__button__container');
-        buttonContainer.innerHTML = titleSlotNodes[0].outerHTML;
+        this._titleInnerHTML = titleSlotNodes[0].outerHTML;
       }
     }).finally(() => {
       this._titleSlotElement.remove();
