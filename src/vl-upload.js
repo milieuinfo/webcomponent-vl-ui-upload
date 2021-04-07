@@ -62,8 +62,8 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
 
   connectedCallback() {
     this._appendTemplates();
-    this._addSlots();
     this.dress();
+    this._addSlots();
   }
 
   /**
@@ -422,19 +422,17 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
   }
 
   _addSlots() {
-    Promise.all([this.uploadElement]).then(() => {
-      const subTitleSlotNodes = this._subTitleSlotElement.assignedNodes();
-      if (subTitleSlotNodes.length > 0) {
-        this._subTitleInnerHTML = subTitleSlotNodes[0].outerHTML;
-      }
+    const subTitleSlotNodes = this._subTitleSlotElement.assignedNodes();
+    if (subTitleSlotNodes.length > 0) {
+      this._subTitleInnerHTML = subTitleSlotNodes[0].outerHTML;
+    }
 
-      const titleSlotNodes = this._titleSlotElement.assignedNodes();
-      if (titleSlotNodes.length > 0) {
-        this._titleInnerHTML = titleSlotNodes[0].outerHTML;
-      }
-    }).finally(() => {
-      this._titleSlotElement.remove();
-      this._subTitleSlotElement.remove();
-    });
+    const titleSlotNodes = this._titleSlotElement.assignedNodes();
+    if (titleSlotNodes.length > 0) {
+      this._titleInnerHTML = titleSlotNodes[0].outerHTML;
+    }
+
+    this._subTitleSlotElement.remove();
+    this._titleSlotElement.remove();
   }
 }
