@@ -38,8 +38,8 @@
   },
   "dependencies": {
     "vl-ui-core": "^7.2.0",
-    "vl-ui-form-validation": "^3.5.0",
-    "vl-ui-link": "^4.0.8"
+    "vl-ui-form-validation": "^3.6.2",
+    "vl-ui-link": "^4.0.9"
   },
   "peerDependencies": {
     "vl-ui-core": "^7.1.0",
