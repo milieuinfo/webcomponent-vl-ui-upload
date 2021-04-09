@@ -263,8 +263,7 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
   }
 
   /**
-   * Wrapper om alle events te kunnen catchen van de upload (zoals vl.upload.hook.fileChange alsook de events van
-   * [DropZoneJs]{@link https://www.dropzonejs.com/#event-list})
+   * Wrapper om alle events te kunnen catchen van de upload (zoals vl.upload.hook.fileChange alsook de events van [DropZoneJs]{@link https://www.dropzonejs.com/#event-list})
    * @param {String} event
    * @param {Function} callback
    * @return {void}
@@ -275,12 +274,12 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
   }
 
   /**
-     * Handmatig bestand toevoegen aan de lijst van opgeladen bestanden zonder achterliggende upload
-     * @param {String} name
-     * @param {Number} size
-     * @param {Number} id
-     * @return {void}
-     */
+   * Handmatig bestand toevoegen aan de lijst van opgeladen bestanden zonder achterliggende upload
+   * @param {String} name
+   * @param {Number} size
+   * @param {Number} id
+   * @return {void}
+   */
   addFile({name, size, id}) {
     const autoprocessActive = this.dataset.vlAutoprocess != undefined;
     if (autoprocessActive) {
@@ -404,15 +403,6 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
 
   _enableAutoProcessQueue() {
     this._dropzone.options.autoProcessQueue = true;
-  }
-
-  _addSlots() {
-    const titleSlotNodes = this._titleSlotElement.assignedNodes();
-    if (titleSlotNodes.length > 0) {
-      this._titleInnerHTML = titleSlotNodes[0].outerHTML;
-    }
-
-    this._titleSlotElement.remove();
   }
 
   _processSlots() {
