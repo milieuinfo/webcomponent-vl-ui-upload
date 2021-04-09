@@ -9,8 +9,7 @@ Promise.all([
 /**
  * VlUpload
  * @class
- * @classdesc Gebruik de upload component om één of meerdere bestanden te selecteren of te slepen naar het upload veld. De gebruiker kan alternatief
- *     ook één of meerdere bestanden uploaden door op de link in het upload veld te klikken en de bestanden te selecteren in het Bestand menu.
+ * @classdesc Gebruik de upload component om één of meerdere bestanden te selecteren of te slepen naar het upload veld. De gebruiker kan alternatief ook één of meerdere bestanden uploaden door op de link in het upload veld te klikken en de bestanden te selecteren in het Bestand menu.
  *
  * @extends HTMLElement
  * @mixes vlElement
@@ -20,8 +19,7 @@ Promise.all([
  * @property {boolean} data-vl-disabled - Attribuut om te voorkomen dat de gebruiker een bijlage kan opladen.
  * @property {boolean} data-vl-disallow-duplicates - Attribuut om te voorkomen dat dezelfde bijlage meerdere keren kan opgeladen worden.
  * @property {string} data-vl-error - Attribuut om aan te geven dat het upload element een fout bevat.
- * @property {string} data-vl-error-message-accepted-files - Attribuut om de message te definiëren wanneer er niet-geaccepteerde bestanden zijn
- *     toegevoegd.
+ * @property {string} data-vl-error-message-accepted-files - Attribuut om de message te definiëren wanneer er niet-geaccepteerde bestanden zijn toegevoegd.
  * @property {string} data-vl-error-message-filesize - Attribuut om de message te definiëren wanneer er te grote bestanden zijn toegevoegd.
  * @property {string} data-vl-error-message-maxfiles - Attribuut om de message te definiëren wanneer er teveel bestanden zijn toegevoegd.
  * @property {boolean} data-vl-full-body-drop - Attribuut om te activeren of deactiveren dat het de dropzone over het heel scherm is.
@@ -63,7 +61,7 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
   connectedCallback() {
     this._appendTemplates();
     this.dress();
-    this._addSlots();
+    this._processSlots();
   }
 
   /**
@@ -143,29 +141,20 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
   }
 
   get _titleSlotElement() {
-    return this._element.querySelector('slot[name=title]');
+    return this.querySelector('[slot="title"]');
+  }
+
+  get _subTitleSlotElement() {
+    return this.querySelector('[slot="sub-title"]');
   }
 
   get _titleElement() {
     return this.uploadElement.querySelector('.vl-upload__element__button__container');
   }
 
-  set _titleInnerHTML(innerHTML) {
-    this._titleElement.innerHTML = innerHTML;
-  }
-
-  get _subTitleSlotElement() {
-    return this._element.querySelector('slot[name=sub-title]');
-  }
-
   get _subTitleElement() {
     return this.uploadElement.querySelector('small');
   }
-
-  set _subTitleInnerHTML(innerHTML) {
-    this._subTitleElement.innerHTML = innerHTML;
-  }
-
 
   get _uploadTemplate() {
     return this._template(`
@@ -175,10 +164,10 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
             <button type="button" class="vl-upload__element__button vl-link">
               <i class="vl-vi vl-vi-paperclip" aria-hidden="true"></i>
               <span class="vl-upload__element__button__container"></span>
-              <slot id="title-slot" name="title"></slot>
+              <span class="vl-upload__element__button__container"><slot name="title"></slot></span>
             </button>
             <small></small>
-            <slot id="sub-title-slot" name="sub-title"></slot>
+            <small><slot name="sub-title"></slot></small>
           </div>
         </div>
       </template>
@@ -292,11 +281,7 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
      * @param {Number} id
      * @return {void}
      */
-  addFile({
-    name,
-    size,
-    id,
-  }) {
+  addFile({name, size, id}) {
     const autoprocessActive = this.dataset.vlAutoprocess != undefined;
     if (autoprocessActive) {
       this._disableAutoProcessQueue();
@@ -422,17 +407,21 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
   }
 
   _addSlots() {
-    const subTitleSlotNodes = this._subTitleSlotElement.assignedNodes();
-    if (subTitleSlotNodes.length > 0) {
-      this._subTitleInnerHTML = subTitleSlotNodes[0].outerHTML;
-    }
-
     const titleSlotNodes = this._titleSlotElement.assignedNodes();
     if (titleSlotNodes.length > 0) {
       this._titleInnerHTML = titleSlotNodes[0].outerHTML;
     }
 
-    this._subTitleSlotElement.remove();
     this._titleSlotElement.remove();
+  }
+
+  _processSlots() {
+    if (this._titleSlotElement) {
+      this._titleElement.remove();
+    }
+
+    if (this._subTitleSlotElement) {
+      this._subTitleElement.remove();
+    }
   }
 }
