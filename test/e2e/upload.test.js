@@ -204,13 +204,22 @@ describe('vl-upload', async () => {
     await assert.lengthOf(files, 1);
   });
 
-  it('als gebruiker kan ik het verschil zien tussen een upload met gepersonaliseerde titel en subtitel en een gewone variant', async () => {
+  it('als gebruiker kan ik het verschil zien tussen een upload met gepersonaliseerde titel en subtitel o.b.v. attributen en een gewone variant', async () => {
     let upload = await vlUploadPage.getUpload();
     await assert.eventually.equal(upload.getTitle(), 'Bijlage toevoegen');
     await assert.eventually.equal(upload.getSubTitle(), 'Sleep de bijlage naar hier om toe te voegen');
-    upload = await vlUploadPage.getUploadCustomText();
+    upload = await vlUploadPage.getUploadCustomTextViaAttributes();
     await assert.eventually.equal(upload.getTitle(), 'Afbeelding toevoegen');
     await assert.eventually.equal(upload.getSubTitle(), 'Sleep de afbeelding naar hier om toe te voegen');
+  });
+
+  it('als gebruiker kan ik het verschil zien tussen een upload met gepersonaliseerde titel en subtitel o.b.v. slots en een gewone variant', async () => {
+    let upload = await vlUploadPage.getUpload();
+    await assert.eventually.equal(upload.getTitle(), 'Bijlage toevoegen');
+    await assert.eventually.equal(upload.getSubTitle(), 'Sleep de bijlage naar hier om toe te voegen');
+    upload = await vlUploadPage.getUploadCustomTextViaSlot();
+    await assert.eventually.equal(upload.getTitle(), 'Titel');
+    await assert.eventually.equal(upload.getSubTitle(), 'Sub-titel');
   });
 
   it('als gebruiker kan ik geen bestand opladen wanneer het upload element disabled is', async () => {

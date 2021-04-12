@@ -41,13 +41,33 @@ class VlUpload extends VlElement {
   }
 
   async getTitle() {
-    const element = await this.shadowRoot.findElement(By.css('.vl-upload__element__button__container'));
-    return element.getText();
+    return this.shadowRoot.findElement(By.id('title')).then(async () => {
+      const element = await this.shadowRoot.findElement(By.css('.vl-upload__element__button__container'));
+      return element.getText();
+    }).catch(async () => {
+      // op firefox specifiek, duurt het één tick langer vooraleer het slot beschikbaar is
+      await this.driver.wait(async () => {
+        const element = await this.shadowRoot.findElement(By.tagName('slot[name="title"]'));
+        return element;
+      }, 10000);
+      const element = await this.shadowRoot.findElement(By.css('.vl-upload__element__button__container'));
+      return element.getText();
+    });
   }
 
   async getSubTitle() {
-    const element = await this.shadowRoot.findElement(By.css('.vl-upload__element__label small'));
-    return element.getText();
+    return this.shadowRoot.findElement(By.id('sub-title')).then(async () => {
+      const element = await this.shadowRoot.findElement(By.css('.vl-upload__element__label small'));
+      return element.getText();
+    }).catch(async () => {
+      // op firefox specifiek, duurt het één tick langer vooraleer het slot beschikbaar is
+      await this.driver.wait(async () => {
+        const element = await this.shadowRoot.findElement(By.tagName('slot[name="sub-title"]'));
+        return element;
+      }, 10000);
+      const element = await this.shadowRoot.findElement(By.css('.vl-upload__element__label small'));
+      return element.getText();
+    });
   }
 }
 
