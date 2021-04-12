@@ -256,18 +256,30 @@
 
         test('de titel en sub-titel kan gepersonaliseerd worden', () => {
           const upload = fixture('vl-upload-custom-text-fixture');
+          should.not.exist(upload._titleSlotElement, 'Slot title content should not be provided');
+          should.not.exist(upload._subTitleSlotElement, 'Slot subtitle content should not be provided');
+
           assert.equal(upload.getTranslation('upload.add_files'), upload.getAttribute('title'));
           assert.equal(upload.getTranslation('upload.add_files_subtitle'), upload.getAttribute('sub-title'));
+
+          should.exist(upload._titleElement, 'Title element should be removed');
+          should.exist(upload._subTitleElement, 'Subtitle element should be removed');
+          should.not.exist(upload._slottedTitleElement, 'Slotted title element should exist');
+          should.not.exist(upload._slottedSubTitleElement, 'Slotted subtitle element should exist');
         });
 
         test('de titel en sub-titel kan gepersonaliseerd worden via een slot', () => {
           const upload = fixture('vl-upload-slots-text-fixture');
-          awaitUntil(() => upload._titleSlotElement).then(() => {
-            assert.equal(upload._titleSlotElement.assignedNodes()[0].textContent, 'Titel');
-          });
-          awaitUntil(() => upload._subTitleSlotElement).then(() => {
-            assert.equal(upload._subTitleSlotElement.assignedNodes()[0].textContent, 'Sub-titel');
-          });
+          should.exist(upload._titleSlotElement, 'Slot title content should be provided');
+          should.exist(upload._subTitleSlotElement, 'Slot subtitle content should be provided');
+
+          assert.equal(upload.shadowRoot.querySelector('slot[name="title"]').assignedNodes()[0].textContent, 'Titel');
+          assert.equal(upload.shadowRoot.querySelector('slot[name="sub-title"]').assignedNodes()[0].textContent, 'Sub-titel');
+
+          should.exist(upload._slottedTitleElement, 'Slotted title element should exist');
+          should.exist(upload._slottedSubTitleElement, 'Slotted subtitle element should exist');
+          should.not.exist(upload._titleElement, 'Title element should be removed');
+          should.not.exist(upload._subTitleElement, 'Subtitle element should be removed');
         });
 
         test('kan programmatisch focus activeren', (done) => {
