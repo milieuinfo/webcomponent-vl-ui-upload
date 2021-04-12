@@ -151,19 +151,19 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
   }
 
   get _titleElement() {
-    return this.uploadElement.querySelector('#title, .vl-upload__element__button__container');
+    return this.uploadElement.querySelector('#title');
   }
 
   get _slottedTitleElement() {
-    return this.uploadElement.querySelector('#slotted-title, .vl-upload__element__button__container');
+    return this.uploadElement.querySelector('#slotted-title');
   }
 
   get _subTitleElement() {
-    return this.uploadElement.querySelector('#sub-title, small');
+    return this.uploadElement.querySelector('#sub-title');
   }
 
   get _slottedSubTitleElement() {
-    return this.uploadElement.querySelector('#slotted-sub-title, small');
+    return this.uploadElement.querySelector('#slotted-sub-title');
   }
 
   get _uploadTemplate() {
@@ -425,7 +425,7 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
     if (this._subTitleSlotElement) {
       this._subTitleElement.remove();
     } else {
-      this._slottedTitleElement.remove();
+      this._slottedSubTitleElement.remove();
     }
   }
 }
