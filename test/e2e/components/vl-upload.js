@@ -41,23 +41,22 @@ class VlUpload extends VlElement {
   }
 
   async getTitle() {
-    const cssLocator = By.css('.vl-upload__element__button__container');
-    // op firefox specifiek, duurt het één tick langer vooraleer het slot beschikbaar is
-    await this.driver.wait(async () => {
-      const element = await this.shadowRoot.findElement(cssLocator);
-      return (await element.getText()) !== '';
-    }, 50000);
-    return (await this.shadowRoot.findElement(cssLocator)).getText();
+    return this._getTextOrSlotText('.vl-upload__element__button__container', 'title');
   }
 
   async getSubTitle() {
-    const cssLocator = By.css('.vl-upload__element__label small');
-    // op firefox specifiek, duurt het één tick langer vooraleer het slot beschikbaar is
-    await this.driver.wait(async () => {
-      const element = await this.shadowRoot.findElement(cssLocator);
-      return (await element.getText()) !== '';
-    }, 50000);
-    return (await this.shadowRoot.findElement(cssLocator)).getText();
+    return this._getTextOrSlotText('.vl-upload__element__label small', 'sub-title');
+  }
+
+  async _getTextOrSlotText(selector, slotSelector) {
+    const element = await this.shadowRoot.findElement(By.css(selector));
+    let text = await element.getText();
+    if (!text) {
+      const slot = await element.findElement(By.css(`slot[name="${slotSelector}"]`));
+      const slotElements = await this.getAssignedNodes(slot);
+      text = slotElements[0].getText();
+    }
+    return text;
   }
 }
 
