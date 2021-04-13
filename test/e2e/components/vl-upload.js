@@ -42,30 +42,22 @@ class VlUpload extends VlElement {
 
   async getTitle() {
     const cssLocator = By.css('.vl-upload__element__button__container');
-    return this.shadowRoot.findElement(By.id('title')).then(async () => {
-      return (await this.shadowRoot.findElement(cssLocator)).getText();
-    }).catch(async () => {
-      // op firefox specifiek, duurt het één tick langer vooraleer het slot beschikbaar is
-      await this.driver.wait(async () => {
-        const element = await this.shadowRoot.findElement(cssLocator);
-        return (await element.getText()) !== '';
-      }, 50000);
-      return (await this.shadowRoot.findElement(cssLocator)).getText();
-    });
+    // op firefox specifiek, duurt het één tick langer vooraleer het slot beschikbaar is
+    await this.driver.wait(async () => {
+      const element = await this.shadowRoot.findElement(cssLocator);
+      return (await element.getText()) !== '';
+    }, 50000);
+    return (await this.shadowRoot.findElement(cssLocator)).getText();
   }
 
   async getSubTitle() {
     const cssLocator = By.css('.vl-upload__element__label small');
-    return this.shadowRoot.findElement(By.id('sub-title')).then(async () => {
-      return (await this.shadowRoot.findElement(cssLocator)).getText();
-    }).catch(async () => {
-      // op firefox specifiek, duurt het één tick langer vooraleer het slot beschikbaar is
-      await this.driver.wait(async () => {
-        const element = await this.shadowRoot.findElement(cssLocator);
-        return (await element.getText()) !== '';
-      }, 50000);
-      return (await this.shadowRoot.findElement(cssLocator)).getText();
-    });
+    // op firefox specifiek, duurt het één tick langer vooraleer het slot beschikbaar is
+    await this.driver.wait(async () => {
+      const element = await this.shadowRoot.findElement(cssLocator);
+      return (await element.getText()) !== '';
+    }, 50000);
+    return (await this.shadowRoot.findElement(cssLocator)).getText();
   }
 }
 
