@@ -48,8 +48,12 @@ class VlUploadPage extends Page {
     return this._getUpload('#vl-upload-programmatically');
   }
 
-  async getUploadCustomText() {
+  async getUploadCustomTextViaAttributes() {
     return this._getUpload('#vl-upload-custom-text');
+  }
+
+  async getUploadCustomTextViaSlot() {
+    return this._getUpload('#vl-title-sub-title-slot');
   }
 
   async getUploadDisabled() {

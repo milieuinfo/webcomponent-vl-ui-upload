@@ -41,13 +41,28 @@ class VlUpload extends VlElement {
   }
 
   async getTitle() {
-    const element = await this.shadowRoot.findElement(By.css('.vl-upload__element__button__container'));
-    return element.getText();
+    return this._getTextOrSlotText('title');
   }
 
   async getSubTitle() {
-    const element = await this.shadowRoot.findElement(By.css('.vl-upload__element__label small'));
-    return element.getText();
+    return this._getTextOrSlotText('sub-title');
+  }
+
+  async _getTextOrSlotText(selector) {
+    let text;
+    try {
+      const element = await this.shadowRoot.findElement(By.css(`#${selector}`));
+      text = await element.getText();
+      if (!text) {
+        throw new Error('no text');
+      }
+    } catch (error) {
+      const element = await this.shadowRoot.findElement(By.css(`#slotted-${selector}`));
+      const slot = await element.findElement(By.css(`slot[name="${selector}"]`));
+      const slotElements = await this.getAssignedNodes(slot);
+      text = slotElements[0].getText();
+    }
+    return text;
   }
 }
 

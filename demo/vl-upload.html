@@ -107,6 +107,13 @@
             <vl-upload id="vl-upload-custom-text" url="http://httpbin.org/post" data-vl-input-name="files" id="vl-upload" data-vl-title="Afbeelding toevoegen" data-vl-sub-title="Sleep de afbeelding naar hier om toe te voegen"></vl-upload>
         </vl-demo>
 
+        <vl-demo data-vl-title="Upload met titel en sub-titel slot">
+            <vl-upload id="vl-title-sub-title-slot" url="http://httpbin.org/post" data-vl-input-name="files">
+                <span slot="title">Titel</span>
+                <span slot="sub-title">Sub-titel</span>
+            </vl-upload>
+        </vl-demo>
+
         <vl-demo data-vl-title="Upload focus">
             <vl-upload url="http://httpbin.org/post" data-vl-input-name="files" id="vl-upload-focus"></vl-upload>
             <button is="vl-button" onclick="document.getElementById('vl-upload-focus').focus();" slot="actions">Focus</button>

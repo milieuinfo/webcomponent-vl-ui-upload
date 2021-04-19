@@ -1,4 +1,4 @@
-import {vlElement, define} from '/node_modules/vl-ui-core/dist/vl-core.js';
+import {define, vlElement} from '/node_modules/vl-ui-core/dist/vl-core.js';
 import {vlFormValidation, vlFormValidationElement} from '/node_modules/vl-ui-form-validation/dist/vl-form-validation-all.js';
 import '/lib/upload.js';
 
@@ -9,7 +9,8 @@ Promise.all([
 /**
  * VlUpload
  * @class
- * @classdesc Gebruik de upload component om één of meerdere bestanden te selecteren of te slepen naar het upload veld. De gebruiker kan alternatief ook één of meerdere bestanden uploaden door op de link in het upload veld te klikken en de bestanden te selecteren in het Bestand menu.
+ * @classdesc Gebruik de upload component om één of meerdere bestanden te selecteren of te slepen naar het upload veld. De gebruiker kan alternatief
+ *   ook één of meerdere bestanden uploaden door op de link in het upload veld te klikken en de bestanden te selecteren in het Bestand menu.
  *
  * @extends HTMLElement
  * @mixes vlElement
@@ -19,7 +20,8 @@ Promise.all([
  * @property {boolean} data-vl-disabled - Attribuut om te voorkomen dat de gebruiker een bijlage kan opladen.
  * @property {boolean} data-vl-disallow-duplicates - Attribuut om te voorkomen dat dezelfde bijlage meerdere keren kan opgeladen worden.
  * @property {string} data-vl-error - Attribuut om aan te geven dat het upload element een fout bevat.
- * @property {string} data-vl-error-message-accepted-files - Attribuut om de message te definiëren wanneer er niet-geaccepteerde bestanden zijn toegevoegd.
+ * @property {string} data-vl-error-message-accepted-files - Attribuut om de message te definiëren wanneer er niet-geaccepteerde bestanden zijn
+ *   toegevoegd.
  * @property {string} data-vl-error-message-filesize - Attribuut om de message te definiëren wanneer er te grote bestanden zijn toegevoegd.
  * @property {string} data-vl-error-message-maxfiles - Attribuut om de message te definiëren wanneer er teveel bestanden zijn toegevoegd.
  * @property {boolean} data-vl-full-body-drop - Attribuut om te activeren of deactiveren dat het de dropzone over het heel scherm is.
@@ -61,6 +63,7 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
   connectedCallback() {
     this._appendTemplates();
     this.dress();
+    this._processSlots();
   }
 
   /**
@@ -139,6 +142,30 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
     return document.body.querySelector('#uploadOverlay');
   }
 
+  get _titleSlotElement() {
+    return this.querySelector('[slot="title"]');
+  }
+
+  get _subTitleSlotElement() {
+    return this.querySelector('[slot="sub-title"]');
+  }
+
+  get _titleElement() {
+    return this.uploadElement.querySelector('#title');
+  }
+
+  get _slottedTitleElement() {
+    return this.uploadElement.querySelector('#slotted-title');
+  }
+
+  get _subTitleElement() {
+    return this.uploadElement.querySelector('#sub-title');
+  }
+
+  get _slottedSubTitleElement() {
+    return this.uploadElement.querySelector('#slotted-sub-title');
+  }
+
   get _uploadTemplate() {
     return this._template(`
       <template id="uploadTemplate">
@@ -146,9 +173,11 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
           <div class="vl-upload__element__label">
             <button type="button" class="vl-upload__element__button vl-link">
               <i class="vl-vi vl-vi-paperclip" aria-hidden="true"></i>
-              <span class="vl-upload__element__button__container"></span>
+              <span class="vl-upload__element__button__container" id="title"></span>
+              <span class="vl-upload__element__button__container" id="slotted-title"><slot name="title"></slot></span>
             </button>
-            <small></small>
+            <small id="sub-title"></small>
+            <small id="slotted-sub-title"><slot name="sub-title"></slot></small>
           </div>
         </div>
       </template>
@@ -243,7 +272,8 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
   }
 
   /**
-   * Wrapper om alle events te kunnen catchen van de upload (zoals vl.upload.hook.fileChange alsook de events van [DropZoneJs]{@link https://www.dropzonejs.com/#event-list})
+   * Wrapper om alle events te kunnen catchen van de upload (zoals vl.upload.hook.fileChange alsook de events van
+   * [DropZoneJs]{@link https://www.dropzonejs.com/#event-list})
    * @param {String} event
    * @param {Function} callback
    * @return {void}
@@ -383,5 +413,19 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
 
   _enableAutoProcessQueue() {
     this._dropzone.options.autoProcessQueue = true;
+  }
+
+  _processSlots() {
+    if (this._titleSlotElement) {
+      this._titleElement.remove();
+    } else {
+      this._slottedTitleElement.remove();
+    }
+
+    if (this._subTitleSlotElement) {
+      this._subTitleElement.remove();
+    } else {
+      this._slottedSubTitleElement.remove();
+    }
   }
 }
