@@ -177,7 +177,7 @@ describe('vl-upload', async () => {
     const upload = await vlUploadPage.getUploadAutoProcess();
     fileUploadServer.haltUploads();
     await upload.uploadFile(file(PDF_FILE));
-    await assert.eventually.lengthOf(upload.getFiles(), 1);
+    await driver.wait(async () => (await upload.getFiles()).length == 1);
     const files = await upload.getFiles();
     await files[0].remove();
     await assert.eventually.lengthOf(upload.getFiles(), 0);
