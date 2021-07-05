@@ -247,14 +247,18 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
     if (!this._dressed) {
       vl.upload.dress(this._upload);
       this._dressFormValidation();
-      this._dropzone.on('addedfile', () => setTimeout(() => this.dispatchEvent(new Event('change'))));
-      this._dropzone.on('removedfile', () => setTimeout(() => this.dispatchEvent(new Event('change'))));
+      this._dropzone.on('addedfile', () => this.__triggerChange());
+      this._dropzone.on('removedfile', () => this.__triggerChange());
       this._dropzone.on('success', (file, response) => {
       	file.responseBody = response;
-      	setTimeout(() => this.dispatchEvent(new Event('change')));
+      	this.__triggerChange();
       });
       this._dropzone.timeout = 0; // 0 value will disable the connection timeout
     }
+  }
+  
+  __triggerChange() {
+    setTimeout(() => this.dispatchEvent(new Event('change')));
   }
 
   /**
@@ -294,7 +298,7 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
    * @param {String} name
    * @param {Number} size
    * @param {Number} id
-   * @param {Object} responseBody
+   * @param {Object} responseBody - body van de response bij het opladen van het bestand
    * @return {void}
    */
   addFile({name, size, id, responseBody}) {
