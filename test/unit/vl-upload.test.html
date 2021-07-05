@@ -236,9 +236,7 @@
           let responseBodyAddedToUploadedFile = false;
           upload.addEventListener('change', () => {
             const uploadedFile = upload.files[0];
-            if (uploadedFile.responseBody && uploadedFile.responseBody == responseBody) {
-              responseBodyAddedToUploadedFile = true;
-            } 
+            responseBodyAddedToUploadedFile = (uploadedFile.responseBody && uploadedFile.responseBody == responseBody);
           });
           upload._dropzone.addFile(mockFile);
           upload._dropzone.emit("success", mockFile, responseBody);
