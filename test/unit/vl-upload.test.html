@@ -231,18 +231,18 @@
             name: 'test.txt',
             id: 1
           };
-          const responseData = {identifier: 'uuid'};
+          const responseBody = {identifier: 'uuid'};
           const upload = fixture('vl-upload-fixture');
-          let responseDataAddedToUploadedFile = false;
+          let responseBodyAddedToUploadedFile = false;
           upload.addEventListener('change', () => {
             const uploadedFile = upload.files[0];
-            if (uploadedFile.responseData && uploadedFile.responseData == responseData) {
-              responseDataAddedToUploadedFile = true;
+            if (uploadedFile.responseBody && uploadedFile.responseBody == responseBody) {
+              responseBodyAddedToUploadedFile = true;
             } 
           });
           upload._dropzone.addFile(mockFile);
-          upload._dropzone.emit("success", mockFile, responseData);
-          await awaitUntil(() => responseDataAddedToUploadedFile);
+          upload._dropzone.emit("success", mockFile, responseBody);
+          await awaitUntil(() => responseBodyAddedToUploadedFile);
         });
 
         test('er kan programmatisch een bestand toegevoegd worden aan de lijst van opgeladen bestanden', () => {
@@ -251,14 +251,14 @@
           const name = 'name';
           const size = '1000';
           const id = '1';
-          const file = {name: name, size: size, id: id, responseData: {identifier: 'uuid'}};
+          const file = {name: name, size: size, id: id, responseBody: {identifier: 'uuid'}};
           upload.addFile(file);
           assert(upload._dropzone.emit.calledWithMatch('addedfile', file));
           assert(upload._dropzone.emit.calledWithMatch('complete', file));
           const addedFile = upload.files[0];
           assert.include(addedFile, file);
           assert.equal(addedFile.status, 'success');
-          assert.deepEqual(addedFile.responseData, {identifier: 'uuid'});
+          assert.deepEqual(addedFile.responseBody, {identifier: 'uuid'});
         });
 
         test('het programmatisch toevoegen van een bestand wanneer autoprocess actief staat zal achterliggend geen upload uitvoeren', (done) => {

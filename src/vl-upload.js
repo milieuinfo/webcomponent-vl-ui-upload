@@ -248,7 +248,7 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
       this._dropzone.on('addedfile', () => setTimeout(() => this.dispatchEvent(new Event('change'))));
       this._dropzone.on('removedfile', () => setTimeout(() => this.dispatchEvent(new Event('change'))));
       this._dropzone.on('success', (file, response) => {
-      	file.responseData = response;
+      	file.responseBody = response;
       	setTimeout(() => this.dispatchEvent(new Event('change')));
       });
       this._dropzone.timeout = 0; // 0 value will disable the connection timeout
@@ -292,15 +292,15 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
    * @param {String} name
    * @param {Number} size
    * @param {Number} id
-   * @param {Object} responseData
+   * @param {Object} responseBody
    * @return {void}
    */
-  addFile({name, size, id, responseData}) {
+  addFile({name, size, id, responseBody}) {
     const autoprocessActive = this.dataset.vlAutoprocess != undefined;
     if (autoprocessActive) {
       this._disableAutoProcessQueue();
     }
-    const file = {name: name, size: size, id: id, responseData: responseData};
+    const file = {name: name, size: size, id: id, responseBody: responseBody};
     this._dropzone.addFile(file);
     this._dropzone.emit('complete', file);
     file.status = 'success';
