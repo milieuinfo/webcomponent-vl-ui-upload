@@ -125,11 +125,14 @@ describe('vl-upload', async () => {
   });
 
   it('als gebruiker kan ik de maximum bestandsgrootte bepalen', async () => {
-    const upload = await vlUploadPage.getUploadMax5();
-    await assert.eventually.equal(upload.getMaximumFilesize(), 1000000);
-    await upload.uploadFile(file(LARGE_FILE));
+    const upload = await vlUploadPage.getUploadMaxSize();
+    await assert.eventually.equal(upload.getMaximumFilesize(), 204800);
+    const largeFile = file(LARGE_FILE);
+    const stats = fs.statSync(largeFile);
+    assert.isTrue(stats.size > 204800);
+    await upload.uploadFile(largeFile);
     const filesTooBig = await upload.getFiles();
-    await assert.eventually.equal(filesTooBig[0].getErrorMessage(), 'De grootte van het bestand mag maximaal 977 KB zijn.');
+    await assert.eventually.equal(filesTooBig[0].getErrorMessage(), 'De grootte van het bestand mag maximaal 200 KB zijn.');
   });
 
   it('als gebruiker kan ik er voor zorgen dat hetzelfde bestand geen 2 keer kan opgeladen worden', async () => {
@@ -227,16 +230,6 @@ describe('vl-upload', async () => {
     const upload = await vlUploadPage.getUploadDisabled();
     await upload.uploadFile(file(PDF_FILE));
     assert.equal(fileUploadServer.uploadedFiles.length, 0);
-  });
-
-  it('als gebruiker kan ik geen bestand uploaden dat groter is dat de maximum ingestelde bestandsgrootte', async() => {
-    const upload = await vlUploadPage.getUploadMaxSize();
-    const pdfFile = file(PDF_FILE);
-    const stats = fs.statSync(pdfFile);
-    assert.isTrue(stats.size > 4096);
-    await upload.uploadFile(pdfFile);
-    const filesTooBig = await upload.getFiles();
-    await assert.eventually.equal(filesTooBig[0].getErrorMessage(), 'Het bestand mag maximaal 4 KB zijn.');
   });
 
   class FileUploadServer {

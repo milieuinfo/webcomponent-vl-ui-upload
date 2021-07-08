@@ -28,7 +28,11 @@ class VlUploadPage extends Page {
     return this._getUpload('#vl-upload-max-5');
   }
 
-   async getUploadUnique() {
+  async getUploadMaxSize() {
+    return this._getUpload('#vl-upload-max-5');
+  }
+
+  async getUploadUnique() {
     return this._getUpload('#vl-upload-unique');
   }
 
@@ -54,10 +58,6 @@ class VlUploadPage extends Page {
 
   async getUploadDisabled() {
     return this._getUpload('#vl-upload-disabled');
-  }
-
-  async getUploadMaxSize() {
-    return this._getUpload('#vl-upload-max-size')
   }
 
   async listenForEventsOnUpload() {
