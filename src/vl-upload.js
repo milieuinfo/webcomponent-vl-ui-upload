@@ -245,10 +245,18 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
     if (!this._dressed) {
       vl.upload.dress(this._upload);
       this._dressFormValidation();
-      this._dropzone.on('addedfile', () => setTimeout(() => this.dispatchEvent(new Event('change'))));
-      this._dropzone.on('removedfile', () => setTimeout(() => this.dispatchEvent(new Event('change'))));
+      this._dropzone.on('addedfile', () => this.__triggerChange());
+      this._dropzone.on('removedfile', () => this.__triggerChange());
+      this._dropzone.on('success', (file, response) => {
+      	file.responseBody = response;
+      	this.__triggerChange();
+      });
       this._dropzone.timeout = 0; // 0 value will disable the connection timeout
     }
+  }
+  
+  __triggerChange() {
+    setTimeout(() => this.dispatchEvent(new Event('change')));
   }
 
   /**
@@ -288,14 +296,15 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
    * @param {String} name
    * @param {Number} size
    * @param {Number} id
+   * @param {Object} responseBody - body van de response bij het opladen van het bestand
    * @return {void}
    */
-  addFile({name, size, id}) {
+  addFile({name, size, id, responseBody}) {
     const autoprocessActive = this.dataset.vlAutoprocess != undefined;
     if (autoprocessActive) {
       this._disableAutoProcessQueue();
     }
-    const file = {name: name, size: size, id: id};
+    const file = {name: name, size: size, id: id, responseBody: responseBody};
     this._dropzone.addFile(file);
     this._dropzone.emit('complete', file);
     file.status = 'success';
