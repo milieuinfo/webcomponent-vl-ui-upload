@@ -53,6 +53,6 @@
     "vl-ui-body": "^1.0.8",
     "vl-ui-button": "^5.0.11",
     "vl-ui-form": "^1.1.2",
-    "vl-ui-util": "^5.4.3"
+    "vl-ui-util": "^5.5.0"
   }
 }
