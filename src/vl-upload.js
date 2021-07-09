@@ -27,7 +27,7 @@ Promise.all([
  * @property {boolean} data-vl-full-body-drop - Attribuut om te activeren of deactiveren dat het de dropzone over het heel scherm is.
  * @property {string} data-vl-input-name - Attribuut om de key te definiëren waarmee het bestand wordt opgeladen.
  * @property {number} data-vl-max-files - Attribuut om het maximaal aantal bestanden dat opgeladen mag worden, aan te duiden.
- * @property {number} data-vl-max-size - Attribuut om de maximum grootte van een bestand dat opgeladen kan worden aan te duiden in bytes. Default: 2097152 (2MB).
+ * @property {number} data-vl-max-size - Attribuut om de maximum grootte van een bestand dat opgeladen kan worden (20000000 = 2MB), aan te duiden.
  * @property {number} data-vl-sub-title - Attribuut om de subtitel te bepalen.
  * @property {string} data-vl-success - Attribuut om aan te geven dat het upload element geen fout bevat.
  * @property {number} data-vl-title - Attribuut om de titel te bepalen.

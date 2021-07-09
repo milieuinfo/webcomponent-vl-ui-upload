@@ -5,7 +5,6 @@ const path = require('path');
 const Express = require('express');
 const Multer = require('multer');
 const remote = require('selenium-webdriver/remote');
-const fs = require("fs");
 
 describe('vl-upload', async () => {
   let driver;
@@ -126,13 +125,10 @@ describe('vl-upload', async () => {
 
   it('als gebruiker kan ik de maximum bestandsgrootte bepalen', async () => {
     const upload = await vlUploadPage.getUploadMaxSize();
-    await assert.eventually.equal(upload.getMaximumFilesize(), 204800);
-    const largeFile = file(LARGE_FILE);
-    const stats = fs.statSync(largeFile);
-    assert.isTrue(stats.size > 204800);
-    await upload.uploadFile(largeFile);
+    await assert.eventually.equal(upload.getMaximumFilesize(), 1000000);
+    await upload.uploadFile(file(LARGE_FILE));
     const filesTooBig = await upload.getFiles();
-    await assert.eventually.equal(filesTooBig[0].getErrorMessage(), 'De grootte van het bestand mag maximaal 200 KB zijn.');
+    await assert.eventually.equal(filesTooBig[0].getErrorMessage(), 'De grootte van het bestand mag maximaal 977 KB zijn.');
   });
 
   it('als gebruiker kan ik er voor zorgen dat hetzelfde bestand geen 2 keer kan opgeladen worden', async () => {
