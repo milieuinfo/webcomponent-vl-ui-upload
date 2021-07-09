@@ -1,10 +1,11 @@
-import {define, vlElement} from '/node_modules/vl-ui-core/dist/vl-core.js';
-import {vlFormValidation, vlFormValidationElement} from '/node_modules/vl-ui-form-validation/dist/vl-form-validation-all.js';
+import { define, vlElement } from '/node_modules/vl-ui-core/dist/vl-core.js';
+import {
+  vlFormValidation,
+  vlFormValidationElement,
+} from '/node_modules/vl-ui-form-validation/dist/vl-form-validation-all.js';
 import '/lib/upload.js';
 
-Promise.all([
-  vlFormValidation.ready(),
-]).then(() => define('vl-upload', VlUpload));
+Promise.all([vlFormValidation.ready()]).then(() => define('vl-upload', VlUpload));
 
 /**
  * VlUpload
@@ -39,7 +40,24 @@ Promise.all([
  */
 export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
   static get _observedAttributes() {
-    return vlFormValidation._observedAttributes().concat(['accepted-files', 'autoprocess', 'disabled', 'disallow-duplicates', 'error-message-accepted-files', 'error-message-filesize', 'error-message-maxfiles', 'full-body-drop', 'input-name', 'max-files', 'max-size', 'sub-title', 'title', 'url']);
+    return vlFormValidation
+      ._observedAttributes()
+      .concat([
+        'accepted-files',
+        'autoprocess',
+        'disabled',
+        'disallow-duplicates',
+        'error-message-accepted-files',
+        'error-message-filesize',
+        'error-message-maxfiles',
+        'full-body-drop',
+        'input-name',
+        'max-files',
+        'max-size',
+        'sub-title',
+        'title',
+        'url',
+      ]);
   }
 
   static get _observedChildClassAttributes() {
@@ -245,10 +263,18 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
     if (!this._dressed) {
       vl.upload.dress(this._upload);
       this._dressFormValidation();
-      this._dropzone.on('addedfile', () => setTimeout(() => this.dispatchEvent(new Event('change'))));
-      this._dropzone.on('removedfile', () => setTimeout(() => this.dispatchEvent(new Event('change'))));
+      this._dropzone.on('addedfile', () => this.__triggerChange());
+      this._dropzone.on('removedfile', () => this.__triggerChange());
+      this._dropzone.on('success', (file, response) => {
+        file.responseBody = response;
+        this.__triggerChange();
+      });
       this._dropzone.timeout = 0; // 0 value will disable the connection timeout
     }
+  }
+
+  __triggerChange() {
+    setTimeout(() => this.dispatchEvent(new Event('change')));
   }
 
   /**
@@ -288,14 +314,15 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
    * @param {String} name
    * @param {Number} size
    * @param {Number} id
+   * @param {Object} responseBody - body van de response bij het opladen van het bestand
    * @return {void}
    */
-  addFile({name, size, id}) {
+  addFile({ name, size, id, responseBody }) {
     const autoprocessActive = this.dataset.vlAutoprocess != undefined;
     if (autoprocessActive) {
       this._disableAutoProcessQueue();
     }
-    const file = {name: name, size: size, id: id};
+    const file = { name: name, size: size, id: id, responseBody: responseBody };
     this._dropzone.addFile(file);
     this._dropzone.emit('complete', file);
     file.status = 'success';
@@ -335,7 +362,7 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
   }
 
   _disabledChangedCallback(oldValue, newValue) {
-    if (newValue !== undefined) {
+    if (newValue !== null) {
       this.disable();
     } else {
       this.enable();
