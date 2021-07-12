@@ -45,7 +45,7 @@ describe('vl-upload', async () => {
         case TXT_FILE:
           return 'C:\\Users\\hello\\Documents\\documents\\text-sample1.txt';
         case LARGE_FILE:
-          return 'C:\\\Users\\\hello\\\Documents\\1MBzipFile.zip';
+          return 'C:\\Users\\hello\\Documents\\1MBzipFile.zip';
         default:
           break;
       }
