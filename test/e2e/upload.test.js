@@ -44,7 +44,7 @@ describe('vl-upload', async () => {
         case TXT_FILE:
           return 'C:\\Users\\hello\\Documents\\documents\\text-sample1.txt';
         case LARGE_FILE:
-          return 'C:\\\Users\\\hello\\\Documents\\1MBzipFile.zip';
+          return 'C:\\Users\\hello\\Documents\\1MBzipFile.zip';
         default:
           break;
       }
@@ -125,10 +125,11 @@ describe('vl-upload', async () => {
 
   it('als gebruiker kan ik de maximum bestandsgrootte bepalen', async () => {
     const upload = await vlUploadPage.getUploadMaxSize();
-    await assert.eventually.equal(upload.getMaximumFilesize(), 1000000);
-    await upload.uploadFile(file(LARGE_FILE));
+    await assert.eventually.equal(upload.getMaximumFilesize(), 204800);
+    const largeFile = file(LARGE_FILE);
+    await upload.uploadFile(largeFile);
     const filesTooBig = await upload.getFiles();
-    await assert.eventually.equal(filesTooBig[0].getErrorMessage(), 'De grootte van het bestand mag maximaal 977 KB zijn.');
+    await assert.eventually.equal(filesTooBig[0].getErrorMessage(), 'De grootte van het bestand mag maximaal 200 KB zijn.');
   });
 
   it('als gebruiker kan ik er voor zorgen dat hetzelfde bestand geen 2 keer kan opgeladen worden', async () => {
