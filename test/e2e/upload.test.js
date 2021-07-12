@@ -5,7 +5,6 @@ const path = require('path');
 const Express = require('express');
 const Multer = require('multer');
 const remote = require('selenium-webdriver/remote');
-const fs = require("fs");
 
 describe('vl-upload', async () => {
   let driver;
