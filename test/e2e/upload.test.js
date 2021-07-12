@@ -128,8 +128,6 @@ describe('vl-upload', async () => {
     const upload = await vlUploadPage.getUploadMaxSize();
     await assert.eventually.equal(upload.getMaximumFilesize(), 204800);
     const largeFile = file(LARGE_FILE);
-    const stats = fs.statSync(largeFile);
-    assert.isTrue(stats.size > 204800);
     await upload.uploadFile(largeFile);
     const filesTooBig = await upload.getFiles();
     await assert.eventually.equal(filesTooBig[0].getErrorMessage(), 'De grootte van het bestand mag maximaal 200 KB zijn.');
