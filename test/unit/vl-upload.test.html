@@ -168,14 +168,6 @@
           assert(upload._upload.getAttribute(upload._prefix + 'accepted-files') === 'application/pdf');
         });
 
-        test('verander full-body-drop attribute van de upload', () => {
-          const upload = fixture('vl-upload-fixture');
-          assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'full-body-drop'));
-          assert.isFalse(upload.hasAttribute('data-vl-full-body-drop'));
-          upload.setAttribute('data-vl-full-body-drop', '');
-          assert(upload._upload.hasAttribute(upload._prefix + 'full-body-drop'));
-        });
-
         test('verander autoprocess attribute van de upload', () => {
           const upload = fixture('vl-upload-fixture');
           assert.isFalse(upload._upload.hasAttribute(upload._prefix + 'autoprocess'));
