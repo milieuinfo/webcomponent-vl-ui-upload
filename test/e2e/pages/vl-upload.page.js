@@ -1,7 +1,7 @@
 const VlUpload = require('../components/vl-upload');
-const {Page} = require('vl-ui-core').Test;
-const {Config} = require('vl-ui-core').Test;
-const {By} = require('vl-ui-core').Test.Setup;
+const { Page } = require('vl-ui-core').Test;
+const { Config } = require('vl-ui-core').Test;
+const { By } = require('vl-ui-core').Test.Setup;
 
 class VlUploadPage extends Page {
   async getUpload() {
@@ -38,10 +38,6 @@ class VlUploadPage extends Page {
 
   async getUploadFileTypes() {
     return this._getUpload('#vl-upload-file-types');
-  }
-
-  async getUploadFullBodyDrop() {
-    return this._getUpload('#vl-upload-full-body-drop');
   }
 
   async getUploadProgrammatically() {
