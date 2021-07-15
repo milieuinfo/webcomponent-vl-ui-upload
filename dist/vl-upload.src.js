@@ -25,7 +25,6 @@ Promise.all([vlFormValidation.ready()]).then(() => define('vl-upload', VlUpload)
  *   toegevoegd.
  * @property {string} data-vl-error-message-filesize - Attribuut om de message te definiëren wanneer er te grote bestanden zijn toegevoegd.
  * @property {string} data-vl-error-message-maxfiles - Attribuut om de message te definiëren wanneer er teveel bestanden zijn toegevoegd.
- * @property {boolean} data-vl-full-body-drop - Attribuut om te activeren of deactiveren dat het de dropzone over het heel scherm is.
  * @property {string} data-vl-input-name - Attribuut om de key te definiëren waarmee het bestand wordt opgeladen.
  * @property {number} data-vl-max-files - Attribuut om het maximaal aantal bestanden dat opgeladen mag worden, aan te duiden.
  * @property {number} data-vl-max-size - Attribuut om de maximum grootte van een bestand dat opgeladen kan worden aan te duiden in bytes. Default: 2097152 (2MB).
@@ -50,7 +49,6 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
         'error-message-accepted-files',
         'error-message-filesize',
         'error-message-maxfiles',
-        'full-body-drop',
         'input-name',
         'max-files',
         'max-size',
@@ -385,10 +383,6 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
 
   _errorMessageMaxfilesChangedCallback(oldValue, newValue) {
     this._element.setAttribute(this._prefix + 'error-message-maxfiles', newValue);
-  }
-
-  _fullBodyDropChangedCallback(oldValue, newValue) {
-    this._element.setAttribute(this._prefix + 'full-body-drop', '');
   }
 
   _inputNameChangedCallback(oldValue, newValue) {

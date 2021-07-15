@@ -1,5 +1,5 @@
-const {assert, getDriver} = require('vl-ui-core').Test.Setup;
-const {Config} = require('vl-ui-core').Test;
+const { assert, getDriver } = require('vl-ui-core').Test.Setup;
+const { Config } = require('vl-ui-core').Test;
 const VlUploadPage = require('./pages/vl-upload.page');
 const path = require('path');
 const Express = require('express');
@@ -24,7 +24,7 @@ describe('vl-upload', async () => {
     await vlUploadPage.changeAllUploadUrlsTo(`http://${host}:${uploadServerPort}${uploadServerPath}`);
     fileUploadServer = new FileUploadServer(uploadServerPort, uploadServerPath);
     await fileUploadServer.start();
-    driver.setFileDetector(new remote.FileDetector);
+    driver.setFileDetector(new remote.FileDetector());
   });
 
   beforeEach(async () => {
@@ -107,7 +107,7 @@ describe('vl-upload', async () => {
     let files;
     await driver.wait(async () => {
       files = await upload.getFiles();
-      return (await files[0].getErrorMessage() == 'Uw bestand kon niet verwerkt worden');
+      return (await files[0].getErrorMessage()) == 'Uw bestand kon niet verwerkt worden';
     });
     await assert.eventually.isTrue(files[0].isProcessing());
     await assert.eventually.isFalse(files[0].isSuccess());
@@ -129,7 +129,10 @@ describe('vl-upload', async () => {
     const largeFile = file(LARGE_FILE);
     await upload.uploadFile(largeFile);
     const filesTooBig = await upload.getFiles();
-    await assert.eventually.equal(filesTooBig[0].getErrorMessage(), 'De grootte van het bestand mag maximaal 200 KB zijn.');
+    await assert.eventually.equal(
+      filesTooBig[0].getErrorMessage(),
+      'De grootte van het bestand mag maximaal 200 KB zijn.',
+    );
   });
 
   it('als gebruiker kan ik er voor zorgen dat hetzelfde bestand geen 2 keer kan opgeladen worden', async () => {
@@ -149,13 +152,6 @@ describe('vl-upload', async () => {
     await assert.eventually.lengthOf(upload.getFiles(), 1);
     const files = await upload.getFiles();
     await assert.eventually.equal(files[0].getErrorMessage(), 'Je kan enkel application/pdf, .png bestanden opladen');
-  });
-
-  it('als gebruiker kan ik het verschil zien tussen een upload over de gehele body of niet', async () => {
-    const upload = await vlUploadPage.getUpload();
-    const uploadFullBodyDrop = await vlUploadPage.getUploadFullBodyDrop();
-    await assert.eventually.isFalse(upload.isFullBodyDrop());
-    await assert.eventually.isTrue(uploadFullBodyDrop.isFullBodyDrop());
   });
 
   it('als gebruiker kan ik events ontvangen wanneer er bestanden worden opgeladen', async () => {
@@ -234,11 +230,14 @@ describe('vl-upload', async () => {
       this.__uploadedFiles = [];
       this.__failUploads = false;
       this.__haltUploads = false;
-      const upload = new Multer({storage: Multer.memoryStorage()});
+      const upload = new Multer({ storage: Multer.memoryStorage() });
       this.express = new Express();
       this.express.use((request, response, next) => {
         response.header('Access-Control-Allow-Origin', '*');
-        response.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Cache-Control');
+        response.header(
+          'Access-Control-Allow-Headers',
+          'Origin, X-Requested-With, Content-Type, Accept, Cache-Control',
+        );
         next();
       });
       this.express.post(path, upload.array('files'), (request, response) => {
@@ -247,7 +246,9 @@ describe('vl-upload', async () => {
           response.status(200);
           response.write('Halting ...');
         } else {
-          response.status(this.__failUploads ? 500: 200).send(this.__failUploads ? 'Uw bestand kon niet verwerkt worden': 'OK');
+          response
+            .status(this.__failUploads ? 500 : 200)
+            .send(this.__failUploads ? 'Uw bestand kon niet verwerkt worden' : 'OK');
         }
       });
       this.port = port;
