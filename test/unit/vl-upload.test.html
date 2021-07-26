@@ -54,6 +54,12 @@
       </template>
     </test-fixture>
 
+    <test-fixture id="vl-upload-accepted-files-fixture">
+      <template>
+      	<vl-upload data-vl-input-name="file" data-vl-accepted-files="txt, jpg, pdf"><vl-upload>
+      </template>
+    </test-fixture>
+
     <script type="module">
       import {VlUpload} from '../../src/vl-upload';
       import {vlFormValidation} from 'vl-ui-form-validation/dist/vl-form-validation';
@@ -249,6 +255,21 @@
           assert.include(addedFile, file);
           assert.equal(addedFile.status, 'success');
           assert.deepEqual(addedFile.responseBody, {identifier: 'uuid'});
+        });
+
+        test('er kan programmatisch een bestand toegevoegd worden aan een vl-upload die enkel bepaalde bestandstypes toelaat', () => {
+          const upload = fixture('vl-upload-accepted-files-fixture');
+          sandbox.spy(upload._dropzone, 'emit');
+          const name = 'name';
+          const size = '1000';
+          const id = '1';
+          const type = 'txt';
+          const file = {name: name, size: size, id: id, type: type, responseBody: {identifier: 'uuid'}};
+
+          upload.addFile(file);
+
+          assert.include(upload.files[0], file);
+          assert.equal(upload.files[0].status, 'success');
         });
 
         test('het programmatisch toevoegen van een bestand wanneer autoprocess actief staat zal achterliggend geen upload uitvoeren', (done) => {
