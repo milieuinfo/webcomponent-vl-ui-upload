@@ -314,6 +314,7 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
    * @param {String} name
    * @param {Number} size
    * @param {Number} id
+   * @param {String} type
    * @param {Object} responseBody - body van de response bij het opladen van het bestand
    * @return {void}
    */
