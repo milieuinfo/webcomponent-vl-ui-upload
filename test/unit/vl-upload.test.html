@@ -270,6 +270,23 @@
 
           assert.include(upload.files[0], file);
           assert.equal(upload.files[0].status, 'success');
+          assert.equal(upload.files[0].accepted, true);
+        });
+
+        test('programmatisch een bestand toegevoegd dat niet van een van de toegelaten types is leidt tot een niet geaccepteerd bestand', () => {
+          const upload = fixture('vl-upload-accepted-files-fixture');
+          sandbox.spy(upload._dropzone, 'emit');
+          const name = 'name';
+          const size = '1000';
+          const id = '1';
+          const type = 'foo';
+          const file = {name: name, size: size, id: id, type: type, responseBody: {identifier: 'uuid'}};
+
+          upload.addFile(file);
+
+          assert.include(upload.files[0], file);
+          assert.equal(upload.files[0].status, 'success');
+          assert.equal(upload.files[0].accepted, false);
         });
 
         test('het programmatisch toevoegen van een bestand wanneer autoprocess actief staat zal achterliggend geen upload uitvoeren', (done) => {
