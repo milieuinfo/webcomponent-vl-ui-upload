@@ -259,7 +259,6 @@
 
         test('er kan programmatisch een bestand toegevoegd worden aan een vl-upload die enkel bepaalde bestandstypes toelaat', () => {
           const upload = fixture('vl-upload-accepted-files-fixture');
-          sandbox.spy(upload._dropzone, 'emit');
           const name = 'name';
           const size = '1000';
           const id = '1';
@@ -275,7 +274,6 @@
 
         test('programmatisch een bestand toegevoegd dat niet van een van de toegelaten types is leidt tot een niet geaccepteerd bestand', () => {
           const upload = fixture('vl-upload-accepted-files-fixture');
-          sandbox.spy(upload._dropzone, 'emit');
           const name = 'name';
           const size = '1000';
           const id = '1';
