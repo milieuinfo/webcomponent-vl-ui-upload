@@ -314,15 +314,16 @@ export class VlUpload extends vlFormValidationElement(vlElement(HTMLElement)) {
    * @param {String} name
    * @param {Number} size
    * @param {Number} id
+   * @param {String} type
    * @param {Object} responseBody - body van de response bij het opladen van het bestand
    * @return {void}
    */
-  addFile({ name, size, id, responseBody }) {
+  addFile({ name, size, id, type, responseBody }) {
     const autoprocessActive = this.dataset.vlAutoprocess != undefined;
     if (autoprocessActive) {
       this._disableAutoProcessQueue();
     }
-    const file = { name: name, size: size, id: id, responseBody: responseBody };
+    const file = { name: name, size: size, id: id, type: type, responseBody: responseBody };
     this._dropzone.addFile(file);
     this._dropzone.emit('complete', file);
     file.status = 'success';
