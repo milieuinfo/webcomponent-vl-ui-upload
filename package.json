@@ -49,7 +49,7 @@
     "vl-ui-link": "^4.0.7"
   },
   "devDependencies": {
-    "@govflanders/vl-ui-upload": "^3.12.17",
+    "@govflanders/vl-ui-upload": "^10.0.0",
     "@storybook/addon-actions": "^6.3.2",
     "@storybook/addon-essentials": "^6.3.2",
     "@storybook/addon-links": "^6.3.2",
